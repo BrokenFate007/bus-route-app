@@ -178,7 +178,18 @@ button:active {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
+  width: 100%;
 }
+
+.time-picker select {
+  min-height: 44px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #020617;
+  color: var(--text);
+}
+
 
 
 /* ===== Journey Toggle ===== */

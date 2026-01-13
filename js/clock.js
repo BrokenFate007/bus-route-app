@@ -18,7 +18,8 @@ function startClock() {
     timeEl.textContent = now.toLocaleTimeString(undefined, {
       hour: "numeric",
       minute: "2-digit",
-      second: "2-digit"
+      second: "2-digit",
+      hour12: true
     });
 
     dateEl.textContent = now.toLocaleDateString(undefined, {
