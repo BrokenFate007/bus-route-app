@@ -21,7 +21,7 @@
     <!-- Clock -->
     <div id="clock" class="clock"></div>
 
-    <!-- Controls -->
+    <!-- ===== Next Bus ===== -->
     <div class="controls">
       <select id="fromSelect" aria-label="Boarding stop">
         <option value="">From</option>
@@ -32,12 +32,65 @@
       </select>
     </div>
 
-    <!-- Results -->
     <div id="results" class="results-grid"></div>
+
+    <!-- ===== Journey Planner ===== -->
+<section class="journey">
+
+  <button id="journeyToggle" class="journey-toggle">
+    Plan a Journey
+    <span class="arrow">▾</span>
+  </button>
+
+  <div id="journeyPanel" class="journey-panel hidden">
+
+  <div class="journey-controls">
+    <select id="journeyDay" aria-label="Day">
+      <option value="">Day</option>
+    </select>
+
+    <div class="time-picker">
+      <select id="journeyHour">
+        <option value="">Hour</option>
+      </select>
+
+      <select id="journeyMinute">
+        <option value="">Min</option>
+      </select>
+
+      <select id="journeyPeriod">
+        <option value="">AM/PM</option>
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+    </div>
+
+  </div>
+
+
+    <div class="journey-controls">
+      <select id="journeyFrom" aria-label="Boarding stop">
+        <option value="">From</option>
+      </select>
+
+      <select id="journeyTo" aria-label="Destination stop">
+        <option value="">To</option>
+      </select>
+    </div>
+
+    <div class="journey-controls full">
+      <button id="journeySearch">Find buses</button>
+    </div>
+
+    <div id="journeyResults" class="journey-results"></div>
+
+  </div>
+</section>
+
 
   </main>
 
-  <!-- Scripts (defer = safe on all devices) -->
+  <!-- Scripts -->
   <script src="js/clock.js" defer></script>
   <script src="js/dataLoader.js" defer></script>
   <script src="js/routeEngine.js" defer></script>
