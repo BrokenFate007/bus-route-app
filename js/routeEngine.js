@@ -8,21 +8,19 @@ function timeToMinutes(t) {
   return h * 60 + m;
 }
 
-function findNextBus(routes, from, to) {
+function findUpcomingBuses(routes, from, to, limit = 3) {
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
   const today = getTodayName();
 
-  const valid = routes.filter(r =>
-    r.dayType === today &&
-    r.from === from &&
-    r.to === to &&
-    timeToMinutes(r.time) >= nowMin
-  );
-
-  if (valid.length === 0) return null;
-
-  return valid.sort(
-    (a, b) => timeToMinutes(a.time) - timeToMinutes(b.time)
-  )[0];
+  return routes
+    .filter(r =>
+      r.dayType === today &&
+      r.from === from &&
+      r.to === to &&
+      timeToMinutes(r.time) >= nowMin
+    )
+    .sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time))
+    .slice(0, limit);
 }
+

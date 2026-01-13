@@ -19,11 +19,17 @@ h1 {
   font-size: 1.2rem;
 }
 
-.clock {
-  text-align: center;
-  font-size: 1.8rem;
-  margin: 15px 0;
+#clock .date {
+  font-size: 0.75rem;     /* clearly smaller than time */
+  opacity: 0.75;
+  white-space: nowrap;   /* prevents line break */
 }
+
+#clock .time {
+  font-size: 2.5rem;     /* dominant */
+  margin-top: 2px;
+}
+
 
 .controls {
   display: flex;
@@ -36,7 +42,22 @@ select {
   border-radius: 6px;
 }
 
-.result {
-  margin-top: 15px;
-  text-align: center;
+.results-grid {
+  display: grid;
+  grid-template-columns: auto 70px 70px 70px;
+  gap: 6px 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.results-grid .label {
+  font-weight: 600;
+}
+
+.results-grid .muted {
+  opacity: 0.75;
+}
+
+.results-grid .next {
+  font-weight: 600;
 }
