@@ -1,51 +1,96 @@
+:root {
+  --bg: #0f172a;
+  --card: #020617;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --border: #1e293b;
+}
+
+/* ===== Global ===== */
 body {
-  font-family: system-ui, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb;
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+
+  background: var(--bg);
+  color: var(--text);
+
   display: flex;
   justify-content: center;
-  padding-top: 40px;
+  padding: 24px 12px;
 }
 
+/* ===== App Container ===== */
 .container {
-  background: #020617;
-  padding: 20px 30px;
-  border-radius: 12px;
-  width: 320px;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 16px;
+
+  width: 100%;
+  max-width: 420px;
+
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
 }
 
+/* ===== Title ===== */
 h1 {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 4px 0 16px;
+}
+
+/* ===== Clock ===== */
+#clock {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 #clock .date {
-  font-size: 0.75rem;     /* clearly smaller than time */
-  opacity: 0.75;
-  white-space: nowrap;   /* prevents line break */
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 #clock .time {
-  font-size: 2.5rem;     /* dominant */
+  font-size: 2.4rem;
+  font-weight: 600;
   margin-top: 2px;
 }
 
-
+/* ===== Controls ===== */
 .controls {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 select {
   flex: 1;
-  padding: 6px;
-  border-radius: 6px;
+
+  min-height: 44px;              /* touch-friendly */
+  padding: 8px 10px;
+
+  font-size: 16px;               /* prevents iOS zoom */
+  color: var(--text);
+  background: #020617;
+
+  border-radius: 10px;
+  border: 1px solid var(--border);
+
+  appearance: none;
 }
 
+/* ===== Results ===== */
 .results-grid {
   display: grid;
-  grid-template-columns: auto 70px 70px 70px;
-  gap: 6px 12px;
+  grid-template-columns: 1fr repeat(3, minmax(56px, auto));
+  gap: 8px 12px;
   align-items: center;
   margin-top: 12px;
 }
@@ -55,9 +100,20 @@ select {
 }
 
 .results-grid .muted {
-  opacity: 0.75;
+  color: var(--muted);
 }
 
 .results-grid .next {
   font-weight: 600;
+}
+
+/* ===== Desktop breathing space ===== */
+@media (min-width: 768px) {
+  body {
+    padding-top: 48px;
+  }
+
+  .container {
+    padding: 24px 28px;
+  }
 }
