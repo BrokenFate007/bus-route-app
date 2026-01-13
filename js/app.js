@@ -8,13 +8,14 @@ const busCountEl = document.getElementById("busCount");
 loadRoutes().then(routes => {
   allRoutes = routes;
 
-  const places = [...new Set(routes.flatMap(r => [r.from, r.to]))];
+const fromPlaces = [...new Set(routes.map(r => r.from))];
+const toPlaces   = [...new Set(routes.map(r => r.to))];
 
-  places.forEach(p => {
-    fromSelect.add(new Option(p, p));
-    toSelect.add(new Option(p, p));
+fromPlaces.forEach(p => fromSelect.add(new Option(p, p)));
+toPlaces.forEach(p => toSelect.add(new Option(p, p)));
+ updateResult(); 
+
   });
-});
 
 function updateResult() {
   const next = findNextBus(
