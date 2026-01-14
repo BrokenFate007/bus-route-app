@@ -36,3 +36,21 @@ async function loadRoutes() {
     })
     .filter(Boolean);
 }
+
+
+async function loadRouteRuns() {
+  const res = await fetch("./data/route_runs.tsv");
+  const text = await res.text();
+  const lines = text.trim().split("\n");
+  lines.shift();
+
+  return lines.map(line => {
+    const [routeId, day, startTime, stops] = line.split("\t");
+    return {
+      routeId,
+      day,
+      startTime,
+      stops: stops.split(">")
+    };
+  });
+}

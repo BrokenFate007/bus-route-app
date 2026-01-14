@@ -1,24 +1,25 @@
 let upcomingBuses = [];
 let allRoutes = [];
+let routeRuns = []; // future use
 
 /* ================= DOM CACHE ================= */
 const fromSelect = document.getElementById("fromSelect");
 const toSelect = document.getElementById("toSelect");
 const resultsDiv = document.getElementById("results");
 
-/* Journey planner elements */
+/* Journey planner (inside campus) */
 const journeyDay = document.getElementById("journeyDay");
 const journeyFrom = document.getElementById("journeyFrom");
 const journeyTo = document.getElementById("journeyTo");
 const journeyBtn = document.getElementById("journeySearch");
 const journeyResults = document.getElementById("journeyResults");
 
-/* 12-hour picker elements */
+/* 12-hour picker */
 const journeyHour = document.getElementById("journeyHour");
 const journeyMinute = document.getElementById("journeyMinute");
 const journeyPeriod = document.getElementById("journeyPeriod");
 
-/* Toggle elements */
+/* Toggle */
 const journeyToggle = document.getElementById("journeyToggle");
 const journeyPanel = document.getElementById("journeyPanel");
 const journeySection = document.querySelector(".journey");
@@ -32,7 +33,6 @@ function to12Hour(time24) {
   return `${h}:${String(m).padStart(2, "0")} ${period}`;
 }
 
-/* Convert custom picker → 24h */
 function getJourneyTime24() {
   const h = Number(journeyHour.value);
   const m = journeyMinute.value;
@@ -46,10 +46,14 @@ function getJourneyTime24() {
   return `${String(hour24).padStart(2, "0")}:${m}`;
 }
 
-/* ================= LOAD DATA ================= */
-loadRoutes()
-  .then(routes => {
+/* ================= LOAD DATA (ONCE) ================= */
+Promise.all([
+  loadRoutes(),
+  typeof loadRouteRuns === "function" ? loadRouteRuns() : Promise.resolve([])
+])
+  .then(([routes, runs]) => {
     allRoutes = routes;
+    routeRuns = runs;
 
     const fromPlaces = [...new Set(routes.map(r => r.from))];
     const toPlaces = [...new Set(routes.map(r => r.to))];
@@ -62,8 +66,14 @@ loadRoutes()
     populateSelect(journeyTo, toPlaces);
     populateSelect(journeyDay, days);
 
+    setJourneyDayToToday(days);
+
     populateTimePicker();
     updateResult();
+
+
+    console.log("Flat routes:", routes.length);
+    console.log("Route runs:", runs.length);
   })
   .catch(err => {
     resultsDiv.textContent = "Failed to load bus data";
@@ -78,19 +88,40 @@ function populateSelect(selectEl, values) {
 }
 
 
-  function populateTimePicker() {
-  // Hours: 1–12
+function setJourneyDayToToday(availableDays) {
+  if (!journeyDay) return;
+
+  const jsDays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+
+  const today = jsDays[new Date().getDay()];
+
+  // Only auto-select if today exists in route data
+  if (availableDays.includes(today)) {
+    journeyDay.value = today;
+  }
+}
+
+
+function populateTimePicker() {
+  if (journeyHour.options.length > 1) return; // prevent duplicates
+
   for (let h = 1; h <= 12; h++) {
     journeyHour.add(new Option(h, h));
   }
 
-  // Minutes: every 5 minutes (00–55)
   for (let m = 0; m < 60; m += 5) {
     const mm = String(m).padStart(2, "0");
     journeyMinute.add(new Option(mm, mm));
   }
 }
-
 
 /* ================= NEXT BUS ================= */
 function updateResult() {
@@ -166,7 +197,7 @@ function updateCountdowns() {
   });
 }
 
-/* ================= JOURNEY PLANNER ================= */
+/* ================= JOURNEY PLANNER (INSIDE CAMPUS) ================= */
 journeyBtn.addEventListener("click", () => {
   journeyResults.innerHTML = "";
 
@@ -187,8 +218,8 @@ journeyBtn.addEventListener("click", () => {
     journeyFrom.value,
     journeyTo.value,
     time24,
-    1,
-    1
+    2,
+    2
   );
 
   if (buses.length === 0) {

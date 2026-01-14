@@ -1,13 +1,14 @@
+/* ================= DAY & TIME ================= */
 function getTodayName() {
   return new Date().toLocaleDateString("en-US", { weekday: "long" });
 }
 
 function timeToMinutes(t) {
   let [h, m] = t.split(":").map(Number);
-  if (h === 0) h = 24; // handle 0:00 safely
   return h * 60 + m;
 }
 
+/* ================= BASIC (CURRENT SYSTEM) ================= */
 function findUpcomingBuses(routes, from, to, limit = 3) {
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
@@ -23,8 +24,6 @@ function findUpcomingBuses(routes, from, to, limit = 3) {
     .sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time))
     .slice(0, limit);
 }
-
-
 
 function findBusesAroundTime(
   routes,
@@ -49,7 +48,6 @@ function findBusesAroundTime(
       ...r,
       minutes: timeToMinutes(r.time)
     }))
-    .filter(r => r.minutes !== null)
     .sort((a, b) => a.minutes - b.minutes);
 
   const before = matching
@@ -63,3 +61,47 @@ function findBusesAroundTime(
   return [...before, ...after];
 }
 
+/* ================= ROUTE-RUN EXPANSION (FUTURE-SAFE) ================= */
+
+/*
+  A routeRun represents ONE physical bus:
+  {
+    routeId,
+    day,
+    startTime,
+    routeType: "campus" | "outside",
+    stops: ["Palakkad", "Stadium", ..., "Sahyadri"]
+  }
+*/
+
+function expandRouteRun(run, stopOffsets = {}) {
+  const trips = [];
+  const baseTimeMin = timeToMinutes(run.startTime);
+
+  for (let i = 0; i < run.stops.length; i++) {
+    for (let j = i + 1; j < run.stops.length; j++) {
+      const from = run.stops[i];
+      const to = run.stops[j];
+
+      const fromOffset = stopOffsets[from] ?? 0;
+      const tripTimeMin = baseTimeMin + fromOffset;
+
+      trips.push({
+        dayType: run.day,
+        from,
+        to,
+        time: minutesToTime(tripTimeMin),
+        routeId: run.routeId,
+        routeType: run.routeType || "outside"
+      });
+    }
+  }
+  return trips;
+}
+
+/* ================= UTIL ================= */
+function minutesToTime(totalMin) {
+  const h = Math.floor(totalMin / 60) % 24;
+  const m = totalMin % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
