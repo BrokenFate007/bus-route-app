@@ -246,21 +246,20 @@ journeyToggle.addEventListener("click", () => {
 
 
 
-(function globalVisitCounter() {
-  const el = document.getElementById("globalCount");
-  if (!el) return; // ← THIS LINE FIXES EVERYTHING
+(function showCounterDevVisits() {
+  const el = document.getElementById("visits");
+  if (!el) return;
 
-  const namespace = "iitpkd-campus-bus-krishna-murari";
-
-  fetch(`https://api.countapi.xyz/hit/${namespace}/visits`)
+  fetch("https://api.counter.dev/v1/96302f6b-27cc-4b7d-8ed6-a0df769c5fee")
     .then(res => res.json())
     .then(data => {
-      el.textContent = data.value;
+      el.textContent = data.views;
     })
     .catch(() => {
       el.textContent = "—";
     });
 })();
+
 
 
 /* ================= EVENTS ================= */
