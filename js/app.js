@@ -246,19 +246,19 @@ journeyToggle.addEventListener("click", () => {
 
 
 
-(function showCounterDevVisits() {
-  const el = document.getElementById("visits");
-  if (!el) return;
+// (function showCounterDevVisits() {
+//   const el = document.getElementById("visits");
+//   if (!el) return;
 
-  fetch("https://api.counter.dev/v1/96302f6b-27cc-4b7d-8ed6-a0df769c5fee")
-    .then(res => res.json())
-    .then(data => {
-      el.textContent = data.views;
-    })
-    .catch(() => {
-      el.textContent = "—";
-    });
-})();
+//   fetch("https://api.counter.dev/v1/96302f6b-27cc-4b7d-8ed6-a0df769c5fee")
+//     .then(res => res.json())
+//     .then(data => {
+//       el.textContent = data.views;
+//     })
+//     .catch(() => {
+//       el.textContent = "—";
+//     });
+// })();
 
 
 
