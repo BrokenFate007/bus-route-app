@@ -1,11 +1,14 @@
 let upcomingBuses = [];
 let allRoutes = [];
-let routeRuns = []; // future use
+let routeRuns = [];
+let outsideRoutes = [];
 
 // These will be populated from loaded data
 let fromPlaces = [];
 let toPlaces = [];
 let days = [];
+let outsideDays = [];
+let outsideDestinations = [];
 
 /* ================= DOM CACHE ================= */
 const resultsDiv = document.getElementById("results");
@@ -27,6 +30,16 @@ const journeyToggle = document.getElementById("journeyToggle");
 const journeyPanel = document.getElementById("journeyPanel");
 const journeySection = document.querySelector(".journey");
 
+/* Outside Campus */
+const outsideCampusToggle = document.getElementById("outsideCampusToggle");
+const outsideCampusPanel = document.getElementById("outsideCampusPanel");
+const outsideCampusSection = document.querySelector(".journey.outside-campus");
+const outsideDay = document.getElementById("outsideDay");
+const outsideTimePeriod = document.getElementById("outsideTimePeriod");
+const outsideDestination = document.getElementById("outsideDestination");
+const outsideSearch = document.getElementById("outsideSearch");
+const outsideResults = document.getElementById("outsideResults");
+
 let activeDirection = null;
 
 const btnNilaToSahyadri = document.getElementById("btnNilaToSahyadri");
@@ -44,7 +57,7 @@ btnSahyadriToNila.addEventListener("click", () => {
 
 function setDirection(from, to) {
   activeDirection = { from, to };
-  updateResult(); // FIXED: was updateNextBuses()
+  updateResult();
 }
 
 function setActiveButton(activeBtn) {
@@ -53,7 +66,6 @@ function setActiveButton(activeBtn) {
   );
   activeBtn.classList.add("active");
 }
-
 
 /* ================= FORMATTERS ================= */
 function to12Hour(time24) {
@@ -77,6 +89,34 @@ function getJourneyTime24() {
   return `${String(hour24).padStart(2, "0")}:${m}`;
 }
 
+/* ================= TIME PERIOD HELPERS ================= */
+function getCurrentTimePeriod() {
+  const now = new Date();
+  const hour = now.getHours();
+
+  if (hour >= 6 && hour < 12) {
+    return "morning";
+  } else if (hour >= 12 && hour < 15) {
+    return "afternoon";
+  } else if (hour >= 15 && hour < 24) {
+    return "evening";
+  }
+  return "morning";
+}
+
+function getTimePeriodForTime(time24) {
+  const [hour] = time24.split(":").map(Number);
+  
+  if (hour >= 6 && hour < 12) {
+    return "morning";
+  } else if (hour >= 12 && hour < 15) {
+    return "afternoon";
+  } else if (hour >= 15 && hour < 24) {
+    return "evening";
+  }
+  return "morning";
+}
+
 /* ================= EXTRACT UNIQUE VALUES ================= */
 function extractUniqueValues(routes) {
   const fromSet = new Set();
@@ -94,29 +134,126 @@ function extractUniqueValues(routes) {
   days = Array.from(daySet);
 }
 
+function extractOutsideValues(routes) {
+  const daySet = new Set();
+  const destSet = new Set();
+
+  routes.forEach(route => {
+    daySet.add(route.dayType);
+    if (route.stops) {
+      route.stops.forEach(stop => destSet.add(stop));
+    }
+  });
+
+  // Always include all days
+  const allDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  outsideDays = allDays;
+  outsideDestinations = Array.from(destSet).sort();
+}
+
+/* ================= SMART DESTINATION FILTERING ================= */
+function getAvailableDestinations(day, timePeriod) {
+  if (!day || day === "Sunday") {
+    return [];
+  }
+
+  const destSet = new Set();
+
+  outsideRoutes.forEach(route => {
+    // Match day
+    if (route.dayType !== day) return;
+
+    // Filter by time period if selected
+    if (timePeriod && timePeriod !== "" && timePeriod !== "all") {
+      const busHour = parseInt(route.departureTime.split(":")[0]);
+      
+      if (timePeriod === "morning" && (busHour < 6 || busHour >= 12)) {
+        return;
+      }
+      if (timePeriod === "afternoon" && (busHour < 12 || busHour >= 15)) {
+        return;
+      }
+      if (timePeriod === "evening" && (busHour < 15 || busHour >= 24)) {
+        return;
+      }
+    }
+
+    // Add all stops from this route
+    if (route.stops) {
+      route.stops.forEach(stop => destSet.add(stop));
+    }
+  });
+
+  return Array.from(destSet).sort();
+}
+
+function updateDestinationDropdown() {
+  const selectedDay = outsideDay.value;
+  const selectedTimePeriod = outsideTimePeriod.value;
+
+  if (!selectedDay) {
+    outsideDestination.innerHTML = '<option value="">Select day first</option>';
+    outsideDestination.disabled = true;
+    return;
+  }
+
+  if (selectedDay === "Sunday") {
+    outsideDestination.innerHTML = '<option value="">No buses on Sunday</option>';
+    outsideDestination.disabled = true;
+    return;
+  }
+
+  const availableDestinations = getAvailableDestinations(selectedDay, selectedTimePeriod);
+
+  if (availableDestinations.length === 0) {
+    outsideDestination.innerHTML = '<option value="">No buses at this time</option>';
+    outsideDestination.disabled = true;
+    return;
+  }
+
+  outsideDestination.disabled = false;
+  outsideDestination.innerHTML = '<option value="">Where to?</option>';
+  availableDestinations.forEach(dest => {
+    outsideDestination.add(new Option(dest, dest));
+  });
+}
+
 /* ================= LOAD DATA (ONCE) ================= */
 Promise.all([
   loadRoutes(),
-  loadRouteRuns()
+  loadRouteRuns(),
+  loadOutsideRoutes()
 ])
-  .then(([routes, runs]) => {
+  .then(([routes, runs, outside]) => {
     allRoutes = routes;
     routeRuns = runs;
+    outsideRoutes = outside;
 
-    // FIXED: Extract unique values from loaded data
     extractUniqueValues(routes);
+    extractOutsideValues(outside);
 
     populateSelect(journeyFrom, fromPlaces);
     populateSelect(journeyTo, toPlaces);
     populateSelect(journeyDay, days);
 
+    // Populate outside campus day dropdown
+    populateSelect(outsideDay, outsideDays);
+
     setJourneyDayToToday(days);
+    setJourneyDayToToday(outsideDays, outsideDay);
+    
+    // Auto-select current time period
+    outsideTimePeriod.value = getCurrentTimePeriod();
+
+    // Initialize destination dropdown based on current selections
+    updateDestinationDropdown();
 
     populateTimePicker();
     updateResult();
 
     console.log("Flat routes:", routes.length);
     console.log("Route runs:", runs.length);
+    console.log("Outside routes:", outside.length);
   })
   .catch(err => {
     resultsDiv.textContent = "Failed to load bus data";
@@ -126,12 +263,13 @@ Promise.all([
 /* ================= HELPERS ================= */
 function populateSelect(selectEl, values) {
   if (!selectEl) return;
-  selectEl.innerHTML = `<option value="">Select</option>`;
+  const firstOption = selectEl.options[0].text;
+  selectEl.innerHTML = `<option value="">${firstOption}</option>`;
   values.forEach(v => selectEl.add(new Option(v, v)));
 }
 
-function setJourneyDayToToday(availableDays) {
-  if (!journeyDay) return;
+function setJourneyDayToToday(availableDays, selectElement = journeyDay) {
+  if (!selectElement) return;
 
   const jsDays = [
     "Sunday",
@@ -145,14 +283,13 @@ function setJourneyDayToToday(availableDays) {
 
   const today = jsDays[new Date().getDay()];
 
-  // Only auto-select if today exists in route data
   if (availableDays.includes(today)) {
-    journeyDay.value = today;
+    selectElement.value = today;
   }
 }
 
 function populateTimePicker() {
-  if (journeyHour.options.length > 1) return; // prevent duplicates
+  if (journeyHour.options.length > 1) return;
 
   for (let h = 1; h <= 12; h++) {
     journeyHour.add(new Option(h, h));
@@ -309,11 +446,90 @@ journeyBtn.addEventListener("click", () => {
   });
 });
 
-/* ================= TOGGLE ================= */
+/* ================= OUTSIDE CAMPUS BUSES ================= */
+outsideSearch.addEventListener("click", () => {
+  outsideResults.innerHTML = "";
+
+  if (!outsideDay.value) {
+    outsideResults.textContent = "Please select a day";
+    return;
+  }
+
+  // Check if Sunday
+  if (outsideDay.value === "Sunday") {
+    outsideResults.innerHTML = `
+      <div class="no-buses-message">
+        No buses available on Sundays
+      </div>
+    `;
+    return;
+  }
+
+  if (!outsideTimePeriod.value || !outsideDestination.value) {
+    outsideResults.textContent = "Please select time and destination";
+    return;
+  }
+
+  const buses = findOutsideBuses(
+    outsideRoutes,
+    outsideDay.value,
+    outsideDestination.value,
+    outsideTimePeriod.value
+  );
+
+  if (buses.length === 0) {
+    outsideResults.textContent = "No buses found for this route";
+    return;
+  }
+
+  buses.forEach(bus => {
+    const card = document.createElement("div");
+    card.className = "outside-bus-card";
+
+    card.innerHTML = `
+      <div class="departure-time">
+        <span class="icon">🚌</span>
+        ${to12Hour(bus.departureTime)}
+      </div>
+      <div class="route-info">
+        From: <strong>${bus.origin}</strong>
+      </div>
+      <div class="route-stops">
+        ${bus.routeDescription}
+      </div>
+      ${bus.returnTime ? `<div class="return-time">↩ Returns: ${bus.returnTime}</div>` : ''}
+    `;
+
+    outsideResults.appendChild(card);
+  });
+});
+
+/* ================= EVENT LISTENERS FOR SMART FILTERING ================= */
+// Update destinations when day changes
+outsideDay.addEventListener("change", () => {
+  updateDestinationDropdown();
+  outsideResults.innerHTML = "";
+});
+
+// Update destinations when time period changes
+outsideTimePeriod.addEventListener("change", () => {
+  updateDestinationDropdown();
+  outsideResults.innerHTML = "";
+});
+
+/* ================= TOGGLE (Campus Journey) ================= */
 if (journeyToggle && journeyPanel && journeySection) {
   journeyToggle.addEventListener("click", () => {
     journeyPanel.classList.toggle("hidden");
     journeySection.classList.toggle("open");
+  });
+}
+
+/* ================= TOGGLE (Outside Campus) ================= */
+if (outsideCampusToggle && outsideCampusPanel && outsideCampusSection) {
+  outsideCampusToggle.addEventListener("click", () => {
+    outsideCampusPanel.classList.toggle("hidden");
+    outsideCampusSection.classList.toggle("open");
   });
 }
 

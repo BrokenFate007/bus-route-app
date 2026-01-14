@@ -11,7 +11,6 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 
-
   <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KC4TPQ1NK"></script>
 <script>
@@ -47,44 +46,47 @@
   <div id="results"></div>
 
 
-    <!-- ===== Journey Planner ===== -->
+    <!-- ===== Journey Planner (Campus) ===== -->
+<!-- ===== Journey Planner (Campus) ===== -->
 <section class="journey">
 
   <button
     id="journeyToggle"
     class="journey-toggle"
     type="button">
-    Plan a Journey
+    Plan a Journey (Campus)
     <span class="arrow">▾</span>
   </button>
 
-
   <div id="journeyPanel" class="journey-panel hidden">
 
-  <div class="journey-controls">
-    <select id="journeyDay" aria-label="Day">
-      <option value="">Day</option>
-    </select>
-
-    <div class="time-picker">
-      <select id="journeyHour">
-        <option value="">Hour</option>
-      </select>
-
-      <select id="journeyMinute">
-        <option value="">Min</option>
-      </select>
-
-      <select id="journeyPeriod">
-        <option value="">AM/PM</option>
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
+    <!-- Day Selection (Full Width) -->
+    <div class="journey-controls full">
+      <select id="journeyDay" aria-label="Day">
+        <option value="">Day</option>
       </select>
     </div>
 
-  </div>
+    <!-- Time Picker (Full Width) -->
+    <div class="journey-controls full">
+      <div class="time-picker">
+        <select id="journeyHour">
+          <option value="">Hour</option>
+        </select>
 
+        <select id="journeyMinute">
+          <option value="">Min</option>
+        </select>
 
+        <select id="journeyPeriod">
+          <option value="">AM/PM</option>
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- From and To -->
     <div class="journey-controls">
       <select id="journeyFrom" aria-label="Boarding stop">
         <option value="">From</option>
@@ -95,6 +97,7 @@
       </select>
     </div>
 
+    <!-- Find Button -->
     <div class="journey-controls full">
       <button
         id="journeySearch"
@@ -107,6 +110,54 @@
 
   </div>
 </section>
+
+
+
+    <!-- ===== Outside Campus Buses ===== -->
+<section class="journey outside-campus">
+
+  <button
+    id="outsideCampusToggle"
+    class="journey-toggle"
+    type="button">
+    Outside Campus Buses
+    <span class="arrow">▾</span>
+  </button>
+
+  <div id="outsideCampusPanel" class="journey-panel hidden">
+
+    <div class="journey-controls outside-three-col">
+      <select id="outsideDay" aria-label="Day">
+        <option value="">Select Day</option>
+      </select>
+
+      <select id="outsideTimePeriod" aria-label="Time Period">
+        <option value="">Time</option>
+        <option value="all">All Day</option>
+        <option value="morning">🌅 Morning</option>
+        <option value="afternoon">☀️ Afternoon</option>
+        <option value="evening">🌆 Evening</option>
+      </select>
+
+      <select id="outsideDestination" aria-label="Destination">
+        <option value="">Where to?</option>
+      </select>
+    </div>
+
+    <div class="journey-controls full">
+      <button
+        id="outsideSearch"
+        type="button">
+        Find Buses
+      </button>
+    </div>
+
+    <div id="outsideResults" class="outside-results"></div>
+
+  </div>
+</section>
+
+
   <footer class="site-footer">
     <div class="footer-line primary">
       Created by <span class="name">Krishna Murari</span>
@@ -118,10 +169,9 @@
 
   </footer>
 
-
   </main>
 
-  <!-- Scripts: Load in correct order, clock can still be deferred -->
+  <!-- Scripts: Load in correct order -->
   <script src="js/clock.js" defer></script>
   <script src="js/routeEngine.js"></script>
   <script src="js/dataLoader.js"></script>

@@ -61,19 +61,48 @@ function findBusesAroundTime(
   return [...before, ...after];
 }
 
+/* ================= OUTSIDE CAMPUS ================= */
+function findOutsideBuses(routes, day, destination, timePeriod) {
+  if (!day || !destination) return [];
+
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const today = getTodayName();
+
+  return routes
+    .filter(r => {
+      // Match day
+      if (r.dayType !== day) return false;
+
+      // Check if destination is in stops
+      if (!r.stops || !r.stops.includes(destination)) return false;
+
+      // Filter by time period
+      if (timePeriod && timePeriod !== "all") {
+        const busHour = parseInt(r.departureTime.split(":")[0]);
+        
+        if (timePeriod === "morning" && (busHour < 6 || busHour >= 12)) {
+          return false;
+        }
+        if (timePeriod === "afternoon" && (busHour < 12 || busHour >= 15)) {
+          return false;
+        }
+        if (timePeriod === "evening" && (busHour < 15 || busHour >= 24)) {
+          return false;
+        }
+      }
+
+      // If today, only show upcoming buses
+      if (day === today) {
+        return timeToMinutes(r.departureTime) >= nowMin;
+      }
+
+      return true;
+    })
+    .sort((a, b) => timeToMinutes(a.departureTime) - timeToMinutes(b.departureTime));
+}
+
 /* ================= ROUTE-RUN EXPANSION (FUTURE-SAFE) ================= */
-
-/*
-  A routeRun represents ONE physical bus:
-  {
-    routeId,
-    day,
-    startTime,
-    routeType: "campus" | "outside",
-    stops: ["Palakkad", "Stadium", ..., "Sahyadri"]
-  }
-*/
-
 function expandRouteRun(run, stopOffsets = {}) {
   const trips = [];
   const baseTimeMin = timeToMinutes(run.startTime);

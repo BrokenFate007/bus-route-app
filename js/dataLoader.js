@@ -8,14 +8,12 @@ async function loadRoutes() {
   const text = await response.text();
   const lines = text.trim().split("\n");
 
-  // Remove header
   lines.shift();
 
   return lines
     .map((line, index) => {
       const cols = line.split("\t");
 
-      // Defensive parsing
       if (cols.length < 5) {
         console.warn(`Skipping malformed line ${index + 2}`);
         return null;
@@ -36,7 +34,6 @@ async function loadRoutes() {
     })
     .filter(Boolean);
 }
-
 
 async function loadRouteRuns() {
   const res = await fetch("./data/route_runs.tsv", { cache: "no-store" });
@@ -67,3 +64,53 @@ async function loadRouteRuns() {
   }).filter(Boolean);
 }
 
+// NEW: Load outside campus routes
+async function loadOutsideRoutes() {
+  const res = await fetch("./data/outside_routes.tsv", { cache: "no-store" });
+
+  if (!res.ok) {
+    console.warn("outside_routes.tsv not found, skipping outside routes");
+    return [];
+  }
+
+  const text = await res.text();
+  const lines = text.trim().split("\n");
+
+  if (lines.length <= 1) return [];
+
+  lines.shift(); // Remove header
+
+  return lines
+    .map((line, index) => {
+      const cols = line.split("\t");
+
+      if (cols.length < 6) {
+        console.warn(`Skipping malformed outside route line ${index + 2}`);
+        return null;
+      }
+
+      const dayType = cols[0].trim();
+      const routeId = cols[1].trim();
+      const departureTime = cols[2].trim();
+      const origin = cols[3].trim();
+      const stopsRaw = cols[4].trim();
+      const routeDescription = cols[5].trim();
+      const returnTime = cols[6] ? cols[6].trim() : "";
+
+      if (!dayType || !departureTime || !origin || !stopsRaw) {
+        console.warn(`Invalid outside route data at line ${index + 2}`);
+        return null;
+      }
+
+      return {
+        dayType,
+        routeId,
+        departureTime,
+        origin,
+        stops: stopsRaw.split(">").map(s => s.trim()),
+        routeDescription,
+        returnTime
+      };
+    })
+    .filter(Boolean);
+}
