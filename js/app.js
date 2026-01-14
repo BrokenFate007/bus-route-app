@@ -204,6 +204,9 @@ journeyBtn.addEventListener("click", () => {
   journeyResults.innerHTML = "";
 
   const time24 = getJourneyTime24();
+  const [selH, selM] = time24.split(":").map(Number);
+  const selectedMinutes = selH * 60 + selM;
+
   if (
     !journeyDay.value ||
     !journeyFrom.value ||
@@ -230,12 +233,25 @@ journeyBtn.addEventListener("click", () => {
   }
 
   buses.forEach(bus => {
+    const [h, m] = bus.time.split(":").map(Number);
+    const busMinutes = h * 60 + m;
+
+    const isEarlier = busMinutes < selectedMinutes;
+
     const row = document.createElement("div");
-    row.className = "journey-row";
-    row.textContent =
-      `${to12Hour(bus.time)} : ${bus.count} bus${bus.count > 1 ? "es" : ""}`;
+    row.className = `journey-row ${isEarlier ? "earlier" : "upcoming"}`;
+
+    row.innerHTML = `
+      <span class="bus-arrow">${isEarlier ? "↑" : "↓"}</span>
+      <span class="bus-time">${to12Hour(bus.time)}</span>
+      <span class="bus-count">
+        : ${bus.count} bus${bus.count > 1 ? "es" : ""}
+      </span>
+    `;
+
     journeyResults.appendChild(row);
   });
+
 });
 
 /* ================= TOGGLE ================= */
@@ -243,23 +259,6 @@ journeyToggle.addEventListener("click", () => {
   journeyPanel.classList.toggle("hidden");
   journeySection.classList.toggle("open");
 });
-
-
-
-// (function showCounterDevVisits() {
-//   const el = document.getElementById("visits");
-//   if (!el) return;
-
-//   fetch("https://api.counter.dev/v1/96302f6b-27cc-4b7d-8ed6-a0df769c5fee")
-//     .then(res => res.json())
-//     .then(data => {
-//       el.textContent = data.views;
-//     })
-//     .catch(() => {
-//       el.textContent = "—";
-//     });
-// })();
-
 
 
 /* ================= EVENTS ================= */
