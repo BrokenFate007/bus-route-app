@@ -52,109 +52,22 @@ body {
 }
 
 /* ===== App Container ===== */
-/* Better select dropdown with scroll */
-select {
-  flex: 1;
-  min-height: 44px;
-  padding: 8px 30px 8px 10px;
+.container {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 16px;
 
-  font-size: 16px;
-  color: var(--text);
-  background: #020617;
-
-  border-radius: 10px;
-  border: 1px solid var(--border);
-
-  appearance: none;
+  width: 100%;
+  max-width: 420px;
   
   box-sizing: border-box;
-  width: 100%;
+  word-wrap: break-word;
+
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
   
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  
-  /* Custom dropdown arrow */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e5e7eb' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px;
+  position: relative;
+  z-index: 1;
 }
-
-/* Limit dropdown height and add scroll */
-select {
-  max-height: 44px; /* Closed state */
-}
-
-/* When dropdown opens - limit height with scroll */
-select[size],
-select[multiple] {
-  max-height: 250px;
-  overflow-y: auto;
-  padding-right: 10px;
-}
-
-/* Custom scrollbar for dropdown */
-select::-webkit-scrollbar {
-  width: 8px;
-}
-
-select::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-}
-
-select::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 4px;
-}
-
-select::-webkit-scrollbar-thumb:hover {
-  background: #60bcf3;
-}
-
-/* Firefox scrollbar */
-select {
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) rgba(255, 255, 255, 0.05);
-}
-
-/* Option styling with better spacing */
-select option {
-  padding: 10px 12px;
-  background: #020617;
-  color: var(--text);
-  font-size: 16px;
-  font-style: normal;
-  line-height: 1.4;
-  cursor: pointer;
-}
-
-select option:hover {
-  background: rgba(56, 189, 248, 0.1);
-}
-
-select option:disabled {
-  color: var(--muted);
-  font-style: italic;
-  cursor: not-allowed;
-}
-
-/* Focus state */
-select:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-color: var(--accent);
-}
-
-/* Disabled state */
-select:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  color: var(--muted);
-  font-style: italic;
-}
-
 
 /* ===== Title ===== */
 h1 {
@@ -313,29 +226,57 @@ button {
   width: 100%;
 }
 
-/* Better text handling for selects */
+/* Better select dropdown styling */
 select {
+  padding: 8px 30px 8px 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  padding-right: 30px; /* Space for dropdown arrow */
+  
+  /* Custom dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e5e7eb' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
 }
 
-/* Disabled state for selects */
-select:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  color: var(--muted);
-  font-style: italic;
+/* Custom scrollbar for dropdown */
+select::-webkit-scrollbar {
+  width: 8px;
+}
+
+select::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+select::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+  background: #60bcf3;
+}
+
+/* Firefox scrollbar */
+select {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) rgba(255, 255, 255, 0.05);
 }
 
 /* Option styling */
 select option {
-  padding: 8px;
+  padding: 10px 12px;
   background: #020617;
   color: var(--text);
   font-size: 16px;
   font-style: normal;
+  line-height: 1.4;
+}
+
+select option:hover {
+  background: rgba(56, 189, 248, 0.1);
 }
 
 select option:disabled {
@@ -343,6 +284,20 @@ select option:disabled {
   font-style: italic;
 }
 
+/* Focus state */
+select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+/* Disabled state */
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: var(--muted);
+  font-style: italic;
+}
 
 button {
   cursor: pointer;
@@ -376,7 +331,6 @@ button:active {
   margin-bottom: 12px;
 }
 
-/* Outside campus: Responsive three-column layout */
 .journey-controls.outside-three-col {
   display: grid;
   grid-template-columns: 1fr;
@@ -405,27 +359,23 @@ button:active {
   background: rgba(255,255,255,0.03);
 }
 
-/* Arrow */
 .bus-arrow {
   font-size: 20px;
   line-height: 1;
   opacity: 1.0;
 }
 
-/* Time */
 .bus-time {
   font-weight: 500;
   white-space: nowrap;
 }
 
-/* Count */
 .bus-count {
   text-align: left;
   font-size: 0.95em;
   opacity: 0.8;
 }
 
-/* Earlier buses */
 .journey-row.earlier {
   opacity: 0.75;
 }
@@ -434,7 +384,6 @@ button:active {
   color: var(--earlier);
 }
 
-/* Upcoming buses */
 .journey-row.upcoming .bus-arrow {
   color: var(--upcoming);
 }
@@ -452,30 +401,6 @@ button:active {
   gap: 10px;
   width: 100%;
 }
-
-.time-picker select {
-  min-height: 44px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: #020617;
-  color: var(--text);
-}
-
-/* Mobile adjustment for time picker */
-@media (max-width: 360px) {
-  .time-picker {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 6px;
-  }
-  
-  .time-picker select {
-    min-height: 42px;
-    font-size: 14px;
-    padding: 6px 8px;
-  }
-}
-
 
 .time-picker select {
   min-height: 44px;
@@ -533,7 +458,6 @@ button:active {
   margin-top: 12px;
 }
 
-/* Outside Bus Card */
 .outside-bus-card {
   background: var(--outside-light);
   border: 1px solid rgba(52, 211, 153, 0.2);
@@ -586,7 +510,6 @@ button:active {
   font-weight: 500;
 }
 
-/* No buses message */
 .no-buses-message {
   text-align: center;
   padding: 24px 16px;
@@ -635,24 +558,10 @@ button:active {
     padding: 12px 8px;
   }
 
-.container {
-  background: var(--card);
-  padding: 20px;
-  border-radius: 16px;
-
-  width: 100%;
-  max-width: 420px;
-  
-  box-sizing: border-box;
-  overflow: visible; /* ← Allow dropdowns to show properly */
-  word-wrap: break-word;
-
-  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
-  
-  /* Give some margin for dropdowns to breathe */
-  margin-bottom: 20px;
-}
-
+  .container {
+    padding: 10px;
+    border-radius: 12px;
+  }
   
   h1 {
     font-size: 0.95rem;
@@ -782,6 +691,20 @@ button:active {
   
   .journey-controls.outside-three-col {
     gap: 12px;
+  }
+}
+
+/* Mobile adjustments for time picker */
+@media (max-width: 360px) {
+  .time-picker {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+  
+  .time-picker select {
+    min-height: 42px;
+    font-size: 14px;
+    padding: 6px 8px;
   }
 }
 
