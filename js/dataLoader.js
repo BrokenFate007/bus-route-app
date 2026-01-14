@@ -39,18 +39,31 @@ async function loadRoutes() {
 
 
 async function loadRouteRuns() {
-  const res = await fetch("./data/route_runs.tsv");
+  const res = await fetch("./data/route_runs.tsv", { cache: "no-store" });
+
+  if (!res.ok) {
+    console.warn("route_runs.tsv not found, skipping route runs");
+    return [];
+  }
+
   const text = await res.text();
   const lines = text.trim().split("\n");
+
+  if (lines.length <= 1) return [];
+
   lines.shift();
 
   return lines.map(line => {
     const [routeId, day, startTime, stops] = line.split("\t");
+
+    if (!routeId || !day || !startTime || !stops) return null;
+
     return {
       routeId,
       day,
       startTime,
       stops: stops.split(">")
     };
-  });
+  }).filter(Boolean);
 }
+

@@ -2,9 +2,12 @@ let upcomingBuses = [];
 let allRoutes = [];
 let routeRuns = []; // future use
 
+// These will be populated from loaded data
+let fromPlaces = [];
+let toPlaces = [];
+let days = [];
+
 /* ================= DOM CACHE ================= */
-const fromSelect = document.getElementById("fromSelect");
-const toSelect = document.getElementById("toSelect");
 const resultsDiv = document.getElementById("results");
 
 /* Journey planner (inside campus) */
@@ -24,6 +27,34 @@ const journeyToggle = document.getElementById("journeyToggle");
 const journeyPanel = document.getElementById("journeyPanel");
 const journeySection = document.querySelector(".journey");
 
+let activeDirection = null;
+
+const btnNilaToSahyadri = document.getElementById("btnNilaToSahyadri");
+const btnSahyadriToNila = document.getElementById("btnSahyadriToNila");
+
+btnNilaToSahyadri.addEventListener("click", () => {
+  setDirection("Nila", "Sahyadri");
+  setActiveButton(btnNilaToSahyadri);
+});
+
+btnSahyadriToNila.addEventListener("click", () => {
+  setDirection("Sahyadri", "Nila");
+  setActiveButton(btnSahyadriToNila);
+});
+
+function setDirection(from, to) {
+  activeDirection = { from, to };
+  updateResult(); // FIXED: was updateNextBuses()
+}
+
+function setActiveButton(activeBtn) {
+  document.querySelectorAll(".dir-btn").forEach(btn =>
+    btn.classList.remove("active")
+  );
+  activeBtn.classList.add("active");
+}
+
+
 /* ================= FORMATTERS ================= */
 function to12Hour(time24) {
   let [h, m] = time24.split(":").map(Number);
@@ -32,8 +63,6 @@ function to12Hour(time24) {
   if (h === 0) h = 12;
   return `${h}:${String(m).padStart(2, "0")} ${period}`;
 }
-
-
 
 function getJourneyTime24() {
   const h = Number(journeyHour.value);
@@ -48,21 +77,34 @@ function getJourneyTime24() {
   return `${String(hour24).padStart(2, "0")}:${m}`;
 }
 
+/* ================= EXTRACT UNIQUE VALUES ================= */
+function extractUniqueValues(routes) {
+  const fromSet = new Set();
+  const toSet = new Set();
+  const daySet = new Set();
+
+  routes.forEach(route => {
+    fromSet.add(route.from);
+    toSet.add(route.to);
+    daySet.add(route.dayType);
+  });
+
+  fromPlaces = Array.from(fromSet).sort();
+  toPlaces = Array.from(toSet).sort();
+  days = Array.from(daySet);
+}
+
 /* ================= LOAD DATA (ONCE) ================= */
 Promise.all([
   loadRoutes(),
-  typeof loadRouteRuns === "function" ? loadRouteRuns() : Promise.resolve([])
+  loadRouteRuns()
 ])
   .then(([routes, runs]) => {
     allRoutes = routes;
     routeRuns = runs;
 
-    const fromPlaces = [...new Set(routes.map(r => r.from))];
-    const toPlaces = [...new Set(routes.map(r => r.to))];
-    const days = [...new Set(routes.map(r => r.dayType))];
-
-    populateSelect(fromSelect, fromPlaces);
-    populateSelect(toSelect, toPlaces);
+    // FIXED: Extract unique values from loaded data
+    extractUniqueValues(routes);
 
     populateSelect(journeyFrom, fromPlaces);
     populateSelect(journeyTo, toPlaces);
@@ -72,7 +114,6 @@ Promise.all([
 
     populateTimePicker();
     updateResult();
-
 
     console.log("Flat routes:", routes.length);
     console.log("Route runs:", runs.length);
@@ -88,7 +129,6 @@ function populateSelect(selectEl, values) {
   selectEl.innerHTML = `<option value="">Select</option>`;
   values.forEach(v => selectEl.add(new Option(v, v)));
 }
-
 
 function setJourneyDayToToday(availableDays) {
   if (!journeyDay) return;
@@ -111,7 +151,6 @@ function setJourneyDayToToday(availableDays) {
   }
 }
 
-
 function populateTimePicker() {
   if (journeyHour.options.length > 1) return; // prevent duplicates
 
@@ -129,15 +168,17 @@ function populateTimePicker() {
 function updateResult() {
   resultsDiv.innerHTML = "";
 
-  if (!fromSelect.value || !toSelect.value) {
-    resultsDiv.textContent = "Select boarding and destination";
+  if (!activeDirection) {
+    resultsDiv.textContent = "Select a direction";
     return;
   }
 
+  const { from, to } = activeDirection;
+
   upcomingBuses = findUpcomingBuses(
     allRoutes,
-    fromSelect.value,
-    toSelect.value,
+    from,
+    to,
     3
   );
 
@@ -154,24 +195,34 @@ function updateResult() {
 }
 
 function addResultRow(bus, isNext) {
+  const row = document.createElement("div");
+  row.className = "bus-row";
+  
   const label = document.createElement("div");
   label.className = `label${isNext ? " next" : ""}`;
   label.textContent = isNext ? "Next Bus" : "";
-  resultsDiv.appendChild(label);
+  row.appendChild(label);
 
-  const time = document.createElement("div");
-  time.className = isNext ? "next" : "";
+  const rightGroup = document.createElement("div");
+  rightGroup.className = "right-group";
+  
+  const time = document.createElement("span");
+  time.className = `time${isNext ? " next" : ""}`;
   time.textContent = to12Hour(bus.time);
-  resultsDiv.appendChild(time);
+  rightGroup.appendChild(time);
 
-  const count = document.createElement("div");
+  const count = document.createElement("span");
+  count.className = "count";
   count.textContent = `${bus.count} bus${bus.count > 1 ? "es" : ""}`;
-  resultsDiv.appendChild(count);
+  rightGroup.appendChild(count);
 
-  const countdown = document.createElement("div");
+  const countdown = document.createElement("span");
   countdown.className = "countdown";
   countdown.dataset.time = bus.time;
-  resultsDiv.appendChild(countdown);
+  rightGroup.appendChild(countdown);
+  
+  row.appendChild(rightGroup);
+  resultsDiv.appendChild(row);
 }
 
 /* ================= COUNTDOWN ================= */
@@ -204,14 +255,19 @@ journeyBtn.addEventListener("click", () => {
   journeyResults.innerHTML = "";
 
   const time24 = getJourneyTime24();
+  
+  if (!time24) {
+    journeyResults.textContent = "Select day, time and stops";
+    return;
+  }
+
   const [selH, selM] = time24.split(":").map(Number);
   const selectedMinutes = selH * 60 + selM;
 
   if (
     !journeyDay.value ||
     !journeyFrom.value ||
-    !journeyTo.value ||
-    !time24
+    !journeyTo.value
   ) {
     journeyResults.textContent = "Select day, time and stops";
     return;
@@ -251,17 +307,15 @@ journeyBtn.addEventListener("click", () => {
 
     journeyResults.appendChild(row);
   });
-
 });
 
 /* ================= TOGGLE ================= */
-journeyToggle.addEventListener("click", () => {
-  journeyPanel.classList.toggle("hidden");
-  journeySection.classList.toggle("open");
-});
-
+if (journeyToggle && journeyPanel && journeySection) {
+  journeyToggle.addEventListener("click", () => {
+    journeyPanel.classList.toggle("hidden");
+    journeySection.classList.toggle("open");
+  });
+}
 
 /* ================= EVENTS ================= */
-fromSelect.addEventListener("change", updateResult);
-toSelect.addEventListener("change", updateResult);
 setInterval(updateCountdowns, 1000);

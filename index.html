@@ -34,17 +34,18 @@
     <div id="clock" class="clock"></div>
 
     <!-- ===== Next Bus ===== -->
-    <div class="controls">
-      <select id="fromSelect" aria-label="Boarding stop">
-        <option value="">From</option>
-      </select>
+  <div class="direction-buttons">
+    <button id="btnNilaToSahyadri" class="dir-btn">
+      Nila → Sahyadri
+    </button>
 
-      <select id="toSelect" aria-label="Destination stop">
-        <option value="">To</option>
-      </select>
-    </div>
+    <button id="btnSahyadriToNila" class="dir-btn">
+      Sahyadri → Nila
+    </button>
+  </div>
 
-    <div id="results" class="results-grid"></div>
+  <div id="results"></div>
+
 
     <!-- ===== Journey Planner ===== -->
 <section class="journey">
@@ -120,11 +121,11 @@
 
   </main>
 
-  <!-- Scripts -->
+  <!-- Scripts: Load in correct order, clock can still be deferred -->
   <script src="js/clock.js" defer></script>
-  <script src="js/dataLoader.js" defer></script>
-  <script src="js/routeEngine.js" defer></script>
-  <script src="js/app.js" defer></script>
+  <script src="js/routeEngine.js"></script>
+  <script src="js/dataLoader.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>
