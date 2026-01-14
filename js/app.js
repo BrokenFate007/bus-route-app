@@ -33,6 +33,9 @@ function to12Hour(time24) {
   return `${h}:${String(m).padStart(2, "0")} ${period}`;
 }
 
+document.getElementById("year").textContent = new Date().getFullYear();
+
+
 function getJourneyTime24() {
   const h = Number(journeyHour.value);
   const m = journeyMinute.value;
@@ -241,6 +244,28 @@ journeyToggle.addEventListener("click", () => {
   journeyPanel.classList.toggle("hidden");
   journeySection.classList.toggle("open");
 });
+
+
+
+(function globalVisitCounter() {
+  const namespace = "iitpkd-campus-bus-krishna";
+  const counterEl = document.getElementById("globalCount");
+
+  // Increment counter
+  fetch(`https://api.countapi.xyz/hit/${namespace}/visits`)
+    .then(() =>
+      fetch(`https://api.countapi.xyz/get/${namespace}/visits`)
+    )
+    .then(res => res.json())
+    .then(data => {
+      if (counterEl) {
+        counterEl.textContent = data.value;
+      }
+    })
+    .catch(() => {
+      if (counterEl) counterEl.textContent = "—";
+    });
+})();
 
 /* ================= EVENTS ================= */
 fromSelect.addEventListener("change", updateResult);

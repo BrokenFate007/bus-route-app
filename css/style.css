@@ -238,3 +238,44 @@ button:active {
     max-width: 480px;
   }
 }
+
+
+.site-footer {
+  margin-top: 2.5rem;
+  padding: 1.2rem 0 0.9rem;
+  text-align: center;
+  font-size: 0.82rem;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.site-footer .primary {
+  font-variant: small-caps;
+}
+
+
+.site-footer .secondary {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.site-footer .secondary {
+  opacity: 0.75;
+}
+
+.site-footer .name {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Mobile polish */
+@media (max-width: 600px) {
+  .site-footer {
+    font-size: 0.78rem;
+    padding: 1rem 0 0.8rem;
+  }
+}
