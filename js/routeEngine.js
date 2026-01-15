@@ -78,7 +78,7 @@ function findOutsideBuses(routes, day, destination, timePeriod) {
       if (!r.stops || !r.stops.includes(destination)) return false;
 
       // Filter by time period
-      if (timePeriod && timePeriod !== "all") {
+      if (timePeriod && timePeriod !== "" && timePeriod !== "all") {
         const busHour = parseInt(r.departureTime.split(":")[0]);
         
         if (timePeriod === "morning" && (busHour < 6 || busHour >= 12)) {
@@ -92,13 +92,12 @@ function findOutsideBuses(routes, day, destination, timePeriod) {
         }
       }
 
-      // If today, only show upcoming buses
-      if (day === today) {
-        return timeToMinutes(r.departureTime) >= nowMin;
-      }
-
-      return true;
+      return true; // Show all buses regardless of time
     })
+    .map(r => ({
+      ...r,
+      departed: day === today && timeToMinutes(r.departureTime) < nowMin
+    }))
     .sort((a, b) => timeToMinutes(a.departureTime) - timeToMinutes(b.departureTime));
 }
 

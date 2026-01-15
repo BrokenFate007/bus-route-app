@@ -484,12 +484,13 @@ outsideSearch.addEventListener("click", () => {
 
   buses.forEach(bus => {
     const card = document.createElement("div");
-    card.className = "outside-bus-card";
+    card.className = `outside-bus-card ${bus.departed ? 'departed' : ''}`;
 
     card.innerHTML = `
       <div class="departure-time">
-        <span class="icon">🚌</span>
+        <span class="icon">${bus.departed ? '⏱️' : '🚌'}</span>
         ${to12Hour(bus.departureTime)}
+        ${bus.departed ? '<span class="departed-badge">Already departed</span>' : ''}
       </div>
       <div class="route-info">
         From: <strong>${bus.origin}</strong>
@@ -497,12 +498,13 @@ outsideSearch.addEventListener("click", () => {
       <div class="route-stops">
         ${bus.routeDescription}
       </div>
-      ${bus.returnTime ? `<div class="return-time">↩ Returns: ${bus.returnTime}</div>` : ''}
+      ${bus.returnTime && !bus.departed ? `<div class="return-time">↩ Returns: ${bus.returnTime}</div>` : ''}
     `;
 
     outsideResults.appendChild(card);
   });
 });
+
 
 /* ================= EVENT LISTENERS FOR SMART FILTERING ================= */
 // Update destinations when day changes
