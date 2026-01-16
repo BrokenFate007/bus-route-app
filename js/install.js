@@ -15,6 +15,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
   installContainer.classList.remove('hidden');
   
   console.log('✅ Install prompt available');
+  
+  // TRACK: Install prompt shown
+  if (typeof trackInstallPromptShown === 'function') {
+    trackInstallPromptShown();
+  }
 });
 
 // Handle install button click
@@ -49,6 +54,11 @@ if (installBtn) {
       console.log('✅ User accepted the install prompt');
     } else {
       console.log('❌ User dismissed the install prompt');
+    }
+    
+    // TRACK: Install prompt response
+    if (typeof trackInstallPromptResponse === 'function') {
+      trackInstallPromptResponse(outcome === 'accepted');
     }
     
     // Clear the prompt
@@ -91,6 +101,11 @@ window.addEventListener('appinstalled', (e) => {
   
   // Clear the prompt
   deferredPrompt = null;
+  
+  // TRACK: PWA installation success
+  if (typeof trackPWAInstall === 'function') {
+    trackPWAInstall();
+  }
 });
 
 // Check if already installed

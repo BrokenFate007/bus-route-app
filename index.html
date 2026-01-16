@@ -29,14 +29,26 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Google Analytics -->
+<!-- Google Analytics - ENHANCED VERSION -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KC4TPQ1NK"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-0KC4TPQ1NK', { anonymize_ip: true });
+    
+    // Basic configuration
+    gtag('config', 'G-0KC4TPQ1NK', { 
+      anonymize_ip: true,
+      send_page_view: true
+    });
+    
+    // Track if app is installed (standalone mode)
+    const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
+    gtag('event', 'page_view', {
+      'app_mode': isInstalled ? 'installed_pwa' : 'web_browser'
+    });
   </script>
+
 </head>
 
 
@@ -190,6 +202,7 @@
   </main>
 
   <!-- Scripts: Load in correct order -->
+   <script src="js/analytics.js"></script>
   <script src="js/clock.js" defer></script>
   <script src="js/routeEngine.js"></script>
   <script src="js/dataLoader.js"></script>

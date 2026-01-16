@@ -67,6 +67,106 @@ function setActiveButton(activeBtn) {
   activeBtn.classList.add("active");
 }
 
+// At the top of app.js, after the DOM cache section
+// (This assumes analytics.js is loaded)
+
+// Update direction button clicks
+btnNilaToSahyadri.addEventListener("click", () => {
+  setDirection("Nila", "Sahyadri");
+  setActiveButton(btnNilaToSahyadri);
+  
+  // TRACK THIS EVENT
+  trackDirectionClick("Nila", "Sahyadri");
+});
+
+btnSahyadriToNila.addEventListener("click", () => {
+  setDirection("Sahyadri", "Nila");
+  setActiveButton(btnSahyadriToNila);
+  
+  // TRACK THIS EVENT
+  trackDirectionClick("Sahyadri", "Nila");
+});
+
+// Update journey search
+journeyBtn.addEventListener("click", () => {
+  journeyResults.innerHTML = "";
+  const time24 = getJourneyTime24();
+  
+  if (!time24 || !journeyDay.value || !journeyFrom.value || !journeyTo.value) {
+    journeyResults.textContent = "Select day, time and stops";
+    return;
+  }
+
+  // TRACK THIS EVENT
+  trackJourneySearch(
+    journeyDay.value,
+    journeyFrom.value,
+    journeyTo.value,
+    time24
+  );
+
+  // ... rest of your existing code
+});
+
+// Update outside campus search
+outsideSearch.addEventListener("click", () => {
+  outsideResults.innerHTML = "";
+
+  if (!outsideDay.value) {
+    outsideResults.textContent = "Please select a day";
+    return;
+  }
+
+  if (outsideDay.value === "Sunday") {
+    outsideResults.innerHTML = `
+      <div class="no-buses-message">
+        No buses available on Sundays
+      </div>
+    `;
+    return;
+  }
+
+  if (!outsideTimePeriod.value || !outsideDestination.value) {
+    outsideResults.textContent = "Please select time and destination";
+    return;
+  }
+
+  // TRACK THIS EVENT
+  trackOutsideSearch(
+    outsideDay.value,
+    outsideDestination.value,
+    outsideTimePeriod.value
+  );
+
+  // ... rest of your existing code
+});
+
+// Update journey toggle
+if (journeyToggle && journeyPanel && journeySection) {
+  journeyToggle.addEventListener("click", () => {
+    const isOpening = journeyPanel.classList.contains("hidden");
+    journeyPanel.classList.toggle("hidden");
+    journeySection.classList.toggle("open");
+    
+    // TRACK THIS EVENT
+    trackToggle("Journey Planner", isOpening);
+  });
+}
+
+// Update outside campus toggle
+if (outsideCampusToggle && outsideCampusPanel && outsideCampusSection) {
+  outsideCampusToggle.addEventListener("click", () => {
+    const isOpening = outsideCampusPanel.classList.contains("hidden");
+    outsideCampusPanel.classList.toggle("hidden");
+    outsideCampusSection.classList.toggle("open");
+    
+    // TRACK THIS EVENT
+    trackToggle("Outside Campus Buses", isOpening);
+  });
+}
+
+
+
 /* ================= FORMATTERS ================= */
 function to12Hour(time24) {
   let [h, m] = time24.split(":").map(Number);
