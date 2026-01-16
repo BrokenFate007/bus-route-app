@@ -2,7 +2,7 @@
   "name": "IIT Palakkad Campus Bus Schedule",
   "short_name": "IITP Bus",
   "description": "Real-time bus schedules for IIT Palakkad campus shuttle and outside routes",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#38bdf8",
