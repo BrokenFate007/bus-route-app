@@ -8,20 +8,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="./manifest.json">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/android-launchericon-96-96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/android-launchericon-72-72.png">
-  <link rel="shortcut icon" href="/icons/android-launchericon-192-192.png">
+  <link rel="icon" href="./icons/android-launchericon-192-192.png">
+  <link rel="apple-touch-icon" href="./icons/android-launchericon-192-192.png">
+  <link rel="shortcut icon" href="./icons/android-launchericon-192-192.png">
   
   <!-- Theme color -->
   <meta name="theme-color" content="#38bdf8">
   
   <!-- iOS specific (Updated) -->
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="IITP Bus">
-  <link rel="apple-touch-icon" href="/icons/android-launchericon-192-192.png">
+  <meta name="apple-mobile-web-app-title" content="IITPKD Bus">
+  <link rel="apple-touch-icon" href="./icons/android-launchericon-192-192.png">
   
   <!-- Description for SEO -->
   <meta name="description" content="Real-time bus schedules for IIT Palakkad campus shuttle and outside routes">
@@ -199,7 +199,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
+        navigator.serviceWorker.register('./service-worker.js')
           .then(registration => {
             console.log('✅ ServiceWorker registered:', registration.scope);
           })
