@@ -2,25 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
   <title>IIT Palakkad Campus Bus Schedule</title>
 
-  <!-- Mobile sanity -->
+  <!-- Mobile viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/android-launchericon-96-96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/android-launchericon-72-72.png">
+  <link rel="shortcut icon" href="/icons/android-launchericon-192-192.png">
+  
+  <!-- Theme color -->
+  <meta name="theme-color" content="#38bdf8">
+  
+  <!-- iOS specific (Updated) -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="IITP Bus">
+  <link rel="apple-touch-icon" href="/icons/android-launchericon-192-192.png">
+  
+  <!-- Description for SEO -->
+  <meta name="description" content="Real-time bus schedules for IIT Palakkad campus shuttle and outside routes">
+  
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0KC4TPQ1NK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-0KC4TPQ1NK', { anonymize_ip: true });
-</script>
-
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KC4TPQ1NK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0KC4TPQ1NK', { anonymize_ip: true });
+  </script>
 </head>
 
 <body>
@@ -32,142 +48,143 @@
     <!-- Clock -->
     <div id="clock" class="clock"></div>
 
+    <!-- Install App Button -->
+    <div id="installContainer" class="install-container hidden">
+      <button id="installButton" class="install-btn">
+        Install Web App
+      </button>
+    </div>
+
     <!-- ===== Next Bus ===== -->
-  <div class="direction-buttons">
-    <button id="btnNilaToSahyadri" class="dir-btn">
-      Nila → Sahyadri
-    </button>
+    <div class="direction-buttons">
+      <button id="btnNilaToSahyadri" class="dir-btn">
+        Nila → Sahyadri
+      </button>
 
-    <button id="btnSahyadriToNila" class="dir-btn">
-      Sahyadri → Nila
-    </button>
-  </div>
+      <button id="btnSahyadriToNila" class="dir-btn">
+        Sahyadri → Nila
+      </button>
+    </div>
 
-  <div id="results"></div>
-
+    <div id="results"></div>
 
     <!-- ===== Journey Planner (Campus) ===== -->
-<!-- ===== Journey Planner (Campus) ===== -->
-<section class="journey">
+    <section class="journey">
 
-  <button
-    id="journeyToggle"
-    class="journey-toggle"
-    type="button">
-    Plan a Journey (Inside Campus)
-    <span class="arrow">▾</span>
-  </button>
-
-  <div id="journeyPanel" class="journey-panel hidden">
-
-    <!-- Day Selection (Full Width) -->
-    <div class="journey-controls full">
-      <select id="journeyDay" aria-label="Day">
-        <option value="">Day</option>
-      </select>
-    </div>
-
-    <!-- Time Picker (Full Width) -->
-    <div class="journey-controls full">
-      <div class="time-picker">
-        <select id="journeyHour">
-          <option value="">Hour</option>
-        </select>
-
-        <select id="journeyMinute">
-          <option value="">Min</option>
-        </select>
-
-        <select id="journeyPeriod">
-          <option value="">AM/PM</option>
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- From and To -->
-    <div class="journey-controls">
-      <select id="journeyFrom" aria-label="Boarding stop">
-        <option value="">From</option>
-      </select>
-
-      <select id="journeyTo" aria-label="Destination stop">
-        <option value="">To</option>
-      </select>
-    </div>
-
-    <!-- Find Button -->
-    <div class="journey-controls full">
       <button
-        id="journeySearch"
+        id="journeyToggle"
+        class="journey-toggle"
         type="button">
-        Find buses
+        Plan a Journey (Campus)
+        <span class="arrow">▾</span>
       </button>
-    </div>
 
-    <div id="journeyResults" class="journey-results"></div>
+      <div id="journeyPanel" class="journey-panel hidden">
 
-  </div>
-</section>
+        <!-- Day Selection (Full Width) -->
+        <div class="journey-controls full">
+          <select id="journeyDay" aria-label="Day">
+            <option value="">Day</option>
+          </select>
+        </div>
 
+        <!-- Time Picker (Full Width) -->
+        <div class="journey-controls full">
+          <div class="time-picker">
+            <select id="journeyHour">
+              <option value="">Hour</option>
+            </select>
 
+            <select id="journeyMinute">
+              <option value="">Min</option>
+            </select>
+
+            <select id="journeyPeriod">
+              <option value="">AM/PM</option>
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- From and To -->
+        <div class="journey-controls">
+          <select id="journeyFrom" aria-label="Boarding stop">
+            <option value="">From</option>
+          </select>
+
+          <select id="journeyTo" aria-label="Destination stop">
+            <option value="">To</option>
+          </select>
+        </div>
+
+        <!-- Find Button -->
+        <div class="journey-controls full">
+          <button
+            id="journeySearch"
+            type="button">
+            Find buses
+          </button>
+        </div>
+
+        <div id="journeyResults" class="journey-results"></div>
+
+      </div>
+    </section>
 
     <!-- ===== Outside Campus Buses ===== -->
-<section class="journey outside-campus">
+    <section class="journey outside-campus">
 
-  <button
-    id="outsideCampusToggle"
-    class="journey-toggle"
-    type="button">
-    Outside Campus Buses
-    <span class="arrow">▾</span>
-  </button>
-
-  <div id="outsideCampusPanel" class="journey-panel hidden">
-
-    <div class="journey-controls outside-three-col">
-      <select id="outsideDay" aria-label="Day">
-        <option value="">Select Day</option>
-      </select>
-
-      <select id="outsideTimePeriod" aria-label="Time Period">
-        <option value="">Time</option>
-        <option value="all">All Day</option>
-        <option value="morning">🌅 Morning</option>
-        <option value="afternoon">☀️ Afternoon</option>
-        <option value="evening">🌆 Evening</option>
-      </select>
-
-      <select id="outsideDestination" aria-label="Destination">
-        <option value="">Where to?</option>
-      </select>
-    </div>
-
-    <div class="journey-controls full">
       <button
-        id="outsideSearch"
+        id="outsideCampusToggle"
+        class="journey-toggle"
         type="button">
-        Find Buses
+        Outside Campus Buses
+        <span class="arrow">▾</span>
       </button>
-    </div>
 
-    <div id="outsideResults" class="outside-results"></div>
+      <div id="outsideCampusPanel" class="journey-panel hidden">
 
-  </div>
-</section>
+        <div class="journey-controls outside-three-col">
+          <select id="outsideDay" aria-label="Day">
+            <option value="">Select Day</option>
+          </select>
 
+          <select id="outsideTimePeriod" aria-label="Time Period">
+            <option value="">Time</option>
+            <option value="all">All Day</option>
+            <option value="morning">🌅 Morning</option>
+            <option value="afternoon">☀️ Afternoon</option>
+            <option value="evening">🌆 Evening</option>
+          </select>
 
-  <footer class="site-footer">
-    <div class="footer-line primary">
-      Created by <span class="name">Krishna Murari</span>
-    </div>
+          <select id="outsideDestination" aria-label="Destination">
+            <option value="">Where to?</option>
+          </select>
+        </div>
 
-    <div class="footer-line secondary">
-      Vibro-Acoustic Lab · IIT Palakkad (2025 Alumni)
-    </div>
+        <div class="journey-controls full">
+          <button
+            id="outsideSearch"
+            type="button">
+            Find Buses
+          </button>
+        </div>
 
-  </footer>
+        <div id="outsideResults" class="outside-results"></div>
+
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-line primary">
+        Created by <span class="name">Krishna Murari</span>
+      </div>
+
+      <div class="footer-line secondary">
+        Vibro-Acoustic Lab · IIT Palakkad (Alumni)
+      </div>
+    </footer>
 
   </main>
 
@@ -176,6 +193,22 @@
   <script src="js/routeEngine.js"></script>
   <script src="js/dataLoader.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/install.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('✅ ServiceWorker registered:', registration.scope);
+          })
+          .catch(err => {
+            console.log('❌ ServiceWorker registration failed:', err);
+          });
+      });
+    }
+  </script>
 
 </body>
 </html>
