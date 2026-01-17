@@ -1,14 +1,15 @@
+// Load INSIDE campus routes
 async function loadRoutes() {
-  const response = await fetch("./data/routes.tsv", { cache: "no-store" });
+  const response = await fetch("./data/inside_routes.tsv", { cache: "no-store" });
 
   if (!response.ok) {
-    throw new Error("Failed to load routes.tsv");
+    throw new Error("Failed to load inside_routes.tsv");
   }
 
   const text = await response.text();
   const lines = text.trim().split("\n");
 
-  lines.shift();
+  lines.shift(); // Remove header
 
   return lines
     .map((line, index) => {
@@ -35,36 +36,7 @@ async function loadRoutes() {
     .filter(Boolean);
 }
 
-async function loadRouteRuns() {
-  const res = await fetch("./data/route_runs.tsv", { cache: "no-store" });
-
-  if (!res.ok) {
-    console.warn("route_runs.tsv not found, skipping route runs");
-    return [];
-  }
-
-  const text = await res.text();
-  const lines = text.trim().split("\n");
-
-  if (lines.length <= 1) return [];
-
-  lines.shift();
-
-  return lines.map(line => {
-    const [routeId, day, startTime, stops] = line.split("\t");
-
-    if (!routeId || !day || !startTime || !stops) return null;
-
-    return {
-      routeId,
-      day,
-      startTime,
-      stops: stops.split(">")
-    };
-  }).filter(Boolean);
-}
-
-// NEW: Load outside campus routes
+// Load OUTSIDE campus routes
 async function loadOutsideRoutes() {
   const res = await fetch("./data/outside_routes.tsv", { cache: "no-store" });
 
@@ -97,7 +69,7 @@ async function loadOutsideRoutes() {
       const routeDescription = cols[5].trim();
       const returnTime = cols[6] ? cols[6].trim() : "";
 
-      if (!dayType || !departureTime || !origin || !stopsRaw) {
+      if (!dayType || !routeId || !departureTime || !origin || !stopsRaw) {
         console.warn(`Invalid outside route data at line ${index + 2}`);
         return null;
       }
