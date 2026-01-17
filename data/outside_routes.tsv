@@ -1,43 +1,60 @@
 dayType	routeId	departureTime	origin	stops	routeDescription	returnTime
-Monday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55 AM
-Monday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55 AM
-Monday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30 AM
-Monday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad>Stadium Bus Stand>Chandranagar>Pudussery>Nila	Evening route to Palakkad (arr. 5:40 PM). Returns from Stadium Bus Stand 5:45 PM to Nila	5:45 PM
-Monday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley>Sekharipuram>Chandranagar>Pudussery>Nila	Evening route to Kalleppulley (arr. 5:55 PM). Also stops Sekharipuram 5:50 PM before returning to Nila	
-Monday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) → Nila Manogata (8:45 AM) → Sahyadri 9:00 AM (service roads only)	9:00 AM
-Monday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	
-Tuesday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55 AM
-Tuesday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55 AM
-Tuesday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30 AM
-Tuesday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad>Stadium Bus Stand>Chandranagar>Pudussery>Nila	Evening route to Palakkad (arr. 5:40 PM). Returns from Stadium Bus Stand 5:45 PM to Nila	5:45 PM
-Tuesday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley>Sekharipuram>Chandranagar>Pudussery>Nila	Evening route to Kalleppulley (arr. 5:55 PM). Also stops Sekharipuram 5:50 PM before returning to Nila	
-Tuesday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) → Nila Manogata (8:45 AM) → Sahyadri 9:00 AM (service roads only)	9:00 AM
-Tuesday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	
-Wednesday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55 AM
-Wednesday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55 AM
-Wednesday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30 AM
-Wednesday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad>Stadium Bus Stand>Chandranagar>Pudussery>Nila	Evening route to Palakkad (arr. 5:40 PM). Returns from Stadium Bus Stand 5:45 PM to Nila	5:45 PM
-Wednesday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley>Sekharipuram>Chandranagar>Pudussery>Nila	Evening route to Kalleppulley (arr. 5:55 PM). Also stops Sekharipuram 5:50 PM before returning to Nila	
-Wednesday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) → Nila Manogata (8:45 AM) → Sahyadri 9:00 AM (service roads only)	9:00 AM
-Wednesday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	
-Thursday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55 AM
-Thursday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55 AM
-Thursday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30 AM
-Thursday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad>Stadium Bus Stand>Chandranagar>Pudussery>Nila	Evening route to Palakkad (arr. 5:40 PM). Returns from Stadium Bus Stand 5:45 PM to Nila	5:45 PM
-Thursday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley>Sekharipuram>Chandranagar>Pudussery>Nila	Evening route to Kalleppulley (arr. 5:55 PM). Also stops Sekharipuram 5:50 PM before returning to Nila	
-Thursday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) → Nila Manogata (8:45 AM) → Sahyadri 9:00 AM (service roads only)	9:00 AM
-Thursday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	
-Friday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55 AM
-Friday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55 AM
-Friday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30 AM
-Friday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad>Stadium Bus Stand>Chandranagar>Pudussery>Nila	Evening route to Palakkad (arr. 5:40 PM). Returns from Stadium Bus Stand 5:45 PM to Nila	5:45 PM
+Monday	KP0	7:00	Kalleppulley	Kalleppulley>Mattumantha>Koppam>Chandranagar Circle>Pudussery>Nila Gate>Sahyadri	Route from Kalleppulley. Arrives Sahyadri 7:50 AM	7:50
+Monday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30
+Monday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55
+Monday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55
+Monday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad	Evening route to Palakkad (arr. 5:40 PM). Stadium Bus Stand 5:45 PM returns to Nila	17:45
+Monday	PT3-RETURN	17:45	Stadium Bus Stand	Stadium Bus Stand>Chandranagar>Pudussery>Nila	Return from Stadium Bus Stand to Nila	
+Monday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley	Evening route to Kalleppulley (arr. 5:55 PM). Sekharipuram at 5:50 PM	17:55
+Monday	KP2-RETURN	17:50	Sekharipuram	Sekharipuram>Chandranagar>Pudussery>Nila	Return from Sekharipuram to Nila	
+Monday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)	9:00
+Monday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	19:00
+Tuesday	KP0	7:00	Kalleppulley	Kalleppulley>Mattumantha>Koppam>Chandranagar Circle>Pudussery>Nila Gate>Sahyadri	Route from Kalleppulley. Arrives Sahyadri 7:50 AM	7:50
+Tuesday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30
+Tuesday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55
+Tuesday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55
+Tuesday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad	Evening route to Palakkad (arr. 5:40 PM). Stadium Bus Stand 5:45 PM returns to Nila	17:45
+Tuesday	PT3-RETURN	17:45	Stadium Bus Stand	Stadium Bus Stand>Chandranagar>Pudussery>Nila	Return from Stadium Bus Stand to Nila	
+Tuesday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley	Evening route to Kalleppulley (arr. 5:55 PM). Sekharipuram at 5:50 PM	17:55
+Tuesday	KP2-RETURN	17:50	Sekharipuram	Sekharipuram>Chandranagar>Pudussery>Nila	Return from Sekharipuram to Nila	
+Tuesday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)	9:00
+Tuesday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	19:00
+Wednesday	KP0	7:00	Kalleppulley	Kalleppulley>Mattumantha>Koppam>Chandranagar Circle>Pudussery>Nila Gate>Sahyadri	Route from Kalleppulley. Arrives Sahyadri 7:50 AM	7:50
+Wednesday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30
+Wednesday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55
+Wednesday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55
+Wednesday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad	Evening route to Palakkad (arr. 5:40 PM). Stadium Bus Stand 5:45 PM returns to Nila	17:45
+Wednesday	PT3-RETURN	17:45	Stadium Bus Stand	Stadium Bus Stand>Chandranagar>Pudussery>Nila	Return from Stadium Bus Stand to Nila	
+Wednesday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley	Evening route to Kalleppulley (arr. 5:55 PM). Sekharipuram at 5:50 PM	17:55
+Wednesday	KP2-RETURN	17:50	Sekharipuram	Sekharipuram>Chandranagar>Pudussery>Nila	Return from Sekharipuram to Nila	
+Wednesday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)	9:00
+Wednesday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	19:00
+Thursday	KP0	7:00	Kalleppulley	Kalleppulley>Mattumantha>Koppam>Chandranagar Circle>Pudussery>Nila Gate>Sahyadri	Route from Kalleppulley. Arrives Sahyadri 7:50 AM	7:50
+Thursday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30
+Thursday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55
+Thursday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55
+Thursday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad	Evening route to Palakkad (arr. 5:40 PM). Stadium Bus Stand 5:45 PM returns to Nila	17:45
+Thursday	PT3-RETURN	17:45	Stadium Bus Stand	Stadium Bus Stand>Chandranagar>Pudussery>Nila	Return from Stadium Bus Stand to Nila	
+Thursday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley	Evening route to Kalleppulley (arr. 5:55 PM). Sekharipuram at 5:50 PM	17:55
+Thursday	KP2-RETURN	17:50	Sekharipuram	Sekharipuram>Chandranagar>Pudussery>Nila	Return from Sekharipuram to Nila	
+Thursday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)	9:00
+Thursday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	19:00
+Friday	KP0	7:00	Kalleppulley	Kalleppulley>Mattumantha>Koppam>Chandranagar Circle>Pudussery>Nila Gate>Sahyadri	Route from Kalleppulley. Arrives Sahyadri 7:50 AM	7:50
+Friday	PT2	8:00	Palakkad	Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM	8:30
+Friday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55
+Friday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55
+Friday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad	Evening route to Palakkad (arr. 5:40 PM). Stadium Bus Stand 5:45 PM returns to Nila	17:45
+Friday	PT3-RETURN	17:45	Stadium Bus Stand	Stadium Bus Stand>Chandranagar>Pudussery>Nila	Return from Stadium Bus Stand to Nila	
 Friday	PT3-KINAR	17:10	Sahyadri	Sahyadri>Kinar Stop	⭐ FRIDAY SPECIAL: Direct service to Kinar Stop	
-Friday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley>Sekharipuram>Chandranagar>Pudussery>Nila	Evening route to Kalleppulley (arr. 5:55 PM). Also stops Sekharipuram 5:50 PM before returning to Nila	
-Friday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) → Nila Manogata (8:45 AM) → Sahyadri 9:00 AM (service roads only)	9:00 AM
-Friday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	
-Saturday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55 AM
-Saturday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55 AM
-Saturday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad>Stadium Bus Stand>Chandranagar>Pudussery>Nila	Evening route to Palakkad (arr. 5:40 PM). Returns from Stadium Bus Stand 5:45 PM to Nila	5:45 PM
-Saturday	PT4	13:00	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad>Stadium Bus Stand>Chandranagar>Pudussery>Nila>Saraswati	⭐ SATURDAY SPECIAL: Afternoon route to Palakkad (arr. 1:30 PM). Returns via Nila to Saraswati 2:00 PM	2:00 PM
-Saturday	WP1	8:45	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 9:00 AM) → Nila Manogata (9:15 AM) → Sahyadri 9:30 AM (service roads only)	9:30 AM
-Saturday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	
+Friday	KP2	17:20	Sahyadri	Sahyadri>Nila Manogata>Malampuzha Road>Mattumantha>Sekharipuram>Koppam>Kalleppulley	Evening route to Kalleppulley (arr. 5:55 PM). Sekharipuram at 5:50 PM	17:55
+Friday	KP2-RETURN	17:50	Sekharipuram	Sekharipuram>Chandranagar>Pudussery>Nila	Return from Sekharipuram to Nila	
+Friday	WP1	8:15	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)	9:00
+Friday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	19:00
+Saturday	PT1	7:40	Nila Gate	Nila Gate>Palakkad>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Kalmandapam>Chandranagar>Pudussery>Nila Gate>Sahyadri	Route to Palakkad Town (arr. 8:25 AM) via Maidaan Hospital & Stadium. Returns to Sahyadri 8:55 AM	8:55
+Saturday	KP1	7:55	Nila Gate	Nila Gate>Kalleppulley>Koppam>Sekharipuram>Mattumantha>Malampuzha>Nila Gate>Sahyadri	Route to Kalleppulley (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM	8:55
+Saturday	PT3	17:10	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad	Evening route to Palakkad (arr. 5:40 PM). Stadium Bus Stand 5:45 PM returns to Nila	17:45
+Saturday	PT3-RETURN	17:45	Stadium Bus Stand	Stadium Bus Stand>Chandranagar>Pudussery>Nila	Return from Stadium Bus Stand to Nila	
+Saturday	PT4	13:00	Sahyadri	Sahyadri>Nila Gate>Pudussery>Kadamkode>Manapullykavu>Maidaan>Stadium Bus Stand>Palakkad	⭐ SATURDAY SPECIAL: Afternoon route to Palakkad (arr. 1:30 PM). Stadium Bus Stand 1:30 PM returns via Nila to Saraswati 2:00 PM	14:00
+Saturday	PT4-RETURN	13:30	Stadium Bus Stand	Stadium Bus Stand>Chandranagar>Pudussery>Nila>Saraswati	Return from Stadium Bus Stand via Nila to Saraswati	14:00
+Saturday	WP1	8:45	Nila	Nila>Wise Park Junction>Nila Manogata>Sahyadri	Wise Park Junction (arr. 9:00 AM) - Nila Manogata (9:15 AM) - Sahyadri 9:30 AM (service roads only)	9:30
+Saturday	WP2	18:15	Sahyadri	Sahyadri>Nila Gate>Wise Park Junction>Nila Manogata	Evening Wise Park route: Junction arr. 6:45 PM, Nila Manogata 7:00 PM (service roads only)	19:00
