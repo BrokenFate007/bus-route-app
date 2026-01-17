@@ -502,41 +502,44 @@ Promise.all([
   });
 
 /* ================= HELPERS ================= */
-function populateSelect(selectEl, values, excludeValue) {
+function populateSelect(selectEl, values) {
   if (!selectEl) return;
   const firstOption = selectEl.options[0].text;
-  const currentValue = selectEl.value; // Save current selection
-  
   selectEl.innerHTML = '<option value="">' + firstOption + '</option>';
   values.forEach(function(v) {
-    // Skip the value that should be excluded
-    if (excludeValue && v === excludeValue) return;
     selectEl.add(new Option(v, v));
   });
-  
-  // Restore selection if still available
-  if (currentValue && values.indexOf(currentValue) !== -1 && currentValue !== excludeValue) {
-    selectEl.value = currentValue;
-  }
 }
 
 
 function updateFromToDropdowns() {
-  const fromValue = journeyFrom.value;
-  const toValue = journeyTo.value;
+  const changedDropdown = this; // The dropdown that triggered the change
   
-  // Update "To" dropdown (exclude selected "From")
-  populateSelect(journeyTo, toPlaces, fromValue);
+  // If "From" dropdown changed
+  if (changedDropdown === journeyFrom) {
+    const fromValue = journeyFrom.value;
+    if (fromValue === "Nila") {
+      journeyTo.value = "Sahyadri";
+    } else if (fromValue === "Sahyadri") {
+      journeyTo.value = "Nila";
+    }
+  }
   
-  // Update "From" dropdown (exclude selected "To")
-  populateSelect(journeyFrom, fromPlaces, toValue);
+  // If "To" dropdown changed
+  if (changedDropdown === journeyTo) {
+    const toValue = journeyTo.value;
+    if (toValue === "Nila") {
+      journeyFrom.value = "Sahyadri";
+    } else if (toValue === "Sahyadri") {
+      journeyFrom.value = "Nila";
+    }
+  }
   
   // Re-apply iOS fix after updates
   if (isIOSPWA()) {
     setTimeout(fixIOSSelectDropdowns, 50);
   }
 }
-
 
 
 function setJourneyDayToToday(availableDays, selectElement) {
