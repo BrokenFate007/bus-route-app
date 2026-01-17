@@ -86,3 +86,8 @@ async function loadOutsideRoutes() {
     })
     .filter(Boolean);
 }
+
+// Load route runs (no longer used, returns empty array)
+async function loadRouteRuns() {
+  return [];
+}
