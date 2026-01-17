@@ -44,11 +44,17 @@ body {
   color: var(--text);
 
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   
   overflow-x: hidden;
   width: 100%;
+  
+  /* iOS PWA specific */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 /* ===== App Container ===== */
@@ -124,6 +130,10 @@ h1 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  
+  /* iOS touch optimization */
+  -webkit-tap-highlight-color: rgba(56, 189, 248, 0.2);
+  touch-action: manipulation;
 }
 
 .dir-btn:hover {
@@ -140,6 +150,11 @@ h1 {
 /* ===== Results Container ===== */
 #results {
   margin-top: 16px;
+  transition: opacity 0.3s ease;
+}
+
+#results:empty {
+  min-height: 60px;
 }
 
 /* ===== Bus Row (Horizontal Layout) ===== */
@@ -220,24 +235,83 @@ button {
   border-radius: 10px;
   border: 1px solid var(--border);
 
-  appearance: none;
-  
   box-sizing: border-box;
   width: 100%;
 }
 
-/* Better select dropdown styling */
+/* ===== FIXED: Select Dropdown Styling (Cross-platform) ===== */
 select {
-  padding: 8px 30px 8px 10px;
+  padding: 8px 32px 8px 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   
-  /* Custom dropdown arrow */
+  /* Remove ALL native appearances first */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  /* Custom arrow for desktop/Android */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e5e7eb' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 12px;
+  background-color: #020617;
+  
+  /* Ensure proper sizing */
+  min-height: 44px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+}
+
+/* Remove Windows/IE/Edge default arrow - CRITICAL FOR WINDOWS */
+select::-ms-expand {
+  display: none;
+}
+
+/* FIXED: iOS specific overrides - moved outside select rule */
+@supports (-webkit-touch-callout: none) {
+  select {
+    /* Use native iOS appearance for better touch experience */
+    -webkit-appearance: menulist !important;
+    appearance: menulist !important;
+    
+    /* Remove custom arrow on iOS, let native handle it */
+    background-image: none !important;
+    padding-right: 12px !important;
+    
+    /* iOS touch optimization */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    
+    /* Force hardware acceleration */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+  }
+}
+
+/* FIXED: iOS PWA standalone mode - separate @supports */
+@supports (-webkit-touch-callout: none) and (display-mode: standalone) {
+  select {
+    -webkit-appearance: menulist-button !important;
+    appearance: menulist-button !important;
+    
+    /* Prevent any interference */
+    pointer-events: auto !important;
+    
+    /* Force visibility */
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 }
 
 /* Custom scrollbar for dropdown */
@@ -273,6 +347,7 @@ select option {
   font-size: 16px;
   font-style: normal;
   line-height: 1.4;
+  min-height: 44px;
 }
 
 select option:hover {
@@ -284,11 +359,16 @@ select option:disabled {
   font-style: italic;
 }
 
-/* Focus state */
+/* Focus state - works on all platforms */
 select:focus {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-color: var(--accent);
+}
+
+/* Active state for touch feedback */
+select:active {
+  background-color: rgba(56, 189, 248, 0.05);
 }
 
 /* Disabled state */
@@ -297,6 +377,14 @@ select:disabled {
   cursor: not-allowed;
   color: var(--muted);
   font-style: italic;
+  -webkit-text-fill-color: var(--muted);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Disabled options */
+select:disabled option {
+  color: var(--muted);
 }
 
 button {
@@ -304,6 +392,10 @@ button {
   background: linear-gradient(180deg, #0ea5e9, #0284c7);
   border: none;
   font-weight: 600;
+  
+  /* iOS touch optimization */
+  -webkit-tap-highlight-color: rgba(14, 165, 233, 0.3);
+  touch-action: manipulation;
 }
 
 button:active {
@@ -343,6 +435,9 @@ button:active {
 
 .journey-results {
   margin-top: 12px;
+  min-height: 40px;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 /* ===== Journey Row ===== */
@@ -357,6 +452,12 @@ button:active {
 
   border-radius: 10px;
   background: rgba(255,255,255,0.03);
+  
+  transition: background 0.2s ease;
+}
+
+.journey-row:hover {
+  background: rgba(255,255,255,0.05);
 }
 
 .bus-arrow {
@@ -425,6 +526,10 @@ button:active {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  
+  /* iOS touch */
+  -webkit-tap-highlight-color: rgba(56, 189, 248, 0.1);
+  touch-action: manipulation;
 }
 
 .journey-toggle .arrow {
@@ -438,7 +543,7 @@ button:active {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .journey.open .arrow {
@@ -450,6 +555,7 @@ button:active {
   color: var(--outside-accent);
 }
 
+/* Outside campus "Find Buses" button - matches actual HTML */
 .outside-campus button[type="button"]:not(.journey-toggle) {
   background: linear-gradient(180deg, #10b981, #059669);
 }
@@ -458,69 +564,6 @@ button:active {
   margin-top: 12px;
 }
 
-.outside-bus-card {
-  background: var(--outside-light);
-  border: 1px solid rgba(52, 211, 153, 0.2);
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 12px;
-  
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.outside-bus-card .departure-time {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--outside-accent);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.outside-bus-card .departure-time .icon {
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.outside-bus-card .route-info {
-  font-size: 0.85rem;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 6px;
-  word-wrap: break-word;
-}
-
-.outside-bus-card .route-stops {
-  font-size: 0.85rem;
-  color: var(--text);
-  opacity: 0.9;
-  margin-top: 8px;
-  padding-left: 8px;
-  border-left: 2px solid var(--outside-accent);
-  line-height: 1.6;
-  word-wrap: break-word;
-}
-
-.outside-bus-card .return-time {
-  font-size: 0.8rem;
-  color: var(--outside-accent);
-  margin-top: 8px;
-  font-weight: 500;
-}
-
-.no-buses-message {
-  text-align: center;
-  padding: 24px 16px;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-
-
-/* Outside Bus Card */
 .outside-bus-card {
   background: var(--outside-light);
   border: 1px solid rgba(52, 211, 153, 0.2);
@@ -608,6 +651,14 @@ button:active {
   font-weight: 500;
 }
 
+.no-buses-message {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
 /* ===== Footer ===== */
 .site-footer {
   margin-top: 2.5rem;
@@ -638,6 +689,58 @@ button:active {
   opacity: 0.55;
   margin-top: 6px;
   height: 20px;
+}
+
+/* ===== Install Button ===== */
+.install-container {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.install-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  
+  /* iOS touch */
+  -webkit-tap-highlight-color: rgba(102, 126, 234, 0.3);
+  touch-action: manipulation;
+}
+
+.install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.install-btn:active {
+  transform: translateY(0);
+}
+
+/* iOS specific hint */
+.ios-hint {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.ios-hint strong {
+  color: var(--accent);
 }
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
@@ -672,59 +775,6 @@ button:active {
     min-height: 42px;
   }
 }
-
-/* ===== Install Button ===== */
-.install-container {
-  margin: 16px 0;
-  text-align: center;
-}
-
-.install-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.install-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
-}
-
-.install-btn:active {
-  transform: translateY(0);
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* iOS specific hint */
-.ios-hint {
-  margin-top: 12px;
-  font-size: 0.8rem;
-  color: var(--muted);
-  text-align: center;
-  line-height: 1.5;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-}
-
-.ios-hint strong {
-  color: var(--accent);
-}
-
 
 /* Small phones (321px to 375px) */
 @media (min-width: 321px) and (max-width: 375px) {
@@ -767,6 +817,7 @@ button:active {
     border-radius: 14px;
   }
   
+  /* Keep single column for outside-three-col on standard phones */
   .journey-controls.outside-three-col {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -775,6 +826,7 @@ button:active {
 
 /* Larger phones (481px to 640px) */
 @media (min-width: 481px) and (max-width: 640px) {
+  /* 2-column layout with 3rd item spanning both columns */
   .journey-controls.outside-three-col {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
@@ -787,6 +839,7 @@ button:active {
 
 /* Tablets (641px to 767px) */
 @media (min-width: 641px) and (max-width: 767px) {
+  /* 2-column layout with 3rd item spanning both columns for better readability */
   .journey-controls.outside-three-col {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
@@ -812,6 +865,7 @@ button:active {
     max-width: 480px;
   }
   
+  /* Full 3-column layout on desktop for compact display */
   .journey-controls.outside-three-col {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
@@ -851,14 +905,6 @@ button:active {
   }
 }
 
-/* Prevent zoom on iOS when focusing inputs */
-@media (max-width: 767px) {
-  select,
-  input[type="time"] {
-    font-size: 16px;
-  }
-}
-
 /* Mobile footer adjustments */
 @media (max-width: 600px) {
   .site-footer {
@@ -871,55 +917,11 @@ button:active {
   }
 }
 
-
-/* ===== iOS PWA Select Dropdown Fix ===== */
-@supports (-webkit-touch-callout: none) {
-  /* iOS-specific styles */
-  select {
-    -webkit-appearance: menulist !important;
-    appearance: menulist !important;
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: pointer;
-    
-    /* Ensure proper sizing for touch */
-    min-height: 44px;
-    
-    /* Fix for standalone mode */
-    position: relative;
-    z-index: 1;
+/* ===== iOS Safe Area Support ===== */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
-  
-  /* When in standalone mode (installed PWA) */
-  @media (display-mode: standalone) {
-    select {
-      -webkit-appearance: menulist-button !important;
-      appearance: menulist-button !important;
-      padding-right: 30px !important;
-      background-position: right 10px center !important;
-      
-      /* Ensure dropdown opens properly */
-      touch-action: manipulation;
-    }
-    
-    /* Force native dropdown on iOS PWA */
-    select:focus {
-      -webkit-appearance: menulist !important;
-      appearance: menulist !important;
-    }
-  }
-}
-
-/* Additional iOS PWA fixes */
-select:focus {
-  -webkit-appearance: menulist !important;
-  appearance: menulist !important;
-  outline: none;
-  border-color: var(--accent);
-}
-
-/* Ensure dropdowns work with touch events */
-select {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
 }

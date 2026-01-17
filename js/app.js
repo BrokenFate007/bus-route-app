@@ -10,38 +10,71 @@ let days = [];
 let outsideDays = [];
 let outsideDestinations = [];
 
-/* ================= iOS PWA FIX ================= */
+/* ================= iOS PWA DETECTION ================= */
 // Detect iOS in standalone mode (PWA)
 function isIOSPWA() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  const isStandalone = window.navigator.standalone === true || 
-                       window.matchMedia('(display-mode: standalone)').matches;
-  return isIOS && isStandalone;
+  
+  // Check window.navigator.standalone first (works on all iOS versions)
+  if ('standalone' in navigator && navigator.standalone === true) {
+    return isIOS;
+  }
+  
+  // Fallback to matchMedia for iOS 11.3+
+  if (window.matchMedia) {
+    try {
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+      return isIOS && isStandalone;
+    } catch (e) {
+      return false;
+    }
+  }
+  
+  return false;
 }
 
-// Fix iOS PWA select dropdown issue
+/* ================= PASSIVE EVENT LISTENER SUPPORT ================= */
+let supportsPassive = false;
+try {
+  const opts = Object.defineProperty({}, 'passive', {
+    get: function() { supportsPassive = true; }
+  });
+  window.addEventListener('testPassive', null, opts);
+  window.removeEventListener('testPassive', null, opts);
+} catch (e) {}
+
+/* ================= OPTIMIZED iOS SELECT FIX ================= */
+// Only handles event listeners - CSS handles all styling via @supports
 function fixIOSSelectDropdowns() {
   if (!isIOSPWA()) return;
   
-  console.log('✅ iOS PWA detected - applying select dropdown fixes');
+  console.log('✅ iOS PWA detected - applying select event fixes');
   
   const selects = document.querySelectorAll('select');
   
   selects.forEach(select => {
-    // Force native select behavior
-    select.style.webkitAppearance = 'menulist';
-    select.style.appearance = 'menulist';
+    // Skip if already fixed
+    if (select.dataset.iosFixed) return;
+    select.dataset.iosFixed = 'true';
     
-    // Add touch event to force focus
+    // Add touch event to force focus - helps with iOS dropdown opening
     select.addEventListener('touchstart', function(e) {
       e.stopPropagation();
       this.focus();
-    }, { passive: true });
+    }, supportsPassive ? { passive: true } : false);
     
-    // Prevent default behavior that might interfere
+    // Prevent interference from parent elements
     select.addEventListener('click', function(e) {
       e.stopPropagation();
-    }, { passive: true });
+    }, supportsPassive ? { passive: true } : false);
+    
+    // Additional fix for iOS 15+ - ensure dropdown stays open
+    select.addEventListener('touchend', function(e) {
+      const self = this;
+      setTimeout(function() {
+        self.focus();
+      }, 50);
+    }, supportsPassive ? { passive: true } : false);
   });
 }
 
@@ -50,6 +83,34 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', fixIOSSelectDropdowns);
 } else {
   fixIOSSelectDropdowns();
+}
+
+// Re-apply fix when new selects are added dynamically
+if (typeof MutationObserver !== 'undefined') {
+  const observer = new MutationObserver(function(mutations) {
+    let needsFix = false;
+    mutations.forEach(function(mutation) {
+      if (mutation.addedNodes.length) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) {
+            if (node.tagName === 'SELECT' || node.querySelectorAll('select').length > 0) {
+              needsFix = true;
+            }
+          }
+        });
+      }
+    });
+    if (needsFix) {
+      fixIOSSelectDropdowns();
+    }
+  });
+  
+  if (document.body) {
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
 }
 
 /* ================= DOM CACHE ================= */
@@ -87,7 +148,8 @@ let activeDirection = null;
 const btnNilaToSahyadri = document.getElementById("btnNilaToSahyadri");
 const btnSahyadriToNila = document.getElementById("btnSahyadriToNila");
 
-btnNilaToSahyadri.addEventListener("click", () => {
+/* ================= DIRECTION BUTTONS ================= */
+btnNilaToSahyadri.addEventListener("click", function() {
   setDirection("Nila", "Sahyadri");
   setActiveButton(btnNilaToSahyadri);
   
@@ -97,7 +159,7 @@ btnNilaToSahyadri.addEventListener("click", () => {
   }
 });
 
-btnSahyadriToNila.addEventListener("click", () => {
+btnSahyadriToNila.addEventListener("click", function() {
   setDirection("Sahyadri", "Nila");
   setActiveButton(btnSahyadriToNila);
   
@@ -108,24 +170,26 @@ btnSahyadriToNila.addEventListener("click", () => {
 });
 
 function setDirection(from, to) {
-  activeDirection = { from, to };
+  activeDirection = { from: from, to: to };
   updateResult();
 }
 
 function setActiveButton(activeBtn) {
-  document.querySelectorAll(".dir-btn").forEach(btn =>
-    btn.classList.remove("active")
-  );
+  document.querySelectorAll(".dir-btn").forEach(function(btn) {
+    btn.classList.remove("active");
+  });
   activeBtn.classList.add("active");
 }
 
 /* ================= FORMATTERS ================= */
 function to12Hour(time24) {
-  let [h, m] = time24.split(":").map(Number);
+  let parts = time24.split(":");
+  let h = Number(parts[0]);
+  let m = Number(parts[1]);
   const period = h >= 12 ? "PM" : "AM";
   h = h % 12;
   if (h === 0) h = 12;
-  return `${h}:${String(m).padStart(2, "0")} ${period}`;
+  return h + ":" + String(m).padStart(2, "0") + " " + period;
 }
 
 function getJourneyTime24() {
@@ -138,7 +202,7 @@ function getJourneyTime24() {
   let hour24 = h % 12;
   if (p === "PM") hour24 += 12;
 
-  return `${String(hour24).padStart(2, "0")}:${m}`;
+  return String(hour24).padStart(2, "0") + ":" + m;
 }
 
 /* ================= TIME PERIOD HELPERS ================= */
@@ -157,7 +221,8 @@ function getCurrentTimePeriod() {
 }
 
 function getTimePeriodForTime(time24) {
-  const [hour] = time24.split(":").map(Number);
+  const parts = time24.split(":");
+  const hour = Number(parts[0]);
   
   if (hour >= 6 && hour < 12) {
     return "morning";
@@ -175,7 +240,7 @@ function extractUniqueValues(routes) {
   const toSet = new Set();
   const daySet = new Set();
 
-  routes.forEach(route => {
+  routes.forEach(function(route) {
     fromSet.add(route.from);
     toSet.add(route.to);
     daySet.add(route.dayType);
@@ -190,10 +255,12 @@ function extractOutsideValues(routes) {
   const daySet = new Set();
   const destSet = new Set();
 
-  routes.forEach(route => {
+  routes.forEach(function(route) {
     daySet.add(route.dayType);
     if (route.stops) {
-      route.stops.forEach(stop => destSet.add(stop));
+      route.stops.forEach(function(stop) {
+        destSet.add(stop);
+      });
     }
   });
 
@@ -211,7 +278,7 @@ function getAvailableDestinations(day, timePeriod) {
 
   const destSet = new Set();
 
-  outsideRoutes.forEach(route => {
+  outsideRoutes.forEach(function(route) {
     // Match day
     if (route.dayType !== day) return;
 
@@ -232,7 +299,9 @@ function getAvailableDestinations(day, timePeriod) {
 
     // Add all stops from this route
     if (route.stops) {
-      route.stops.forEach(stop => destSet.add(stop));
+      route.stops.forEach(function(stop) {
+        destSet.add(stop);
+      });
     }
   });
 
@@ -249,7 +318,7 @@ function updateDestinationDropdown() {
     
     // Re-apply iOS fix after update
     if (isIOSPWA()) {
-      setTimeout(() => fixIOSSelectDropdowns(), 50);
+      setTimeout(fixIOSSelectDropdowns, 50);
     }
     return;
   }
@@ -260,7 +329,7 @@ function updateDestinationDropdown() {
     
     // Re-apply iOS fix after update
     if (isIOSPWA()) {
-      setTimeout(() => fixIOSSelectDropdowns(), 50);
+      setTimeout(fixIOSSelectDropdowns, 50);
     }
     return;
   }
@@ -273,20 +342,20 @@ function updateDestinationDropdown() {
     
     // Re-apply iOS fix after update
     if (isIOSPWA()) {
-      setTimeout(() => fixIOSSelectDropdowns(), 50);
+      setTimeout(fixIOSSelectDropdowns, 50);
     }
     return;
   }
 
   outsideDestination.disabled = false;
   outsideDestination.innerHTML = '<option value="">Where to?</option>';
-  availableDestinations.forEach(dest => {
+  availableDestinations.forEach(function(dest) {
     outsideDestination.add(new Option(dest, dest));
   });
   
   // Re-apply iOS fix after update
   if (isIOSPWA()) {
-    setTimeout(() => fixIOSSelectDropdowns(), 50);
+    setTimeout(fixIOSSelectDropdowns, 50);
   }
 }
 
@@ -296,13 +365,13 @@ Promise.all([
   loadRouteRuns(),
   loadOutsideRoutes()
 ])
-  .then(([routes, runs, outside]) => {
-    allRoutes = routes;
-    routeRuns = runs;
-    outsideRoutes = outside;
+  .then(function(results) {
+    allRoutes = results[0];
+    routeRuns = results[1];
+    outsideRoutes = results[2];
 
-    extractUniqueValues(routes);
-    extractOutsideValues(outside);
+    extractUniqueValues(allRoutes);
+    extractOutsideValues(outsideRoutes);
 
     populateSelect(journeyFrom, fromPlaces);
     populateSelect(journeyTo, toPlaces);
@@ -328,11 +397,11 @@ Promise.all([
       setTimeout(fixIOSSelectDropdowns, 100);
     }
 
-    console.log("Flat routes:", routes.length);
-    console.log("Route runs:", runs.length);
-    console.log("Outside routes:", outside.length);
+    console.log("Flat routes:", allRoutes.length);
+    console.log("Route runs:", routeRuns.length);
+    console.log("Outside routes:", outsideRoutes.length);
   })
-  .catch(err => {
+  .catch(function(err) {
     resultsDiv.textContent = "Failed to load bus data";
     console.error(err);
   });
@@ -341,11 +410,16 @@ Promise.all([
 function populateSelect(selectEl, values) {
   if (!selectEl) return;
   const firstOption = selectEl.options[0].text;
-  selectEl.innerHTML = `<option value="">${firstOption}</option>`;
-  values.forEach(v => selectEl.add(new Option(v, v)));
+  selectEl.innerHTML = '<option value="">' + firstOption + '</option>';
+  values.forEach(function(v) {
+    selectEl.add(new Option(v, v));
+  });
 }
 
-function setJourneyDayToToday(availableDays, selectElement = journeyDay) {
+function setJourneyDayToToday(availableDays, selectElement) {
+  if (!selectElement) {
+    selectElement = journeyDay;
+  }
   if (!selectElement) return;
 
   const jsDays = [
@@ -360,7 +434,7 @@ function setJourneyDayToToday(availableDays, selectElement = journeyDay) {
 
   const today = jsDays[new Date().getDay()];
 
-  if (availableDays.includes(today)) {
+  if (availableDays.indexOf(today) !== -1) {
     selectElement.value = today;
   }
 }
@@ -387,7 +461,8 @@ function updateResult() {
     return;
   }
 
-  const { from, to } = activeDirection;
+  const from = activeDirection.from;
+  const to = activeDirection.to;
 
   upcomingBuses = findUpcomingBuses(
     allRoutes,
@@ -401,7 +476,7 @@ function updateResult() {
     return;
   }
 
-  upcomingBuses.forEach((bus, index) => {
+  upcomingBuses.forEach(function(bus, index) {
     addResultRow(bus, index === 0);
   });
 
@@ -413,7 +488,7 @@ function addResultRow(bus, isNext) {
   row.className = "bus-row";
   
   const label = document.createElement("div");
-  label.className = `label${isNext ? " next" : ""}`;
+  label.className = isNext ? "label next" : "label";
   label.textContent = isNext ? "Next Bus" : "";
   row.appendChild(label);
 
@@ -421,13 +496,13 @@ function addResultRow(bus, isNext) {
   rightGroup.className = "right-group";
   
   const time = document.createElement("span");
-  time.className = `time${isNext ? " next" : ""}`;
+  time.className = isNext ? "time next" : "time";
   time.textContent = to12Hour(bus.time);
   rightGroup.appendChild(time);
 
   const count = document.createElement("span");
   count.className = "count";
-  count.textContent = `${bus.count} bus${bus.count > 1 ? "es" : ""}`;
+  count.textContent = bus.count + " bus" + (bus.count > 1 ? "es" : "");
   rightGroup.appendChild(count);
 
   const countdown = document.createElement("span");
@@ -447,8 +522,10 @@ function updateCountdowns() {
     now.getMinutes() * 60 +
     now.getSeconds();
 
-  document.querySelectorAll(".countdown").forEach(el => {
-    const [h, m] = el.dataset.time.split(":").map(Number);
+  document.querySelectorAll(".countdown").forEach(function(el) {
+    const parts = el.dataset.time.split(":");
+    const h = Number(parts[0]);
+    const m = Number(parts[1]);
     const busSec = h * 3600 + m * 60;
     const diff = busSec - nowSec;
 
@@ -460,12 +537,12 @@ function updateCountdowns() {
     const mm = Math.floor(diff / 60);
     const ss = diff % 60;
     el.textContent =
-      `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
+      String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
   });
 }
 
 /* ================= JOURNEY PLANNER (INSIDE CAMPUS) ================= */
-journeyBtn.addEventListener("click", () => {
+journeyBtn.addEventListener("click", function() {
   journeyResults.innerHTML = "";
 
   const time24 = getJourneyTime24();
@@ -485,7 +562,9 @@ journeyBtn.addEventListener("click", () => {
     );
   }
 
-  const [selH, selM] = time24.split(":").map(Number);
+  const parts = time24.split(":");
+  const selH = Number(parts[0]);
+  const selM = Number(parts[1]);
   const selectedMinutes = selH * 60 + selM;
 
   const buses = findBusesAroundTime(
@@ -503,29 +582,28 @@ journeyBtn.addEventListener("click", () => {
     return;
   }
 
-  buses.forEach(bus => {
-    const [h, m] = bus.time.split(":").map(Number);
+  buses.forEach(function(bus) {
+    const busParts = bus.time.split(":");
+    const h = Number(busParts[0]);
+    const m = Number(busParts[1]);
     const busMinutes = h * 60 + m;
 
     const isEarlier = busMinutes < selectedMinutes;
 
     const row = document.createElement("div");
-    row.className = `journey-row ${isEarlier ? "earlier" : "upcoming"}`;
+    row.className = isEarlier ? "journey-row earlier" : "journey-row upcoming";
 
-    row.innerHTML = `
-      <span class="bus-arrow">${isEarlier ? "↑" : "↓"}</span>
-      <span class="bus-time">${to12Hour(bus.time)}</span>
-      <span class="bus-count">
-        : ${bus.count} bus${bus.count > 1 ? "es" : ""}
-      </span>
-    `;
+    row.innerHTML =
+      '<span class="bus-arrow">' + (isEarlier ? "↑" : "↓") + '</span>' +
+      '<span class="bus-time">' + to12Hour(bus.time) + '</span>' +
+      '<span class="bus-count">: ' + bus.count + ' bus' + (bus.count > 1 ? "es" : "") + '</span>';
 
     journeyResults.appendChild(row);
   });
 });
 
 /* ================= OUTSIDE CAMPUS BUSES ================= */
-outsideSearch.addEventListener("click", () => {
+outsideSearch.addEventListener("click", function() {
   outsideResults.innerHTML = "";
 
   if (!outsideDay.value) {
@@ -535,11 +613,8 @@ outsideSearch.addEventListener("click", () => {
 
   // Check if Sunday
   if (outsideDay.value === "Sunday") {
-    outsideResults.innerHTML = `
-      <div class="no-buses-message">
-        No buses available on Sundays
-      </div>
-    `;
+    outsideResults.innerHTML =
+      '<div class="no-buses-message">No buses available on Sundays</div>';
     return;
   }
 
@@ -569,24 +644,19 @@ outsideSearch.addEventListener("click", () => {
     return;
   }
 
-  buses.forEach(bus => {
+  buses.forEach(function(bus) {
     const card = document.createElement("div");
-    card.className = `outside-bus-card ${bus.departed ? 'departed' : ''}`;
+    card.className = bus.departed ? 'outside-bus-card departed' : 'outside-bus-card';
 
-    card.innerHTML = `
-      <div class="departure-time">
-        <span class="icon">${bus.departed ? '⏱️' : '🚌'}</span>
-        ${to12Hour(bus.departureTime)}
-        ${bus.departed ? '<span class="departed-badge">Already departed</span>' : ''}
-      </div>
-      <div class="route-info">
-        From: <strong>${bus.origin}</strong>
-      </div>
-      <div class="route-stops">
-        ${bus.routeDescription}
-      </div>
-      ${bus.returnTime && !bus.departed ? `<div class="return-time">↩ Returns: ${bus.returnTime}</div>` : ''}
-    `;
+    card.innerHTML =
+      '<div class="departure-time">' +
+        '<span class="icon">' + (bus.departed ? '⏱️' : '🚌') + '</span> ' +
+        to12Hour(bus.departureTime) +
+        (bus.departed ? '<span class="departed-badge">Already departed</span>' : '') +
+      '</div>' +
+      '<div class="route-info">From: <strong>' + bus.origin + '</strong></div>' +
+      '<div class="route-stops">' + bus.routeDescription + '</div>' +
+      (bus.returnTime && !bus.departed ? '<div class="return-time">↩ Returns: ' + bus.returnTime + '</div>' : '');
 
     outsideResults.appendChild(card);
   });
@@ -594,20 +664,20 @@ outsideSearch.addEventListener("click", () => {
 
 /* ================= EVENT LISTENERS FOR SMART FILTERING ================= */
 // Update destinations when day changes
-outsideDay.addEventListener("change", () => {
+outsideDay.addEventListener("change", function() {
   updateDestinationDropdown();
   outsideResults.innerHTML = "";
 });
 
 // Update destinations when time period changes
-outsideTimePeriod.addEventListener("change", () => {
+outsideTimePeriod.addEventListener("change", function() {
   updateDestinationDropdown();
   outsideResults.innerHTML = "";
 });
 
 /* ================= TOGGLE (Campus Journey) ================= */
 if (journeyToggle && journeyPanel && journeySection) {
-  journeyToggle.addEventListener("click", () => {
+  journeyToggle.addEventListener("click", function() {
     const isOpening = journeyPanel.classList.contains("hidden");
     journeyPanel.classList.toggle("hidden");
     journeySection.classList.toggle("open");
@@ -621,7 +691,7 @@ if (journeyToggle && journeyPanel && journeySection) {
 
 /* ================= TOGGLE (Outside Campus) ================= */
 if (outsideCampusToggle && outsideCampusPanel && outsideCampusSection) {
-  outsideCampusToggle.addEventListener("click", () => {
+  outsideCampusToggle.addEventListener("click", function() {
     const isOpening = outsideCampusPanel.classList.contains("hidden");
     outsideCampusPanel.classList.toggle("hidden");
     outsideCampusSection.classList.toggle("open");
