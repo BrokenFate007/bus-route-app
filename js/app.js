@@ -467,6 +467,10 @@ Promise.all([
     populateSelect(journeyFrom, fromPlaces);
     populateSelect(journeyTo, toPlaces);
     populateSelect(journeyDay, days);
+    
+    // Add event listeners for smart from/to filtering
+    journeyFrom.addEventListener("change", updateFromToDropdowns);
+    journeyTo.addEventListener("change", updateFromToDropdowns);
 
     // Populate outside campus day dropdown
     populateSelect(outsideDay, outsideDays);
@@ -498,14 +502,42 @@ Promise.all([
   });
 
 /* ================= HELPERS ================= */
-function populateSelect(selectEl, values) {
+function populateSelect(selectEl, values, excludeValue) {
   if (!selectEl) return;
   const firstOption = selectEl.options[0].text;
+  const currentValue = selectEl.value; // Save current selection
+  
   selectEl.innerHTML = '<option value="">' + firstOption + '</option>';
   values.forEach(function(v) {
+    // Skip the value that should be excluded
+    if (excludeValue && v === excludeValue) return;
     selectEl.add(new Option(v, v));
   });
+  
+  // Restore selection if still available
+  if (currentValue && values.indexOf(currentValue) !== -1 && currentValue !== excludeValue) {
+    selectEl.value = currentValue;
+  }
 }
+
+
+function updateFromToDropdowns() {
+  const fromValue = journeyFrom.value;
+  const toValue = journeyTo.value;
+  
+  // Update "To" dropdown (exclude selected "From")
+  populateSelect(journeyTo, toPlaces, fromValue);
+  
+  // Update "From" dropdown (exclude selected "To")
+  populateSelect(journeyFrom, fromPlaces, toValue);
+  
+  // Re-apply iOS fix after updates
+  if (isIOSPWA()) {
+    setTimeout(fixIOSSelectDropdowns, 50);
+  }
+}
+
+
 
 function setJourneyDayToToday(availableDays, selectElement) {
   if (!selectElement) {
