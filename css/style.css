@@ -870,3 +870,56 @@ button:active {
     font-size: 0.72rem;
   }
 }
+
+
+/* ===== iOS PWA Select Dropdown Fix ===== */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific styles */
+  select {
+    -webkit-appearance: menulist !important;
+    appearance: menulist !important;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    
+    /* Ensure proper sizing for touch */
+    min-height: 44px;
+    
+    /* Fix for standalone mode */
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* When in standalone mode (installed PWA) */
+  @media (display-mode: standalone) {
+    select {
+      -webkit-appearance: menulist-button !important;
+      appearance: menulist-button !important;
+      padding-right: 30px !important;
+      background-position: right 10px center !important;
+      
+      /* Ensure dropdown opens properly */
+      touch-action: manipulation;
+    }
+    
+    /* Force native dropdown on iOS PWA */
+    select:focus {
+      -webkit-appearance: menulist !important;
+      appearance: menulist !important;
+    }
+  }
+}
+
+/* Additional iOS PWA fixes */
+select:focus {
+  -webkit-appearance: menulist !important;
+  appearance: menulist !important;
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Ensure dropdowns work with touch events */
+select {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}

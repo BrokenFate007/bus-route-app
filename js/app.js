@@ -10,6 +10,48 @@ let days = [];
 let outsideDays = [];
 let outsideDestinations = [];
 
+/* ================= iOS PWA FIX ================= */
+// Detect iOS in standalone mode (PWA)
+function isIOSPWA() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.navigator.standalone === true || 
+                       window.matchMedia('(display-mode: standalone)').matches;
+  return isIOS && isStandalone;
+}
+
+// Fix iOS PWA select dropdown issue
+function fixIOSSelectDropdowns() {
+  if (!isIOSPWA()) return;
+  
+  console.log('✅ iOS PWA detected - applying select dropdown fixes');
+  
+  const selects = document.querySelectorAll('select');
+  
+  selects.forEach(select => {
+    // Force native select behavior
+    select.style.webkitAppearance = 'menulist';
+    select.style.appearance = 'menulist';
+    
+    // Add touch event to force focus
+    select.addEventListener('touchstart', function(e) {
+      e.stopPropagation();
+      this.focus();
+    }, { passive: true });
+    
+    // Prevent default behavior that might interfere
+    select.addEventListener('click', function(e) {
+      e.stopPropagation();
+    }, { passive: true });
+  });
+}
+
+// Call the fix after DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', fixIOSSelectDropdowns);
+} else {
+  fixIOSSelectDropdowns();
+}
+
 /* ================= DOM CACHE ================= */
 const resultsDiv = document.getElementById("results");
 
@@ -48,11 +90,21 @@ const btnSahyadriToNila = document.getElementById("btnSahyadriToNila");
 btnNilaToSahyadri.addEventListener("click", () => {
   setDirection("Nila", "Sahyadri");
   setActiveButton(btnNilaToSahyadri);
+  
+  // TRACK THIS EVENT
+  if (typeof trackDirectionClick === 'function') {
+    trackDirectionClick("Nila", "Sahyadri");
+  }
 });
 
 btnSahyadriToNila.addEventListener("click", () => {
   setDirection("Sahyadri", "Nila");
   setActiveButton(btnSahyadriToNila);
+  
+  // TRACK THIS EVENT
+  if (typeof trackDirectionClick === 'function') {
+    trackDirectionClick("Sahyadri", "Nila");
+  }
 });
 
 function setDirection(from, to) {
@@ -66,106 +118,6 @@ function setActiveButton(activeBtn) {
   );
   activeBtn.classList.add("active");
 }
-
-// At the top of app.js, after the DOM cache section
-// (This assumes analytics.js is loaded)
-
-// Update direction button clicks
-btnNilaToSahyadri.addEventListener("click", () => {
-  setDirection("Nila", "Sahyadri");
-  setActiveButton(btnNilaToSahyadri);
-  
-  // TRACK THIS EVENT
-  trackDirectionClick("Nila", "Sahyadri");
-});
-
-btnSahyadriToNila.addEventListener("click", () => {
-  setDirection("Sahyadri", "Nila");
-  setActiveButton(btnSahyadriToNila);
-  
-  // TRACK THIS EVENT
-  trackDirectionClick("Sahyadri", "Nila");
-});
-
-// Update journey search
-journeyBtn.addEventListener("click", () => {
-  journeyResults.innerHTML = "";
-  const time24 = getJourneyTime24();
-  
-  if (!time24 || !journeyDay.value || !journeyFrom.value || !journeyTo.value) {
-    journeyResults.textContent = "Select day, time and stops";
-    return;
-  }
-
-  // TRACK THIS EVENT
-  trackJourneySearch(
-    journeyDay.value,
-    journeyFrom.value,
-    journeyTo.value,
-    time24
-  );
-
-  // ... rest of your existing code
-});
-
-// Update outside campus search
-outsideSearch.addEventListener("click", () => {
-  outsideResults.innerHTML = "";
-
-  if (!outsideDay.value) {
-    outsideResults.textContent = "Please select a day";
-    return;
-  }
-
-  if (outsideDay.value === "Sunday") {
-    outsideResults.innerHTML = `
-      <div class="no-buses-message">
-        No buses available on Sundays
-      </div>
-    `;
-    return;
-  }
-
-  if (!outsideTimePeriod.value || !outsideDestination.value) {
-    outsideResults.textContent = "Please select time and destination";
-    return;
-  }
-
-  // TRACK THIS EVENT
-  trackOutsideSearch(
-    outsideDay.value,
-    outsideDestination.value,
-    outsideTimePeriod.value
-  );
-
-  // ... rest of your existing code
-});
-
-// Update journey toggle
-if (journeyToggle && journeyPanel && journeySection) {
-  journeyToggle.addEventListener("click", () => {
-    const isOpening = journeyPanel.classList.contains("hidden");
-    journeyPanel.classList.toggle("hidden");
-    journeySection.classList.toggle("open");
-    
-    // TRACK THIS EVENT
-    trackToggle("Journey Planner", isOpening);
-  });
-}
-
-// Update outside campus toggle
-if (outsideCampusToggle && outsideCampusPanel && outsideCampusSection) {
-  outsideCampusToggle.addEventListener("click", () => {
-    const isOpening = outsideCampusPanel.classList.contains("hidden");
-    outsideCampusPanel.classList.toggle("hidden");
-    outsideCampusSection.classList.toggle("open");
-    
-    // TRACK THIS EVENT
-    trackToggle("Outside Campus Buses", isOpening);
-  });
-}
-
-
 
 /* ================= FORMATTERS ================= */
 function to12Hour(time24) {
@@ -294,12 +246,22 @@ function updateDestinationDropdown() {
   if (!selectedDay) {
     outsideDestination.innerHTML = '<option value="">Select day first</option>';
     outsideDestination.disabled = true;
+    
+    // Re-apply iOS fix after update
+    if (isIOSPWA()) {
+      setTimeout(() => fixIOSSelectDropdowns(), 50);
+    }
     return;
   }
 
   if (selectedDay === "Sunday") {
     outsideDestination.innerHTML = '<option value="">No buses on Sunday</option>';
     outsideDestination.disabled = true;
+    
+    // Re-apply iOS fix after update
+    if (isIOSPWA()) {
+      setTimeout(() => fixIOSSelectDropdowns(), 50);
+    }
     return;
   }
 
@@ -308,6 +270,11 @@ function updateDestinationDropdown() {
   if (availableDestinations.length === 0) {
     outsideDestination.innerHTML = '<option value="">No buses at this time</option>';
     outsideDestination.disabled = true;
+    
+    // Re-apply iOS fix after update
+    if (isIOSPWA()) {
+      setTimeout(() => fixIOSSelectDropdowns(), 50);
+    }
     return;
   }
 
@@ -316,6 +283,11 @@ function updateDestinationDropdown() {
   availableDestinations.forEach(dest => {
     outsideDestination.add(new Option(dest, dest));
   });
+  
+  // Re-apply iOS fix after update
+  if (isIOSPWA()) {
+    setTimeout(() => fixIOSSelectDropdowns(), 50);
+  }
 }
 
 /* ================= LOAD DATA (ONCE) ================= */
@@ -350,6 +322,11 @@ Promise.all([
 
     populateTimePicker();
     updateResult();
+    
+    // Re-apply iOS fix after all dropdowns are populated
+    if (isIOSPWA()) {
+      setTimeout(fixIOSSelectDropdowns, 100);
+    }
 
     console.log("Flat routes:", routes.length);
     console.log("Route runs:", runs.length);
@@ -493,22 +470,23 @@ journeyBtn.addEventListener("click", () => {
 
   const time24 = getJourneyTime24();
   
-  if (!time24) {
+  if (!time24 || !journeyDay.value || !journeyFrom.value || !journeyTo.value) {
     journeyResults.textContent = "Select day, time and stops";
     return;
+  }
+
+  // TRACK THIS EVENT
+  if (typeof trackJourneySearch === 'function') {
+    trackJourneySearch(
+      journeyDay.value,
+      journeyFrom.value,
+      journeyTo.value,
+      time24
+    );
   }
 
   const [selH, selM] = time24.split(":").map(Number);
   const selectedMinutes = selH * 60 + selM;
-
-  if (
-    !journeyDay.value ||
-    !journeyFrom.value ||
-    !journeyTo.value
-  ) {
-    journeyResults.textContent = "Select day, time and stops";
-    return;
-  }
 
   const buses = findBusesAroundTime(
     allRoutes,
@@ -570,6 +548,15 @@ outsideSearch.addEventListener("click", () => {
     return;
   }
 
+  // TRACK THIS EVENT
+  if (typeof trackOutsideSearch === 'function') {
+    trackOutsideSearch(
+      outsideDay.value,
+      outsideDestination.value,
+      outsideTimePeriod.value
+    );
+  }
+
   const buses = findOutsideBuses(
     outsideRoutes,
     outsideDay.value,
@@ -605,7 +592,6 @@ outsideSearch.addEventListener("click", () => {
   });
 });
 
-
 /* ================= EVENT LISTENERS FOR SMART FILTERING ================= */
 // Update destinations when day changes
 outsideDay.addEventListener("change", () => {
@@ -622,16 +608,28 @@ outsideTimePeriod.addEventListener("change", () => {
 /* ================= TOGGLE (Campus Journey) ================= */
 if (journeyToggle && journeyPanel && journeySection) {
   journeyToggle.addEventListener("click", () => {
+    const isOpening = journeyPanel.classList.contains("hidden");
     journeyPanel.classList.toggle("hidden");
     journeySection.classList.toggle("open");
+    
+    // TRACK THIS EVENT
+    if (typeof trackToggle === 'function') {
+      trackToggle("Journey Planner", isOpening);
+    }
   });
 }
 
 /* ================= TOGGLE (Outside Campus) ================= */
 if (outsideCampusToggle && outsideCampusPanel && outsideCampusSection) {
   outsideCampusToggle.addEventListener("click", () => {
+    const isOpening = outsideCampusPanel.classList.contains("hidden");
     outsideCampusPanel.classList.toggle("hidden");
     outsideCampusSection.classList.toggle("open");
+    
+    // TRACK THIS EVENT
+    if (typeof trackToggle === 'function') {
+      trackToggle("Outside Campus Buses", isOpening);
+    }
   });
 }
 
