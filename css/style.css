@@ -461,20 +461,34 @@ button:active {
 }
 
 .bus-arrow {
-  font-size: 20px;
-  line-height: 1;
-  opacity: 1.0;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 8px;
 }
 
-.bus-time {
-  font-weight: 500;
-  white-space: nowrap;
+.bus-arrow.earlier {
+  color: #888;
 }
 
-.bus-count {
-  text-align: left;
-  font-size: 0.95em;
-  opacity: 0.8;
+.bus-arrow.upcoming {
+  color: #4A90E2;
+}
+
+.bus-row.departed .time {
+  color: #888;
+}
+
+.bus-row.departed .count {
+  color: #888;
+}
+
+.time.departed,
+.count.departed {
+  color: #888;
+}
+
+.countdown.departed {
+  color: #888;
 }
 
 .journey-row.earlier {

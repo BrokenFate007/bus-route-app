@@ -116,3 +116,24 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
     installContainer.classList.add('hidden');
   }
 }
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+    
+    // Check for updates
+    registration.onupdatefound = function() {
+      const installingWorker = registration.installing;
+      
+      installingWorker.onstatechange = function() {
+        if (installingWorker.state === 'installed') {
+          if (navigator.serviceWorker.controller) {
+            // New update available
+            console.log('New version available! Refreshing...');
+            window.location.reload();
+          }
+        }
+      };
+    };
+  });
+}

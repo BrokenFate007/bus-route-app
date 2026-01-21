@@ -602,43 +602,62 @@ function updateResult() {
     return;
   }
 
+  // Find the first upcoming bus (not departed)
+  let firstUpcomingIndex = upcomingBuses.findIndex(bus => !bus.departed);
+
   upcomingBuses.forEach(function(bus, index) {
-    addResultRow(bus, index === 0);
+    addResultRow(bus, index === firstUpcomingIndex);
   });
 
   updateCountdowns();
 }
 
+
 function addResultRow(bus, isNext) {
   const row = document.createElement("div");
-  row.className = "bus-row";
+  row.className = bus.departed ? "bus-row departed" : "bus-row";
   
   const label = document.createElement("div");
-  label.className = isNext ? "label next" : "label";
-  label.textContent = isNext ? "Next Bus" : "";
+  label.className = "label";
+  // Only show "Next Bus" for the first UPCOMING bus, not departed
+  if (isNext && !bus.departed) {
+    label.className = "label next";
+    label.textContent = "Next Bus";
+  }
   row.appendChild(label);
 
   const rightGroup = document.createElement("div");
   rightGroup.className = "right-group";
   
+  // Add arrow for all buses except the "Next Bus"
+  const arrow = document.createElement("span");
+  arrow.className = bus.departed ? "bus-arrow earlier" : "bus-arrow upcoming";
+  arrow.textContent = bus.departed ? "↑" : "↓";
+  rightGroup.appendChild(arrow);
+  
   const time = document.createElement("span");
-  time.className = isNext ? "time next" : "time";
+  // Blue color only for the first upcoming (Next Bus), gray for departed
+  time.className = (isNext && !bus.departed) ? "time next" : (bus.departed ? "time departed" : "time");
   time.textContent = to12Hour(bus.time);
   rightGroup.appendChild(time);
 
   const count = document.createElement("span");
-  count.className = "count";
+  count.className = bus.departed ? "count departed" : "count";
   count.textContent = bus.count + " bus" + (bus.count > 1 ? "es" : "");
   rightGroup.appendChild(count);
 
+  // Show countdown for all buses (negative for departed, positive for upcoming)
   const countdown = document.createElement("span");
-  countdown.className = "countdown";
+  countdown.className = bus.departed ? "countdown departed" : "countdown";
   countdown.dataset.time = bus.time;
+  countdown.dataset.departed = bus.departed ? "true" : "false";
   rightGroup.appendChild(countdown);
   
   row.appendChild(rightGroup);
   resultsDiv.appendChild(row);
 }
+
+
 
 /* ================= COUNTDOWN ================= */
 function updateCountdowns() {
@@ -654,7 +673,19 @@ function updateCountdowns() {
     const m = Number(parts[1]);
     const busSec = h * 3600 + m * 60;
     const diff = busSec - nowSec;
+    
+    const isDeparted = el.dataset.departed === "true";
 
+    // For departed buses, show negative time
+    if (isDeparted) {
+      const absDiff = Math.abs(diff);
+      const mm = Math.floor(absDiff / 60);
+      const ss = absDiff % 60;
+      el.textContent = "-" + String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+      return;
+    }
+
+    // For upcoming buses
     if (diff <= 0) {
       el.textContent = "--:--";
       return;
@@ -666,6 +697,7 @@ function updateCountdowns() {
       String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
   });
 }
+
 
 /* ================= JOURNEY PLANNER (INSIDE CAMPUS) ================= */
 journeyBtn.addEventListener("click", function() {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iitp-bus-v1.1.1';
+const CACHE_NAME = 'iitp-bus-v1.2.1';
 const urlsToCache = [
   './',
   './index.html',
@@ -37,18 +37,22 @@ self.addEventListener('fetch', event => {
 });
 
 // Update cache when new version available
-self.addEventListener('activate', event => {
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then(function(cacheNames) {
       return Promise.all(
-        cacheNames.map(cacheName => {
+        cacheNames.map(function(cacheName) {
+          // Delete old caches that don't match current CACHE_NAME
           if (cacheName !== CACHE_NAME) {
             console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(function() {
+      // Take control of all pages immediately
+      return self.clients.claim();
     })
   );
-  self.clients.claim();
 });
+
