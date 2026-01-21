@@ -71,7 +71,8 @@ if (installBtn) {
 
 // Detect iOS
 function isIOS() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod/.test(userAgent) && !window.MSStream;
 }
 
 // Show iOS installation instructions
@@ -118,22 +119,71 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 }
 
 
+// [Keep all your install functionality as is - it's perfect!]
+
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js').then(function(registration) {
-    
-    // Check for updates
-    registration.onupdatefound = function() {
-      const installingWorker = registration.installing;
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(function(registration) {
+      console.log('✅ Service Worker registered');
       
-      installingWorker.onstatechange = function() {
-        if (installingWorker.state === 'installed') {
-          if (navigator.serviceWorker.controller) {
-            // New update available
-            console.log('New version available! Refreshing...');
-            window.location.reload();
+      // Check for updates immediately
+      registration.update();
+      
+      // Optional: Listen for updates
+      registration.addEventListener('updatefound', function() {
+        const newWorker = registration.installing;
+        newWorker.addEventListener('statechange', function() {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            console.log('🔄 Update ready! Will activate on next visit.');
           }
+        });
+      });
+      
+      // Check for updates every 30 minutes
+      setInterval(function() {
+        registration.update();
+      }, 1800000);
+    })
+    .catch(function(error) {
+      console.error('❌ Service Worker registration failed:', error);
+    });
+}
+
+// Display app version from service worker
+function displayAppVersion() {
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    // Send message to service worker to get version
+    navigator.serviceWorker.controller.postMessage({ type: 'GET_VERSION' });
+  } else {
+    // Fallback: try to parse from service-worker.js
+    fetch('./service-worker.js')
+      .then(response => response.text())
+      .then(text => {
+        const match = text.match(/CACHE_NAME\s*=\s*['"]([^'"]+)['"]/);
+        if (match) {
+          const version = match[1].split('-v')[1] || match[1];
+          document.getElementById('appVersion').textContent = version;
+        } else {
+          document.getElementById('appVersion').textContent = '1.2.2';
         }
-      };
-    };
-  });
+      })
+      .catch(() => {
+        document.getElementById('appVersion').textContent = '1.2.2';
+      });
+  }
+}
+
+// Listen for version response from service worker
+navigator.serviceWorker.addEventListener('message', function(event) {
+  if (event.data.type === 'VERSION') {
+    document.getElementById('appVersion').textContent = event.data.version;
+  }
+});
+
+// Call when page loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', displayAppVersion);
+} else {
+  displayAppVersion();
 }

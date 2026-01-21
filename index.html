@@ -29,7 +29,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 
-<!-- Google Analytics - ENHANCED VERSION -->
+  <!-- Google Analytics - ENHANCED VERSION -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KC4TPQ1NK"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -50,7 +50,6 @@
   </script>
 
 </head>
-
 
 <body>
 
@@ -190,39 +189,28 @@
     </section>
 
     <footer class="site-footer">
-      <div class="footer-line primary">
-        Created by <span class="name">Krishna Murari</span>
-      </div>
+    <div class="footer-line primary">
+      Created by <span class="name">Krishna Murari</span>
+    </div>
 
-      <div class="footer-line secondary">
-        Vibro-Acoustic Lab · IIT Palakkad (Alumni)
-      </div>
-    </footer>
+    <div class="footer-line secondary">
+      Vibro-Acoustic Lab · IIT Palakkad (Alumni)
+    </div>
+
+    <div class="footer-line version">
+      Version: <span id="appVersion">Loading...</span>
+    </div>
+  </footer>
+
 
   </main>
 
   <!-- Scripts: Load in correct order -->
-   <script src="js/analytics.js"></script>
+  <script src="js/analytics.js"></script>
   <script src="js/clock.js" defer></script>
   <script src="js/routeEngine.js"></script>
-  <script src="js/dataLoader.js"></script>
   <script src="js/app.js"></script>
   <script src="js/install.js"></script>
-
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
-          .then(registration => {
-            console.log('✅ ServiceWorker registered:', registration.scope);
-          })
-          .catch(err => {
-            console.log('❌ ServiceWorker registration failed:', err);
-          });
-      });
-    }
-  </script>
 
 </body>
 </html>

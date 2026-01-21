@@ -14,6 +14,7 @@ function findUpcomingBuses(routes, from, to, count) {
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   const today = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][now.getDay()];
   
+  // Get all buses for today matching from/to
   const todayBuses = routes.filter(function(r) {
     return r.dayType === today && r.from === from && r.to === to;
   }).map(function(r) {
@@ -29,12 +30,17 @@ function findUpcomingBuses(routes, from, to, count) {
     return a.minutes - b.minutes;
   });
   
-  // Find the last departed bus
-  const departed = todayBuses.filter(b => b.departed).slice(-1);
+  // Find the last departed bus (just 1)
+  const departed = todayBuses.filter(function(b) { 
+    return b.departed; 
+  }).slice(-1);
   
   // Find next 3 upcoming buses
-  const upcoming = todayBuses.filter(b => !b.departed).slice(0, 3);
+  const upcoming = todayBuses.filter(function(b) { 
+    return !b.departed; 
+  }).slice(0, count);
   
+  // Combine: 1 departed + 3 upcoming
   return departed.concat(upcoming);
 }
 
