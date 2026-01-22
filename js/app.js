@@ -348,7 +348,7 @@ function updateDestinationDropdown() {
   }
 
   outsideDestination.disabled = false;
-  outsideDestination.innerHTML = '<option value="">Where to?</option>';
+  outsideDestination.innerHTML = '<option value="">Bus Stop</option>';
   availableDestinations.forEach(function(dest) {
     outsideDestination.add(new Option(dest, dest));
   });
