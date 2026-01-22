@@ -1,6 +1,6 @@
 {
   "name": "IIT Palakkad Campus Bus Schedule",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "short_name": "IITPKD Bus",
   "description": "Real-time bus schedules for IIT Palakkad campus",
   "start_url": "./",
