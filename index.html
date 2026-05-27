@@ -67,16 +67,21 @@
       </button>
     </div>
 
-    <!-- ===== Next Bus ===== -->
-    <div class="direction-buttons">
-      <button id="btnNilaToSahyadri" class="dir-btn">
-        Nila → Sahyadri
-      </button>
+    <!-- MAIN VIEWS WRAPPER -->
+    <div id="viewContainer">
+      <!-- ================= BUS VIEW ================= -->
+      <div id="busView">
 
-      <button id="btnSahyadriToNila" class="dir-btn">
-        Sahyadri → Nila
-      </button>
-    </div>
+        <!-- ===== Next Bus ===== -->
+        <div class="direction-buttons">
+          <button id="btnNilaToSahyadri" class="dir-btn">
+            Nila → Sahyadri
+          </button>
+
+          <button id="btnSahyadriToNila" class="dir-btn">
+            Sahyadri → Nila
+          </button>
+        </div>
 
     <div id="results"></div>
 
@@ -186,7 +191,53 @@
         <div id="outsideResults" class="outside-results"></div>
 
       </div>
+      </div>
     </section>
+    
+      </div> <!-- End of Bus View -->
+
+      <!-- ================= FOOD VIEW ================= -->
+      <div id="foodView" class="hidden">
+        <div class="food-controls">
+          <select id="foodDaySelect" aria-label="Day">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+          </select>
+
+          <!-- Veg / Non-Veg Toggle -->
+          <div class="preference-toggle">
+            <button id="btnPrefVeg" class="pref-btn active" type="button">
+              <span class="dot veg-dot"></span> Veg
+            </button>
+            <button id="btnPrefNonVeg" class="pref-btn" type="button">
+              <span class="dot nonveg-dot"></span> Non-Veg
+            </button>
+          </div>
+        </div>
+        
+        <!-- Featured Podium Meal -->
+        <div id="foodPodium" class="food-podium">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Collapsible Full Day Menu -->
+        <div class="full-day-toggle-container">
+          <button id="btnToggleFullDay" class="journey-toggle" type="button">
+            Show Full Day Menu <span class="arrow">▾</span>
+          </button>
+        </div>
+
+        <div id="foodFullDayContainer" class="food-full-day-container hidden">
+          <!-- Rendered dynamically -->
+        </div>
+      </div> <!-- End of Food View -->
+    
+    </div> <!-- End of viewContainer -->
 
     <footer class="site-footer">
     <div class="footer-line primary">
@@ -205,9 +256,22 @@
 
   </main>
 
+  <!-- ================= BOTTOM NAVIGATION ================= -->
+  <nav class="bottom-nav">
+    <button id="navBus" class="nav-item active">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2l.64-2.54c.24-.96.36-1.92.36-2.96V9a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2.5c0 1.04.12 2 .36 2.96L3 17h2"/><path d="M14 17h-4"/><path d="M6 17v3a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1v-3"/><path d="M16 17v3a1 1 0 0 0 1 1h0a1 1 0 0 0 1-1v-3"/><path d="M4.5 8h15"/><path d="M8 13h.01"/><path d="M16 13h.01"/></svg>
+      <span>Bus</span>
+    </button>
+    <button id="navFood" class="nav-item">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+      <span>Food</span>
+    </button>
+  </nav>
+
   <!-- Scripts: Load in correct order -->
   <script src="js/analytics.js"></script>
   <script src="js/clock.js" defer></script>
+  <script src="js/dataLoader.js"></script>
   <script src="js/routeEngine.js"></script>
   <script src="js/app.js"></script>
   <script src="js/install.js"></script>

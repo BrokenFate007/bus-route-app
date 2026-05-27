@@ -1,6 +1,7 @@
 let upcomingBuses = [];
 let allRoutes = [];
 let outsideRoutes = [];
+let foodMenuData = null;
 
 // These will be populated from loaded data
 let fromPlaces = [];
@@ -13,12 +14,12 @@ let outsideDestinations = [];
 // Detect iOS in standalone mode (PWA)
 function isIOSPWA() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  
+
   // Check window.navigator.standalone first (works on all iOS versions)
   if ('standalone' in navigator && navigator.standalone === true) {
     return isIOS;
   }
-  
+
   // Fallback to matchMedia for iOS 11.3+
   if (window.matchMedia) {
     try {
@@ -28,7 +29,7 @@ function isIOSPWA() {
       return false;
     }
   }
-  
+
   return false;
 }
 
@@ -36,41 +37,41 @@ function isIOSPWA() {
 let supportsPassive = false;
 try {
   const opts = Object.defineProperty({}, 'passive', {
-    get: function() { supportsPassive = true; }
+    get: function () { supportsPassive = true; }
   });
   window.addEventListener('testPassive', null, opts);
   window.removeEventListener('testPassive', null, opts);
-} catch (e) {}
+} catch (e) { }
 
 /* ================= OPTIMIZED iOS SELECT FIX ================= */
 // Only handles event listeners - CSS handles all styling via @supports
 function fixIOSSelectDropdowns() {
   if (!isIOSPWA()) return;
-  
+
   console.log('✅ iOS PWA detected - applying select event fixes');
-  
+
   const selects = document.querySelectorAll('select');
-  
+
   selects.forEach(select => {
     // Skip if already fixed
     if (select.dataset.iosFixed) return;
     select.dataset.iosFixed = 'true';
-    
+
     // Add touch event to force focus - helps with iOS dropdown opening
-    select.addEventListener('touchstart', function(e) {
+    select.addEventListener('touchstart', function (e) {
       e.stopPropagation();
       this.focus();
     }, supportsPassive ? { passive: true } : false);
-    
+
     // Prevent interference from parent elements
-    select.addEventListener('click', function(e) {
+    select.addEventListener('click', function (e) {
       e.stopPropagation();
     }, supportsPassive ? { passive: true } : false);
-    
+
     // Additional fix for iOS 15+ - ensure dropdown stays open
-    select.addEventListener('touchend', function(e) {
+    select.addEventListener('touchend', function (e) {
       const self = this;
-      setTimeout(function() {
+      setTimeout(function () {
         self.focus();
       }, 50);
     }, supportsPassive ? { passive: true } : false);
@@ -86,11 +87,11 @@ if (document.readyState === 'loading') {
 
 // Re-apply fix when new selects are added dynamically
 if (typeof MutationObserver !== 'undefined') {
-  const observer = new MutationObserver(function(mutations) {
+  const observer = new MutationObserver(function (mutations) {
     let needsFix = false;
-    mutations.forEach(function(mutation) {
+    mutations.forEach(function (mutation) {
       if (mutation.addedNodes.length) {
-        mutation.addedNodes.forEach(function(node) {
+        mutation.addedNodes.forEach(function (node) {
           if (node.nodeType === 1) {
             if (node.tagName === 'SELECT' || node.querySelectorAll('select').length > 0) {
               needsFix = true;
@@ -103,7 +104,7 @@ if (typeof MutationObserver !== 'undefined') {
       fixIOSSelectDropdowns();
     }
   });
-  
+
   if (document.body) {
     observer.observe(document.body, {
       childList: true,
@@ -142,26 +143,34 @@ const outsideDestination = document.getElementById("outsideDestination");
 const outsideSearch = document.getElementById("outsideSearch");
 const outsideResults = document.getElementById("outsideResults");
 
-let activeDirection = null;
+/* Nav & Food */
+const navBus = document.getElementById("navBus");
+const navFood = document.getElementById("navFood");
+const busView = document.getElementById("busView");
+const foodView = document.getElementById("foodView");
+const foodDaySelect = document.getElementById("foodDaySelect");
+const foodResults = document.getElementById("foodResults");
+
+let activeDirection = { from: "Nila", to: "Sahyadri" };
 
 const btnNilaToSahyadri = document.getElementById("btnNilaToSahyadri");
 const btnSahyadriToNila = document.getElementById("btnSahyadriToNila");
 
 /* ================= DIRECTION BUTTONS ================= */
-btnNilaToSahyadri.addEventListener("click", function() {
+btnNilaToSahyadri.addEventListener("click", function () {
   setDirection("Nila", "Sahyadri");
   setActiveButton(btnNilaToSahyadri);
-  
+
   // TRACK THIS EVENT
   if (typeof trackDirectionClick === 'function') {
     trackDirectionClick("Nila", "Sahyadri");
   }
 });
 
-btnSahyadriToNila.addEventListener("click", function() {
+btnSahyadriToNila.addEventListener("click", function () {
   setDirection("Sahyadri", "Nila");
   setActiveButton(btnSahyadriToNila);
-  
+
   // TRACK THIS EVENT
   if (typeof trackDirectionClick === 'function') {
     trackDirectionClick("Sahyadri", "Nila");
@@ -174,7 +183,7 @@ function setDirection(from, to) {
 }
 
 function setActiveButton(activeBtn) {
-  document.querySelectorAll(".dir-btn").forEach(function(btn) {
+  document.querySelectorAll(".dir-btn").forEach(function (btn) {
     btn.classList.remove("active");
   });
   activeBtn.classList.add("active");
@@ -222,7 +231,7 @@ function getCurrentTimePeriod() {
 function getTimePeriodForTime(time24) {
   const parts = time24.split(":");
   const hour = Number(parts[0]);
-  
+
   if (hour >= 6 && hour < 12) {
     return "morning";
   } else if (hour >= 12 && hour < 15) {
@@ -239,7 +248,7 @@ function extractUniqueValues(routes) {
   const toSet = new Set();
   const daySet = new Set();
 
-  routes.forEach(function(route) {
+  routes.forEach(function (route) {
     fromSet.add(route.from);
     toSet.add(route.to);
     daySet.add(route.dayType);
@@ -254,10 +263,10 @@ function extractOutsideValues(routes) {
   const daySet = new Set();
   const destSet = new Set();
 
-  routes.forEach(function(route) {
+  routes.forEach(function (route) {
     daySet.add(route.dayType);
     if (route.stops) {
-      route.stops.forEach(function(stop) {
+      route.stops.forEach(function (stop) {
         destSet.add(stop);
       });
     }
@@ -277,14 +286,14 @@ function getAvailableDestinations(day, timePeriod) {
 
   const destSet = new Set();
 
-  outsideRoutes.forEach(function(route) {
+  outsideRoutes.forEach(function (route) {
     // Match day
     if (route.dayType !== day) return;
 
     // Filter by time period if selected
     if (timePeriod && timePeriod !== "" && timePeriod !== "all") {
       const busHour = parseInt(route.departureTime.split(":")[0]);
-      
+
       if (timePeriod === "morning" && (busHour < 6 || busHour >= 12)) {
         return;
       }
@@ -298,7 +307,7 @@ function getAvailableDestinations(day, timePeriod) {
 
     // Add all stops from this route
     if (route.stops) {
-      route.stops.forEach(function(stop) {
+      route.stops.forEach(function (stop) {
         destSet.add(stop);
       });
     }
@@ -315,7 +324,7 @@ function updateDestinationDropdown() {
   if (!selectedDay) {
     outsideDestination.innerHTML = '<option value="">Select day first</option>';
     outsideDestination.disabled = true;
-    
+
     // Re-apply iOS fix after update
     if (isIOSPWA()) {
       setTimeout(fixIOSSelectDropdowns, 50);
@@ -326,7 +335,7 @@ function updateDestinationDropdown() {
   if (selectedDay === "Sunday") {
     outsideDestination.innerHTML = '<option value="">No buses on Sunday</option>';
     outsideDestination.disabled = true;
-    
+
     // Re-apply iOS fix after update
     if (isIOSPWA()) {
       setTimeout(fixIOSSelectDropdowns, 50);
@@ -339,7 +348,7 @@ function updateDestinationDropdown() {
   if (availableDestinations.length === 0) {
     outsideDestination.innerHTML = '<option value="">No buses at this time</option>';
     outsideDestination.disabled = true;
-    
+
     // Re-apply iOS fix after update
     if (isIOSPWA()) {
       setTimeout(fixIOSSelectDropdowns, 50);
@@ -349,116 +358,31 @@ function updateDestinationDropdown() {
 
   outsideDestination.disabled = false;
   outsideDestination.innerHTML = '<option value="">Bus Stop</option>';
-  availableDestinations.forEach(function(dest) {
+  availableDestinations.forEach(function (dest) {
     outsideDestination.add(new Option(dest, dest));
   });
-  
+
   // RESTORE PREVIOUS SELECTION IF STILL AVAILABLE
   if (currentDestination && availableDestinations.indexOf(currentDestination) !== -1) {
     outsideDestination.value = currentDestination;
   }
-  
+
   // Re-apply iOS fix after update
   if (isIOSPWA()) {
     setTimeout(fixIOSSelectDropdowns, 50);
   }
 }
-// Load INSIDE campus routes
-async function loadRoutes() {
-  const response = await fetch("./data/inside_routes.tsv", { cache: "no-store" });
 
-  if (!response.ok) {
-    throw new Error("Failed to load inside_routes.tsv");
-  }
-
-  const text = await response.text();
-  const lines = text.trim().split("\n");
-
-  lines.shift(); // Remove header
-
-  return lines
-    .map((line, index) => {
-      const cols = line.split("\t");
-
-      if (cols.length < 5) {
-        console.warn(`Skipping malformed line ${index + 2}`);
-        return null;
-      }
-
-      const dayType = cols[0].trim();
-      const from = cols[1].trim();
-      const to = cols[2].trim();
-      const time = cols[3].trim();
-      const count = Number(cols[4].trim());
-
-      if (!dayType || !from || !to || !time || Number.isNaN(count)) {
-        console.warn(`Invalid data at line ${index + 2}`);
-        return null;
-      }
-
-      return { dayType, from, to, time, count };
-    })
-    .filter(Boolean);
-}
-
-// Load OUTSIDE campus routes
-async function loadOutsideRoutes() {
-  const res = await fetch("./data/outside_routes.tsv", { cache: "no-store" });
-
-  if (!res.ok) {
-    console.warn("outside_routes.tsv not found, skipping outside routes");
-    return [];
-  }
-
-  const text = await res.text();
-  const lines = text.trim().split("\n");
-
-  if (lines.length <= 1) return [];
-
-  lines.shift(); // Remove header
-
-  return lines
-    .map((line, index) => {
-      const cols = line.split("\t");
-
-      if (cols.length < 6) {
-        console.warn(`Skipping malformed outside route line ${index + 2}`);
-        return null;
-      }
-
-      const dayType = cols[0].trim();
-      const routeId = cols[1].trim();
-      const departureTime = cols[2].trim();
-      const origin = cols[3].trim();
-      const stopsRaw = cols[4].trim();
-      const routeDescription = cols[5].trim();
-      const returnTime = cols[6] ? cols[6].trim() : "";
-
-      if (!dayType || !routeId || !departureTime || !origin || !stopsRaw) {
-        console.warn(`Invalid outside route data at line ${index + 2}`);
-        return null;
-      }
-
-      return {
-        dayType,
-        routeId,
-        departureTime,
-        origin,
-        stops: stopsRaw.split(">").map(s => s.trim()),
-        routeDescription,
-        returnTime
-      };
-    })
-    .filter(Boolean);
-}
 /* ================= LOAD DATA (ONCE) ================= */
 Promise.all([
   loadRoutes(),
-  loadOutsideRoutes()
+  loadOutsideRoutes(),
+  typeof loadFoodMenu === 'function' ? loadFoodMenu() : Promise.resolve(null)
 ])
-  .then(function(results) {
+  .then(function (results) {
     allRoutes = results[0];
     outsideRoutes = results[1];
+    foodMenuData = results[2];
     routeRuns = [];
 
     extractUniqueValues(allRoutes);
@@ -467,7 +391,7 @@ Promise.all([
     populateSelect(journeyFrom, fromPlaces);
     populateSelect(journeyTo, toPlaces);
     populateSelect(journeyDay, days);
-    
+
     // Add event listeners for smart from/to filtering
     journeyFrom.addEventListener("change", updateFromToDropdowns);
     journeyTo.addEventListener("change", updateFromToDropdowns);
@@ -477,7 +401,7 @@ Promise.all([
 
     setJourneyDayToToday(days);
     setJourneyDayToToday(outsideDays, outsideDay);
-    
+
     // Auto-select current time period
     outsideTimePeriod.value = getCurrentTimePeriod();
 
@@ -485,8 +409,20 @@ Promise.all([
     updateDestinationDropdown();
 
     populateTimePicker();
+    setJourneyTimeToNow(); // Auto-select current time for journey planner
+
+    // Set default active button state
+    if (btnNilaToSahyadri) {
+      setActiveButton(btnNilaToSahyadri);
+    }
+
     updateResult();
-    
+
+    // Initialize food view controls
+    if (typeof setupFoodControls === 'function') {
+      setupFoodControls();
+    }
+
     // Re-apply iOS fix after all dropdowns are populated
     if (isIOSPWA()) {
       setTimeout(fixIOSSelectDropdowns, 100);
@@ -496,7 +432,7 @@ Promise.all([
     console.log("Route runs:", routeRuns.length);
     console.log("Outside routes:", outsideRoutes.length);
   })
-  .catch(function(err) {
+  .catch(function (err) {
     resultsDiv.textContent = "Failed to load bus data";
     console.error(err);
   });
@@ -506,7 +442,7 @@ function populateSelect(selectEl, values) {
   if (!selectEl) return;
   const firstOption = selectEl.options[0].text;
   selectEl.innerHTML = '<option value="">' + firstOption + '</option>';
-  values.forEach(function(v) {
+  values.forEach(function (v) {
     selectEl.add(new Option(v, v));
   });
 }
@@ -514,7 +450,7 @@ function populateSelect(selectEl, values) {
 
 function updateFromToDropdowns() {
   const changedDropdown = this; // The dropdown that triggered the change
-  
+
   // If "From" dropdown changed
   if (changedDropdown === journeyFrom) {
     const fromValue = journeyFrom.value;
@@ -524,7 +460,7 @@ function updateFromToDropdowns() {
       journeyTo.value = "Nila";
     }
   }
-  
+
   // If "To" dropdown changed
   if (changedDropdown === journeyTo) {
     const toValue = journeyTo.value;
@@ -534,7 +470,7 @@ function updateFromToDropdowns() {
       journeyFrom.value = "Nila";
     }
   }
-  
+
   // Re-apply iOS fix after updates
   if (isIOSPWA()) {
     setTimeout(fixIOSSelectDropdowns, 50);
@@ -578,6 +514,29 @@ function populateTimePicker() {
   }
 }
 
+function setJourneyTimeToNow() {
+  if (!journeyHour || !journeyMinute || !journeyPeriod) return;
+
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  // Round to nearest 5 minutes
+  let roundedMinutes = Math.round(minutes / 5) * 5;
+  if (roundedMinutes === 60) {
+    roundedMinutes = 0;
+    hours = (hours + 1) % 24;
+  }
+
+  const period = hours >= 12 ? "PM" : "AM";
+  let displayHours = hours % 12;
+  if (displayHours === 0) displayHours = 12;
+
+  journeyHour.value = String(displayHours);
+  journeyMinute.value = String(roundedMinutes).padStart(2, "0");
+  journeyPeriod.value = period;
+}
+
 /* ================= NEXT BUS ================= */
 function updateResult() {
   resultsDiv.innerHTML = "";
@@ -605,7 +564,7 @@ function updateResult() {
   // Find the first upcoming bus (not departed)
   let firstUpcomingIndex = upcomingBuses.findIndex(bus => !bus.departed);
 
-  upcomingBuses.forEach(function(bus, index) {
+  upcomingBuses.forEach(function (bus, index) {
     addResultRow(bus, index === firstUpcomingIndex);
   });
 
@@ -616,7 +575,7 @@ function updateResult() {
 function addResultRow(bus, isNext) {
   const row = document.createElement("div");
   row.className = bus.departed ? "bus-row departed" : "bus-row";
-  
+
   const label = document.createElement("div");
   label.className = "label";
   // Only show "Next Bus" for the first UPCOMING bus, not departed
@@ -628,13 +587,13 @@ function addResultRow(bus, isNext) {
 
   const rightGroup = document.createElement("div");
   rightGroup.className = "right-group";
-  
+
   // Add arrow for all buses except the "Next Bus"
   const arrow = document.createElement("span");
   arrow.className = bus.departed ? "bus-arrow earlier" : "bus-arrow upcoming";
   arrow.textContent = bus.departed ? "↑" : "↓";
   rightGroup.appendChild(arrow);
-  
+
   const time = document.createElement("span");
   // Blue color only for the first upcoming (Next Bus), gray for departed
   time.className = (isNext && !bus.departed) ? "time next" : (bus.departed ? "time departed" : "time");
@@ -652,7 +611,7 @@ function addResultRow(bus, isNext) {
   countdown.dataset.time = bus.time;
   countdown.dataset.departed = bus.departed ? "true" : "false";
   rightGroup.appendChild(countdown);
-  
+
   row.appendChild(rightGroup);
   resultsDiv.appendChild(row);
 }
@@ -667,13 +626,13 @@ function updateCountdowns() {
     now.getMinutes() * 60 +
     now.getSeconds();
 
-  document.querySelectorAll(".countdown").forEach(function(el) {
+  document.querySelectorAll(".countdown").forEach(function (el) {
     const parts = el.dataset.time.split(":");
     const h = Number(parts[0]);
     const m = Number(parts[1]);
     const busSec = h * 3600 + m * 60;
     const diff = busSec - nowSec;
-    
+
     const isDeparted = el.dataset.departed === "true";
 
     // For departed buses, show negative time
@@ -700,11 +659,11 @@ function updateCountdowns() {
 
 
 /* ================= JOURNEY PLANNER (INSIDE CAMPUS) ================= */
-journeyBtn.addEventListener("click", function() {
+journeyBtn.addEventListener("click", function () {
   journeyResults.innerHTML = "";
 
   const time24 = getJourneyTime24();
-  
+
   if (!time24 || !journeyDay.value || !journeyFrom.value || !journeyTo.value) {
     journeyResults.textContent = "Select day, time and stops";
     return;
@@ -740,7 +699,7 @@ journeyBtn.addEventListener("click", function() {
     return;
   }
 
-  buses.forEach(function(bus) {
+  buses.forEach(function (bus) {
     const busParts = bus.time.split(":");
     const h = Number(busParts[0]);
     const m = Number(busParts[1]);
@@ -761,7 +720,7 @@ journeyBtn.addEventListener("click", function() {
 });
 
 /* ================= OUTSIDE CAMPUS BUSES ================= */
-outsideSearch.addEventListener("click", function() {
+outsideSearch.addEventListener("click", function () {
   outsideResults.innerHTML = "";
 
   if (!outsideDay.value) {
@@ -802,15 +761,15 @@ outsideSearch.addEventListener("click", function() {
     return;
   }
 
-  buses.forEach(function(bus) {
+  buses.forEach(function (bus) {
     const card = document.createElement("div");
     card.className = bus.departed ? 'outside-bus-card departed' : 'outside-bus-card';
 
     card.innerHTML =
       '<div class="departure-time">' +
-        '<span class="icon">' + (bus.departed ? '⏱️' : '🚌') + '</span> ' +
-        to12Hour(bus.departureTime) +
-        (bus.departed ? '<span class="departed-badge">Already departed</span>' : '') +
+      '<span class="icon">' + (bus.departed ? '⏱️' : '🚌') + '</span> ' +
+      to12Hour(bus.departureTime) +
+      (bus.departed ? '<span class="departed-badge">Already departed</span>' : '') +
       '</div>' +
       '<div class="route-info">From: <strong>' + bus.origin + '</strong></div>' +
       '<div class="route-stops">' + bus.routeDescription + '</div>' +
@@ -822,24 +781,24 @@ outsideSearch.addEventListener("click", function() {
 
 /* ================= EVENT LISTENERS FOR SMART FILTERING ================= */
 // Update destinations when day changes
-outsideDay.addEventListener("change", function() {
+outsideDay.addEventListener("change", function () {
   updateDestinationDropdown();
   outsideResults.innerHTML = "";
 });
 
 // Update destinations when time period changes
-outsideTimePeriod.addEventListener("change", function() {
+outsideTimePeriod.addEventListener("change", function () {
   updateDestinationDropdown();
   outsideResults.innerHTML = "";
 });
 
 /* ================= TOGGLE (Campus Journey) ================= */
 if (journeyToggle && journeyPanel && journeySection) {
-  journeyToggle.addEventListener("click", function() {
+  journeyToggle.addEventListener("click", function () {
     const isOpening = journeyPanel.classList.contains("hidden");
     journeyPanel.classList.toggle("hidden");
     journeySection.classList.toggle("open");
-    
+
     // TRACK THIS EVENT
     if (typeof trackToggle === 'function') {
       trackToggle("Journey Planner", isOpening);
@@ -849,11 +808,11 @@ if (journeyToggle && journeyPanel && journeySection) {
 
 /* ================= TOGGLE (Outside Campus) ================= */
 if (outsideCampusToggle && outsideCampusPanel && outsideCampusSection) {
-  outsideCampusToggle.addEventListener("click", function() {
+  outsideCampusToggle.addEventListener("click", function () {
     const isOpening = outsideCampusPanel.classList.contains("hidden");
     outsideCampusPanel.classList.toggle("hidden");
     outsideCampusSection.classList.toggle("open");
-    
+
     // TRACK THIS EVENT
     if (typeof trackToggle === 'function') {
       trackToggle("Outside Campus Buses", isOpening);
@@ -863,3 +822,425 @@ if (outsideCampusToggle && outsideCampusPanel && outsideCampusSection) {
 
 /* ================= EVENTS ================= */
 setInterval(updateCountdowns, 1000);
+
+/* ================= BOTTOM NAV & FOOD MENU LOGIC ================= */
+if (navBus && navFood) {
+  navBus.addEventListener("click", () => {
+    navBus.classList.add("active");
+    navFood.classList.remove("active");
+    busView.classList.remove("hidden");
+    foodView.classList.add("hidden");
+  });
+
+  navFood.addEventListener("click", () => {
+    navFood.classList.add("active");
+    navBus.classList.remove("active");
+    foodView.classList.remove("hidden");
+    busView.classList.add("hidden");
+
+    // Auto-select today's day for food if not already set
+    const jsDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const today = jsDays[new Date().getDay()];
+    const foodPodium = document.getElementById("foodPodium");
+    if (!foodPodium || !foodPodium.innerHTML.trim() || foodDaySelect.value !== today) {
+      foodDaySelect.value = today;
+      renderFoodMenu();
+    }
+  });
+}
+
+if (foodDaySelect) {
+  foodDaySelect.addEventListener("change", renderFoodMenu);
+}
+
+// State for Food preference
+let foodPreference = 'veg'; // 'veg' or 'nonveg'
+
+function parseFoodItems(rawText, preference) {
+  if (!rawText) return [];
+
+  // Smart split function to ignore separators inside parentheses
+  function smartSplit(str, separator) {
+    let parts = [];
+    let current = "";
+    let depth = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str[i];
+      if (char === '(') depth++;
+      else if (char === ')') depth--;
+
+      if (char === separator && depth === 0) {
+        parts.push(current.trim());
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+    if (current.trim()) parts.push(current.trim());
+    return parts;
+  }
+
+  // Split by semicolon first, then by comma
+  let parts = [];
+  smartSplit(rawText, ';').forEach(p => {
+    smartSplit(p, ',').forEach(item => {
+      parts.push(item.trim());
+    });
+  });
+
+  let finalItems = [];
+
+  parts.forEach(part => {
+    if (!part) return;
+
+    // Strip outer parentheses if present (e.g. "(Non Veg:- Omlet)")
+    if (part.startsWith('(') && part.endsWith(')')) {
+      part = part.slice(1, -1).trim();
+    }
+
+    // Check if it's explicitly Veg-only
+    let vegMatch = part.match(/^Veg\s*[: -]+\s*(.*)$/i);
+    // Check if it's explicitly Non-Veg-only
+    let nonVegMatch = part.match(/^Non[- ]?Veg\s*[: -]+\s*(.*)$/i);
+
+    if (vegMatch) {
+      if (preference === 'veg') {
+        finalItems.push({ text: vegMatch[1].trim(), type: 'veg' });
+      }
+    } else if (nonVegMatch) {
+      if (preference === 'nonveg') {
+        finalItems.push({ text: nonVegMatch[1].trim(), type: 'nonveg' });
+      }
+    } else {
+      // It's a shared item, but check if there's a nested Non-Veg note, e.g. "PEANUT BUTTER (Non Veg:-Omlet)"
+      let nestedNonVeg = part.match(/(.*?)\s*\((?:Non[- ]?Veg\s*[: -]+\s*)(.*?)\)/i);
+      if (nestedNonVeg) {
+        let mainText = nestedNonVeg[1].trim();
+        let nonVegOption = nestedNonVeg[2].trim();
+        if (preference === 'veg') {
+          if (mainText) finalItems.push({ text: mainText, type: 'veg' }); // display main as veg
+        } else {
+          finalItems.push({ text: `${mainText} + ${nonVegOption}`, type: 'nonveg' });
+        }
+      } else {
+        // Plain shared item
+        finalItems.push({ text: part, type: 'shared' });
+      }
+    }
+  });
+
+  return finalItems;
+}
+
+function getUpcomingMealName() {
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const currentMinutes = hour * 60 + minute;
+
+  // Breakfast: up to 9:30 AM
+  if (currentMinutes < 9 * 60 + 30) {
+    return "Breakfast";
+  }
+  // Lunch: up to 2:15 PM (14:15)
+  if (currentMinutes < 14 * 60 + 15) {
+    return "Lunch";
+  }
+  // Snacks: up to 5:30 PM (17:30)
+  if (currentMinutes < 17 * 60 + 30) {
+    return "Snacks";
+  }
+  // Dinner: up to 9:30 PM (21:30)
+  if (currentMinutes < 21 * 60 + 30) {
+    return "Dinner";
+  }
+  // After 9:30 PM, next meal is Breakfast (tomorrow)
+  return "Breakfast";
+}
+
+const mealSlots = {
+  "Breakfast": { label: "7:30 AM - 9:30 AM", start: 7 * 60 + 30, end: 9 * 60 + 30 },
+  "Lunch": { label: "12:00 PM - 2:00 PM", start: 12 * 60, end: 14 * 60 + 15 },
+  "Snacks": { label: "4:30 PM - 06:00 PM", start: 16 * 60 + 30, end: 17 * 60 + 30 },
+  "Dinner": { label: "7:30 PM - 9:00 PM", start: 19 * 60 + 30, end: 21 * 60 + 30 }
+};
+
+function getMealStatus(mealName, isTodaySelected) {
+  if (!isTodaySelected) return "";
+
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const slot = mealSlots[mealName];
+
+  if (slot && currentMinutes >= slot.start && currentMinutes <= slot.end) {
+    return "Ongoing Meal";
+  }
+
+  const upcomingName = getUpcomingMealName();
+  if (mealName === upcomingName) {
+    return "Next Meal";
+  }
+
+  return "";
+}
+
+function getMonday(d) {
+  const date = new Date(d);
+  const day = date.getDay(); // 0 is Sun, 1 is Mon, ..., 6 is Sat
+  // In our week (Mon-Sun), Sunday (0) is the last day of the week.
+  // So if it's Sunday, we want to go back 6 days to get to Monday.
+  // Otherwise, we go back (day - 1) days.
+  const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(date.setDate(diff));
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+}
+
+function getActiveWeekKey(selectedDate) {
+  // Reference Monday: May 25, 2026 (Month is 4 since May is 0-indexed)
+  const refMonday = new Date(2026, 4, 25);
+  refMonday.setHours(0, 0, 0, 0);
+
+  const selMonday = getMonday(selectedDate);
+
+  const diffTime = selMonday.getTime() - refMonday.getTime();
+  const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+  const diffWeeks = Math.round(diffTime / msPerWeek);
+
+  if (diffWeeks % 2 === 0) {
+    return "Week_2_4";
+  } else {
+    return "Week_1_3";
+  }
+}
+
+function getDateForDayOfWeek(dayName) {
+  const now = new Date();
+  const monday = getMonday(now);
+
+  const dayOffsets = {
+    "Monday": 0,
+    "Tuesday": 1,
+    "Wednesday": 2,
+    "Thursday": 3,
+    "Friday": 4,
+    "Saturday": 5,
+    "Sunday": 6
+  };
+
+  const offset = dayOffsets[dayName] !== undefined ? dayOffsets[dayName] : 0;
+  const targetDate = new Date(monday);
+  targetDate.setDate(monday.getDate() + offset);
+  return targetDate;
+}
+
+function formatFoodItemText(text) {
+  let main = text;
+  let sub = "";
+
+  // Match parenthetical notes at the end of strings
+  let parenMatch = text.match(/^(.*?)\s*\(([^)]*)\)$/);
+  if (parenMatch) {
+    main = parenMatch[1].trim();
+    sub = parenMatch[2].trim();
+  }
+
+  // Check for custom "+ " join
+  if (main.includes(" + ")) {
+    let parts = main.split(" + ");
+    main = parts[0].trim();
+    sub = "with " + parts[1].trim();
+  }
+
+  return { main, sub };
+}
+
+function renderFoodMenu() {
+  const foodPodium = document.getElementById("foodPodium");
+  const foodFullDayContainer = document.getElementById("foodFullDayContainer");
+
+  if (!foodPodium || !foodFullDayContainer || !foodMenuData) return;
+
+  const day = foodDaySelect.value;
+  foodPodium.innerHTML = "";
+  foodFullDayContainer.innerHTML = "";
+
+  const targetDate = getDateForDayOfWeek(day);
+  const weekKey = getActiveWeekKey(targetDate);
+  const weekData = foodMenuData[weekKey] || {};
+  const common = weekData["Common"] || {};
+
+  // Clone dayData so we can modify it safely without mutating original cache
+  const dayData = { ...(weekData[day] || {}) };
+  const meals = ["Breakfast", "Lunch", "Snacks", "Dinner"];
+
+  const activeMealName = getUpcomingMealName();
+
+  const jsDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const todayName = jsDays[new Date().getDay()];
+  const isTodaySelected = foodDaySelect.value === todayName;
+
+  // Helper to render the item list HTML (merging specific & common items)
+  function getItemListHTML(itemsText, commonText) {
+    const specificItems = parseFoodItems(itemsText, foodPreference);
+    const commonItems = parseFoodItems(commonText, foodPreference);
+    const combinedItems = [...specificItems, ...commonItems];
+
+    if (combinedItems.length === 0) {
+      return `<div class="food-items" style="font-size: 0.92rem; color: var(--muted); margin: 6px 0;">No items available for this selection.</div>`;
+    }
+
+    let html = `<ul class="food-item-list">`;
+
+    combinedItems.forEach(item => {
+      let dotClass = "shared-dot";
+      if (item.type === 'veg') dotClass = "veg-dot";
+      if (item.type === 'nonveg') dotClass = "nonveg-dot";
+
+      // Parse main and subtitle
+      let { main, sub } = formatFoodItemText(item.text);
+
+      // Special override to clean up egg text
+      if (main.toLowerCase().startsWith("boiled egg") && main.toLowerCase().includes("omelette")) {
+        main = "Eggs & Omelettes";
+        sub = "Boiled Egg (5x/week), Omelette (2x/week)";
+      }
+
+      let subHTML = sub ? `<span class="food-item-subtitle">${sub}</span>` : "";
+
+      html += `
+        <li class="food-item-row item-${item.type}">
+          <span class="food-item-indicator dot ${dotClass}"></span>
+          <div class="food-item-details">
+            <span class="food-item-title">${main}</span>
+            ${subHTML}
+          </div>
+        </li>
+      `;
+    });
+
+    html += `</ul>`;
+    return html;
+  }
+
+  // 1. Render Featured Podium Card
+  const activeItemsText = dayData[activeMealName] || "";
+  const activeCommonText = common[activeMealName] || "";
+
+  let mealIcon = "";
+  if (activeMealName === "Breakfast") mealIcon = "🌅 ";
+  if (activeMealName === "Lunch") mealIcon = "☀️ ";
+  if (activeMealName === "Snacks") mealIcon = "☕ ";
+  if (activeMealName === "Dinner") mealIcon = "🌙 ";
+
+  const podiumCard = document.createElement("div");
+  podiumCard.className = "podium-card";
+
+  const statusText = getMealStatus(activeMealName, isTodaySelected) || "Next Meal";
+
+  podiumCard.innerHTML = `
+    <div class="podium-badge">${statusText}</div>
+    <div class="food-meal-name">${mealIcon}${activeMealName}</div>
+    <div class="meal-time-slot" style="font-size: 0.82rem; color: var(--muted); margin: -8px 0 12px 0;">🕒 Timings: ${mealSlots[activeMealName].label}</div>
+    ${getItemListHTML(activeItemsText, activeCommonText)}
+  `;
+  foodPodium.appendChild(podiumCard);
+
+  // 2. Render Full Day Cards
+  meals.forEach(meal => {
+    const itemsText = dayData[meal] || "";
+    const commonText = common[meal] || "";
+
+    if (!itemsText) return;
+
+    const card = document.createElement("div");
+    const isActive = meal === activeMealName;
+    card.className = isActive ? "food-card active-meal" : "food-card collapsed";
+
+    let icon = "";
+    if (meal === "Breakfast") icon = "🌅 ";
+    if (meal === "Lunch") icon = "☀️ ";
+    if (meal === "Snacks") icon = "☕ ";
+    if (meal === "Dinner") icon = "🌙 ";
+
+    const statusText = getMealStatus(meal, isTodaySelected);
+    const statusBadge = statusText ? `<span class="meal-status-badge active">${statusText}</span>` : "";
+    const arrow = isActive ? "▵" : "▾";
+
+    card.innerHTML = `
+      <div class="food-card-header" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <span style="font-weight: 700; font-size: 1.1rem; color: var(--accent); display: flex; align-items: center; gap: 8px;">${icon}${meal}</span>
+          <span style="font-size: 0.78rem; color: var(--muted); font-weight: normal; margin-top: 2px;">(${mealSlots[meal].label})</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          ${statusBadge}
+          <span class="collapse-arrow" style="font-size: 1.1rem; color: var(--muted); font-weight: bold;">${arrow}</span>
+        </div>
+      </div>
+      <div class="food-card-body ${isActive ? '' : 'hidden'}" style="margin-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 10px;">
+        ${getItemListHTML(itemsText, commonText)}
+      </div>
+    `;
+
+    // Toggle collapse on header click
+    const header = card.querySelector(".food-card-header");
+    const body = card.querySelector(".food-card-body");
+    const arrowEl = card.querySelector(".collapse-arrow");
+
+    header.addEventListener("click", () => {
+      const isHidden = body.classList.contains("hidden");
+      body.classList.toggle("hidden");
+      card.classList.toggle("collapsed");
+      
+      if (isHidden) {
+        arrowEl.textContent = "▵";
+      } else {
+        arrowEl.textContent = "▾";
+      }
+    });
+
+    foodFullDayContainer.appendChild(card);
+  });
+}
+
+// Setup preference buttons and collapse toggle
+function setupFoodControls() {
+  const btnPrefVeg = document.getElementById("btnPrefVeg");
+  const btnPrefNonVeg = document.getElementById("btnPrefNonVeg");
+  const btnToggleFullDay = document.getElementById("btnToggleFullDay");
+  const foodFullDayContainer = document.getElementById("foodFullDayContainer");
+
+  if (btnPrefVeg && btnPrefNonVeg) {
+    btnPrefVeg.addEventListener("click", () => {
+      if (foodPreference !== 'veg') {
+        foodPreference = 'veg';
+        btnPrefVeg.classList.add("active");
+        btnPrefNonVeg.classList.remove("active");
+        renderFoodMenu();
+      }
+    });
+
+    btnPrefNonVeg.addEventListener("click", () => {
+      if (foodPreference !== 'nonveg') {
+        foodPreference = 'nonveg';
+        btnPrefNonVeg.classList.add("active");
+        btnPrefVeg.classList.remove("active");
+        renderFoodMenu();
+      }
+    });
+  }
+
+  if (btnToggleFullDay && foodFullDayContainer) {
+    btnToggleFullDay.addEventListener("click", () => {
+      const isHidden = foodFullDayContainer.classList.contains("hidden");
+      foodFullDayContainer.classList.toggle("hidden");
+
+      if (isHidden) {
+        btnToggleFullDay.innerHTML = `Hide Full Day Menu <span class="arrow">▵</span>`;
+      } else {
+        btnToggleFullDay.innerHTML = `Show Full Day Menu <span class="arrow">▾</span>`;
+      }
+    });
+  }
+}

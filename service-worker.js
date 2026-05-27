@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iitp-bus-v1.2.4';
+const CACHE_NAME = 'iitp-bus-v1.4.3';
 const urlsToCache = [
   './',
   './index.html',
@@ -8,8 +8,9 @@ const urlsToCache = [
   './js/dataLoader.js',
   './js/routeEngine.js',
   './js/install.js',
-  './data/inside_routes.tsv',
-  './data/outside_routes.tsv'
+  './data/inside_routes.json',
+  './data/outside_routes.json',
+  './data/food_menu.json'
 ];
 
 // Install service worker and cache resources
