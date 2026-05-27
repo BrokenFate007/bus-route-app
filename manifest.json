@@ -1,8 +1,8 @@
 {
-  "name": "IIT Palakkad Campus Bus Schedule",
+  "name": "IIT Palakkad Shuttle & Mess Menu",
   "version": "1.2.4",
-  "short_name": "IITPKD Bus",
-  "description": "Real-time bus schedules for IIT Palakkad campus",
+  "short_name": "IITPKD Bus & Mess",
+  "description": "Real-time bus schedules and daily mess menu for IIT Palakkad",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
