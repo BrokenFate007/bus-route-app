@@ -104,10 +104,10 @@ function findOutsideBuses(routes, day, destination, timePeriod) {
         if (timePeriod === "morning" && (busHour < 6 || busHour >= 12)) {
           return false;
         }
-        if (timePeriod === "afternoon" && (busHour < 12 || busHour >= 15)) {
+        if (timePeriod === "afternoon" && (busHour < 12 || busHour >= 17)) {
           return false;
         }
-        if (timePeriod === "evening" && (busHour < 15 || busHour >= 24)) {
+        if (timePeriod === "evening" && (busHour < 17 || busHour >= 24)) {
           return false;
         }
       }

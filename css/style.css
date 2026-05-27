@@ -1297,4 +1297,100 @@ button:active {
 
 .food-full-day-container.hidden {
   display: none;
+}
+
+/* ===== Premium PWA Features ===== */
+
+/* Quick-Swap Button */
+.journey-controls.route-select-container {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+.swap-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--accent);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.swap-btn:active {
+  transform: scale(0.85);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Urgency Pulse */
+@keyframes pulse-urgent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.urgent-timer {
+  color: #ef4444; /* A clean, solid red to indicate urgency */
+  animation: pulse-urgent 2.5s ease-in-out infinite;
+  font-weight: bold;
+}
+
+/* Meal Countdown & Progress */
+.meal-countdown-wrapper {
+  margin-top: 6px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.meal-countdown-text {
+  font-family: monospace;
+  font-size: 1.05rem;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.meal-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.meal-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #60a5fa);
+  width: 0%;
+  transition: width 1s linear;
+  border-radius: 2px;
+}
+
+/* Favorite Star */
+.favorite-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  color: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.favorite-star.active {
+  color: #facc15;
+  filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.4));
+  transform: scale(1.15);
+}
+.favorite-star:active {
+  transform: scale(0.8);
+}
+
+/* Ambient glow container */
+body {
+  transition: background-color 2s ease, --surface 2s ease;
 }

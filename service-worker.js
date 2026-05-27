@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iitp-bus-v1.4.3';
+const CACHE_NAME = 'iitp-bus-v1.4.9';
 const urlsToCache = [
   './',
   './index.html',

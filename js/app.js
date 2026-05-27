@@ -10,6 +10,26 @@ let days = [];
 let outsideDays = [];
 let outsideDestinations = [];
 
+/* ================= HAPTIC FEEDBACK ================= */
+function triggerHaptic() {
+  if (navigator && navigator.vibrate) {
+    navigator.vibrate(50);
+  }
+}
+
+window.toggleFavorite = function(itemName, el) {
+  triggerHaptic();
+  let favorites = JSON.parse(localStorage.getItem("food_favorites") || "[]");
+  if (favorites.includes(itemName)) {
+    favorites = favorites.filter(f => f !== itemName);
+    el.classList.remove('active');
+  } else {
+    favorites.push(itemName);
+    el.classList.add('active');
+  }
+  localStorage.setItem("food_favorites", JSON.stringify(favorites));
+};
+
 /* ================= iOS PWA DETECTION ================= */
 // Detect iOS in standalone mode (PWA)
 function isIOSPWA() {
@@ -132,6 +152,7 @@ const journeyPeriod = document.getElementById("journeyPeriod");
 const journeyToggle = document.getElementById("journeyToggle");
 const journeyPanel = document.getElementById("journeyPanel");
 const journeySection = document.querySelector(".journey");
+const btnSwapRoute = document.getElementById("btnSwapRoute");
 
 /* Outside Campus */
 const outsideCampusToggle = document.getElementById("outsideCampusToggle");
@@ -448,6 +469,17 @@ function populateSelect(selectEl, values) {
 }
 
 
+function setupDropdownListeners() {
+  if (btnSwapRoute) {
+    btnSwapRoute.addEventListener("click", () => {
+      triggerHaptic();
+      const temp = journeyFrom.value;
+      journeyFrom.value = journeyTo.value;
+      journeyTo.value = temp;
+    });
+  }
+}
+
 function updateFromToDropdowns() {
   const changedDropdown = this; // The dropdown that triggered the change
 
@@ -612,6 +644,7 @@ function addResultRow(bus, isNext) {
   countdown.dataset.departed = bus.departed ? "true" : "false";
   rightGroup.appendChild(countdown);
 
+  row.appendChild(label);
   row.appendChild(rightGroup);
   resultsDiv.appendChild(row);
 }
@@ -635,26 +668,100 @@ function updateCountdowns() {
 
     const isDeparted = el.dataset.departed === "true";
 
-    // For departed buses, show negative time
     if (isDeparted) {
       const absDiff = Math.abs(diff);
       const mm = Math.floor(absDiff / 60);
       const ss = absDiff % 60;
       el.textContent = "-" + String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+      el.classList.remove("urgent-timer");
       return;
     }
 
-    // For upcoming buses
     if (diff <= 0) {
       el.textContent = "--:--";
+      el.classList.remove("urgent-timer");
       return;
+    }
+
+    if (diff <= 300) {
+      el.classList.add("urgent-timer");
+    } else {
+      el.classList.remove("urgent-timer");
     }
 
     const mm = Math.floor(diff / 60);
     const ss = diff % 60;
-    el.textContent =
-      String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+    el.textContent = String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
   });
+
+  // Food Countdown Logic & Theme Toggling
+  const mealCountdownWrapper = document.getElementById("mealCountdownWrapper");
+  const mealCountdownText = document.getElementById("mealCountdownText");
+  const mealProgressFill = document.getElementById("mealProgressFill");
+  
+  // Theme Auto-Toggling
+  const h = now.getHours();
+  // Morning glow (6am to 10am), Night glow (8pm to 5am)
+  if (h >= 6 && h < 10) {
+    document.body.style.setProperty('--surface', '#1e1b15');
+  } else if (h >= 20 || h < 5) {
+    document.body.style.setProperty('--surface', '#0f172a');
+  } else {
+    document.body.style.setProperty('--surface', '#111827');
+  }
+
+  if (mealCountdownText && mealProgressFill) {
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const currentSeconds = now.getSeconds();
+    const activeMealName = getUpcomingMealName();
+    const slot = mealSlots[activeMealName];
+    
+    // Only show dynamic countdown if "Today" is selected in the food UI
+    const jsDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const isTodaySelected = document.getElementById("foodDaySelect")?.value === jsDays[now.getDay()];
+
+    if (slot && isTodaySelected) {
+      mealCountdownWrapper.style.display = "block";
+      if (currentMinutes >= slot.start && currentMinutes <= slot.end) {
+        // Ongoing meal
+        const endSec = slot.end * 60;
+        const nowSec = currentMinutes * 60 + currentSeconds;
+        const diff = endSec - nowSec;
+        
+        const dh = Math.floor(diff / 3600);
+        const dm = Math.floor((diff % 3600) / 60);
+        const ds = diff % 60;
+        
+        mealCountdownText.textContent = "Ends in " + (dh > 0 ? dh + "h " : "") + String(dm).padStart(2, '0') + "m " + String(ds).padStart(2, '0') + "s";
+        
+        // Progress
+        const totalDuration = (slot.end - slot.start) * 60;
+        const elapsed = nowSec - (slot.start * 60);
+        const progress = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
+        mealProgressFill.style.width = progress + "%";
+        
+      } else {
+        // Upcoming meal
+        const startSec = slot.start * 60;
+        let nowSec = currentMinutes * 60 + currentSeconds;
+        
+        // If it's for tomorrow
+        if (currentMinutes > slot.start) {
+          nowSec -= (24 * 60 * 60);
+        }
+        
+        const diff = startSec - nowSec;
+        const dh = Math.floor(diff / 3600);
+        const dm = Math.floor((diff % 3600) / 60);
+        const ds = diff % 60;
+        
+        mealCountdownText.textContent = "Starts in " + (dh > 0 ? dh + "h " : "") + String(dm).padStart(2, '0') + "m " + String(ds).padStart(2, '0') + "s";
+        mealProgressFill.style.width = "0%";
+      }
+    } else {
+       mealCountdownWrapper.style.display = "none";
+    }
+  }
 }
 
 
@@ -942,16 +1049,16 @@ function getUpcomingMealName() {
   if (currentMinutes < 9 * 60 + 30) {
     return "Breakfast";
   }
-  // Lunch: up to 2:15 PM (14:15)
-  if (currentMinutes < 14 * 60 + 15) {
+  // Lunch: up to 2:00 PM (14:00)
+  if (currentMinutes < 14 * 60) {
     return "Lunch";
   }
-  // Snacks: up to 5:30 PM (17:30)
-  if (currentMinutes < 17 * 60 + 30) {
+  // Snacks: up to 6:00 PM (18:00)
+  if (currentMinutes < 18 * 60) {
     return "Snacks";
   }
-  // Dinner: up to 9:30 PM (21:30)
-  if (currentMinutes < 21 * 60 + 30) {
+  // Dinner: up to 9:00 PM (21:00)
+  if (currentMinutes < 21 * 60) {
     return "Dinner";
   }
   // After 9:30 PM, next meal is Breakfast (tomorrow)
@@ -960,9 +1067,9 @@ function getUpcomingMealName() {
 
 const mealSlots = {
   "Breakfast": { label: "7:30 AM - 9:30 AM", start: 7 * 60 + 30, end: 9 * 60 + 30 },
-  "Lunch": { label: "12:00 PM - 2:00 PM", start: 12 * 60, end: 14 * 60 + 15 },
-  "Snacks": { label: "4:30 PM - 06:00 PM", start: 16 * 60 + 30, end: 17 * 60 + 30 },
-  "Dinner": { label: "7:30 PM - 9:00 PM", start: 19 * 60 + 30, end: 21 * 60 + 30 }
+  "Lunch": { label: "12:00 PM - 2:00 PM", start: 12 * 60, end: 14 * 60 },
+  "Snacks": { label: "4:30 PM - 06:00 PM", start: 16 * 60 + 30, end: 18 * 60 },
+  "Dinner": { label: "7:30 PM - 9:00 PM", start: 19 * 60 + 30, end: 21 * 60 }
 };
 
 function getMealStatus(mealName, isTodaySelected) {
@@ -1084,7 +1191,29 @@ function renderFoodMenu() {
   function getItemListHTML(itemsText, commonText) {
     const specificItems = parseFoodItems(itemsText, foodPreference);
     const commonItems = parseFoodItems(commonText, foodPreference);
-    const combinedItems = [...specificItems, ...commonItems];
+    let combinedItems = [...specificItems, ...commonItems];
+
+    // Meaningful Sorting
+    const priorityMap = [
+      { level: 1, keywords: ["chapathi", "phulka", "puri", "rice", "briyani", "pulao", "dosa", "idly", "paratha", "bhatura", "puttu", "upma"] },
+      { level: 2, keywords: ["chicken", "paneer", "egg", "kofta", "manchurian"] },
+      { level: 3, keywords: ["dal", "sambar", "rasam", "kadhi", "curry", "gravy", "masala", "chola", "rajma"] },
+      { level: 4, keywords: ["dry", "fry", "poriyal", "veg"] },
+      { level: 6, keywords: ["curd", "raita", "buttermilk", "milk", "tea", "coffee", "juice", "panna"] },
+      { level: 7, keywords: ["pickle", "papad", "salad", "onion", "lemon", "chutney", "ketchup", "appalam", "sugar"] }
+    ];
+
+    function getPriority(text) {
+      const lower = text.toLowerCase();
+      for (const p of priorityMap) {
+        if (p.keywords.some(kw => lower.includes(kw))) {
+          return p.level;
+        }
+      }
+      return 5; // Default priority (Other items)
+    }
+
+    combinedItems.sort((a, b) => getPriority(a.text) - getPriority(b.text));
 
     if (combinedItems.length === 0) {
       return `<div class="food-items" style="font-size: 0.92rem; color: var(--muted); margin: 6px 0;">No items available for this selection.</div>`;
@@ -1106,13 +1235,18 @@ function renderFoodMenu() {
         sub = "Boiled Egg (5x/week), Omelette (2x/week)";
       }
 
+      // Favorites logic
+      const favorites = JSON.parse(localStorage.getItem("food_favorites") || "[]");
+      const isFav = favorites.includes(main);
+      const starHTML = `<span class="favorite-star ${isFav ? 'active' : ''}" data-item="${main}" onclick="window.toggleFavorite('${main.replace(/'/g, "\\'")}', this)">★</span>`;
+
       let subHTML = sub ? `<span class="food-item-subtitle">${sub}</span>` : "";
 
       html += `
         <li class="food-item-row item-${item.type}">
           <span class="food-item-indicator dot ${dotClass}"></span>
           <div class="food-item-details">
-            <span class="food-item-title">${main}</span>
+            <span class="food-item-title">${main} ${starHTML}</span>
             ${subHTML}
           </div>
         </li>
@@ -1142,6 +1276,14 @@ function renderFoodMenu() {
     <div class="podium-badge">${statusText}</div>
     <div class="food-meal-name">${mealIcon}${activeMealName}</div>
     <div class="meal-time-slot" style="font-size: 0.82rem; color: var(--muted); margin: -8px 0 12px 0;">🕒 Timings: ${mealSlots[activeMealName].label}</div>
+    
+    <div class="meal-countdown-wrapper" id="mealCountdownWrapper">
+      <div id="mealCountdownText" class="meal-countdown-text">--:--:--</div>
+      <div class="meal-progress-bar">
+        <div id="mealProgressFill" class="meal-progress-fill"></div>
+      </div>
+    </div>
+
     ${getItemListHTML(activeItemsText, activeCommonText)}
   `;
   foodPodium.appendChild(podiumCard);
@@ -1213,6 +1355,7 @@ function setupFoodControls() {
 
   if (btnPrefVeg && btnPrefNonVeg) {
     btnPrefVeg.addEventListener("click", () => {
+      triggerHaptic();
       if (foodPreference !== 'veg') {
         foodPreference = 'veg';
         btnPrefVeg.classList.add("active");
@@ -1222,6 +1365,7 @@ function setupFoodControls() {
     });
 
     btnPrefNonVeg.addEventListener("click", () => {
+      triggerHaptic();
       if (foodPreference !== 'nonveg') {
         foodPreference = 'nonveg';
         btnPrefNonVeg.classList.add("active");
@@ -1233,6 +1377,7 @@ function setupFoodControls() {
 
   if (btnToggleFullDay && foodFullDayContainer) {
     btnToggleFullDay.addEventListener("click", () => {
+      triggerHaptic();
       const isHidden = foodFullDayContainer.classList.contains("hidden");
       foodFullDayContainer.classList.toggle("hidden");
 
