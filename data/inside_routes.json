@@ -3,28 +3,35 @@
     "dayType": "Monday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "7:45",
-    "count": 1
-  },
-  {
-    "dayType": "Monday",
-    "from": "Nila",
-    "to": "Sahyadri",
-    "time": "8:30",
+    "time": "07:45",
     "count": 2
   },
   {
     "dayType": "Monday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:25",
+    "time": "08:30",
+    "count": 2
+  },
+  {
+    "dayType": "Monday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "08:55",
     "count": 1
   },
   {
     "dayType": "Monday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:45",
+    "time": "09:25",
+    "count": 1
+  },
+  {
+    "dayType": "Monday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -213,56 +220,49 @@
     "dayType": "Monday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "0:00",
+    "time": "00:00",
     "count": 1
   },
   {
     "dayType": "Monday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "7:45",
+    "time": "07:45",
     "count": 1
   },
   {
     "dayType": "Monday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:15",
+    "time": "08:15",
     "count": 1
   },
   {
     "dayType": "Monday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:30",
+    "time": "08:30",
     "count": 2
   },
   {
     "dayType": "Monday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:45",
-    "count": 1
-  },
-  {
-    "dayType": "Monday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "9:00",
+    "time": "08:55",
     "count": 2
   },
   {
     "dayType": "Monday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:25",
+    "time": "09:25",
     "count": 1
   },
   {
     "dayType": "Monday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:45",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -326,7 +326,14 @@
     "from": "Sahyadri",
     "to": "Nila",
     "time": "13:45",
-    "count": 2
+    "count": 1
+  },
+  {
+    "dayType": "Monday",
+    "from": "Sahyadri",
+    "to": "Nila",
+    "time": "13:55",
+    "count": 1
   },
   {
     "dayType": "Monday",
@@ -441,38 +448,38 @@
     "count": 1
   },
   {
-    "dayType": "Monday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "23:15",
-    "count": 1
-  },
-  {
     "dayType": "Tuesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "7:45",
-    "count": 1
-  },
-  {
-    "dayType": "Tuesday",
-    "from": "Nila",
-    "to": "Sahyadri",
-    "time": "8:30",
+    "time": "07:45",
     "count": 2
   },
   {
     "dayType": "Tuesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:25",
+    "time": "08:30",
+    "count": 2
+  },
+  {
+    "dayType": "Tuesday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "08:55",
     "count": 1
   },
   {
     "dayType": "Tuesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:45",
+    "time": "09:25",
+    "count": 1
+  },
+  {
+    "dayType": "Tuesday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -661,56 +668,49 @@
     "dayType": "Tuesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "0:00",
+    "time": "00:00",
     "count": 1
   },
   {
     "dayType": "Tuesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "7:45",
+    "time": "07:45",
     "count": 1
   },
   {
     "dayType": "Tuesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:15",
+    "time": "08:15",
     "count": 1
   },
   {
     "dayType": "Tuesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:30",
+    "time": "08:30",
     "count": 2
   },
   {
     "dayType": "Tuesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:45",
-    "count": 1
-  },
-  {
-    "dayType": "Tuesday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "9:00",
+    "time": "08:55",
     "count": 2
   },
   {
     "dayType": "Tuesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:25",
+    "time": "09:25",
     "count": 1
   },
   {
     "dayType": "Tuesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:45",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -774,7 +774,14 @@
     "from": "Sahyadri",
     "to": "Nila",
     "time": "13:45",
-    "count": 2
+    "count": 1
+  },
+  {
+    "dayType": "Tuesday",
+    "from": "Sahyadri",
+    "to": "Nila",
+    "time": "13:55",
+    "count": 1
   },
   {
     "dayType": "Tuesday",
@@ -889,38 +896,38 @@
     "count": 1
   },
   {
-    "dayType": "Tuesday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "23:15",
-    "count": 1
-  },
-  {
     "dayType": "Wednesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "7:45",
-    "count": 1
-  },
-  {
-    "dayType": "Wednesday",
-    "from": "Nila",
-    "to": "Sahyadri",
-    "time": "8:30",
+    "time": "07:45",
     "count": 2
   },
   {
     "dayType": "Wednesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:25",
+    "time": "08:30",
+    "count": 2
+  },
+  {
+    "dayType": "Wednesday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "08:55",
     "count": 1
   },
   {
     "dayType": "Wednesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:45",
+    "time": "09:25",
+    "count": 1
+  },
+  {
+    "dayType": "Wednesday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -1109,56 +1116,49 @@
     "dayType": "Wednesday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "0:00",
+    "time": "00:00",
     "count": 1
   },
   {
     "dayType": "Wednesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "7:45",
+    "time": "07:45",
     "count": 1
   },
   {
     "dayType": "Wednesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:15",
+    "time": "08:15",
     "count": 1
   },
   {
     "dayType": "Wednesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:30",
+    "time": "08:30",
     "count": 2
   },
   {
     "dayType": "Wednesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:45",
-    "count": 1
-  },
-  {
-    "dayType": "Wednesday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "9:00",
+    "time": "08:55",
     "count": 2
   },
   {
     "dayType": "Wednesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:25",
+    "time": "09:25",
     "count": 1
   },
   {
     "dayType": "Wednesday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:45",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -1222,7 +1222,14 @@
     "from": "Sahyadri",
     "to": "Nila",
     "time": "13:45",
-    "count": 2
+    "count": 1
+  },
+  {
+    "dayType": "Wednesday",
+    "from": "Sahyadri",
+    "to": "Nila",
+    "time": "13:55",
+    "count": 1
   },
   {
     "dayType": "Wednesday",
@@ -1337,38 +1344,38 @@
     "count": 1
   },
   {
-    "dayType": "Wednesday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "23:15",
-    "count": 1
-  },
-  {
     "dayType": "Thursday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "7:45",
-    "count": 1
-  },
-  {
-    "dayType": "Thursday",
-    "from": "Nila",
-    "to": "Sahyadri",
-    "time": "8:30",
+    "time": "07:45",
     "count": 2
   },
   {
     "dayType": "Thursday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:25",
+    "time": "08:30",
+    "count": 2
+  },
+  {
+    "dayType": "Thursday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "08:55",
     "count": 1
   },
   {
     "dayType": "Thursday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:45",
+    "time": "09:25",
+    "count": 1
+  },
+  {
+    "dayType": "Thursday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -1557,56 +1564,49 @@
     "dayType": "Thursday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "0:00",
+    "time": "00:00",
     "count": 1
   },
   {
     "dayType": "Thursday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "7:45",
+    "time": "07:45",
     "count": 1
   },
   {
     "dayType": "Thursday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:15",
+    "time": "08:15",
     "count": 1
   },
   {
     "dayType": "Thursday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:30",
+    "time": "08:30",
     "count": 2
   },
   {
     "dayType": "Thursday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:45",
-    "count": 1
-  },
-  {
-    "dayType": "Thursday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "9:00",
+    "time": "08:55",
     "count": 2
   },
   {
     "dayType": "Thursday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:25",
+    "time": "09:25",
     "count": 1
   },
   {
     "dayType": "Thursday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:45",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -1670,7 +1670,14 @@
     "from": "Sahyadri",
     "to": "Nila",
     "time": "13:45",
-    "count": 2
+    "count": 1
+  },
+  {
+    "dayType": "Thursday",
+    "from": "Sahyadri",
+    "to": "Nila",
+    "time": "13:55",
+    "count": 1
   },
   {
     "dayType": "Thursday",
@@ -1785,38 +1792,38 @@
     "count": 1
   },
   {
-    "dayType": "Thursday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "23:15",
-    "count": 1
-  },
-  {
     "dayType": "Friday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "7:45",
-    "count": 1
-  },
-  {
-    "dayType": "Friday",
-    "from": "Nila",
-    "to": "Sahyadri",
-    "time": "8:30",
+    "time": "07:45",
     "count": 2
   },
   {
     "dayType": "Friday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:25",
+    "time": "08:30",
+    "count": 2
+  },
+  {
+    "dayType": "Friday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "08:55",
     "count": 1
   },
   {
     "dayType": "Friday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:45",
+    "time": "09:25",
+    "count": 1
+  },
+  {
+    "dayType": "Friday",
+    "from": "Nila",
+    "to": "Sahyadri",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -2005,56 +2012,49 @@
     "dayType": "Friday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "0:00",
+    "time": "00:00",
     "count": 1
   },
   {
     "dayType": "Friday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "7:45",
+    "time": "07:45",
     "count": 1
   },
   {
     "dayType": "Friday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:15",
+    "time": "08:15",
     "count": 1
   },
   {
     "dayType": "Friday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:30",
+    "time": "08:30",
     "count": 2
   },
   {
     "dayType": "Friday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:45",
-    "count": 1
-  },
-  {
-    "dayType": "Friday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "9:00",
+    "time": "08:55",
     "count": 2
   },
   {
     "dayType": "Friday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:25",
+    "time": "09:25",
     "count": 1
   },
   {
     "dayType": "Friday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:45",
+    "time": "09:45",
     "count": 1
   },
   {
@@ -2118,7 +2118,14 @@
     "from": "Sahyadri",
     "to": "Nila",
     "time": "13:45",
-    "count": 2
+    "count": 1
+  },
+  {
+    "dayType": "Friday",
+    "from": "Sahyadri",
+    "to": "Nila",
+    "time": "13:55",
+    "count": 1
   },
   {
     "dayType": "Friday",
@@ -2223,13 +2230,6 @@
     "from": "Sahyadri",
     "to": "Nila",
     "time": "22:15",
-    "count": 1
-  },
-  {
-    "dayType": "Friday",
-    "from": "Sahyadri",
-    "to": "Nila",
-    "time": "23:15",
     "count": 1
   },
   {
@@ -2243,21 +2243,21 @@
     "dayType": "Saturday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "8:30",
+    "time": "08:30",
     "count": 1
   },
   {
     "dayType": "Saturday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:00",
+    "time": "09:00",
     "count": 1
   },
   {
     "dayType": "Saturday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:30",
+    "time": "09:30",
     "count": 1
   },
   {
@@ -2390,6 +2390,13 @@
     "dayType": "Saturday",
     "from": "Nila",
     "to": "Sahyadri",
+    "time": "18:00",
+    "count": 1
+  },
+  {
+    "dayType": "Saturday",
+    "from": "Nila",
+    "to": "Sahyadri",
     "time": "18:30",
     "count": 1
   },
@@ -2446,42 +2453,42 @@
     "dayType": "Saturday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "0:00",
+    "time": "00:00",
     "count": 1
   },
   {
     "dayType": "Saturday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "7:30",
+    "time": "07:30",
     "count": 1
   },
   {
     "dayType": "Saturday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:00",
+    "time": "08:00",
     "count": 1
   },
   {
     "dayType": "Saturday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:30",
+    "time": "08:30",
     "count": 1
   },
   {
     "dayType": "Saturday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:00",
+    "time": "09:00",
     "count": 1
   },
   {
     "dayType": "Saturday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:30",
+    "time": "09:30",
     "count": 1
   },
   {
@@ -2594,6 +2601,13 @@
     "from": "Sahyadri",
     "to": "Nila",
     "time": "17:30",
+    "count": 1
+  },
+  {
+    "dayType": "Saturday",
+    "from": "Sahyadri",
+    "to": "Nila",
+    "time": "18:00",
     "count": 1
   },
   {
@@ -2656,14 +2670,14 @@
     "dayType": "Sunday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "8:45",
+    "time": "08:45",
     "count": 1
   },
   {
     "dayType": "Sunday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "9:15",
+    "time": "09:15",
     "count": 1
   },
   {
@@ -2796,35 +2810,35 @@
     "dayType": "Sunday",
     "from": "Nila",
     "to": "Sahyadri",
-    "time": "0:00",
+    "time": "00:00",
     "count": 1
   },
   {
     "dayType": "Sunday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:00",
+    "time": "08:00",
     "count": 1
   },
   {
     "dayType": "Sunday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "8:30",
+    "time": "08:30",
     "count": 1
   },
   {
     "dayType": "Sunday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:00",
+    "time": "09:00",
     "count": 1
   },
   {
     "dayType": "Sunday",
     "from": "Sahyadri",
     "to": "Nila",
-    "time": "9:30",
+    "time": "09:30",
     "count": 1
   },
   {

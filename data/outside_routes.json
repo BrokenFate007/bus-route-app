@@ -1,31 +1,30 @@
 [
   {
-    "routeId": "KP0",
-    "departureTime": "7:00",
-    "origin": "Kalleppully",
+    "routeId": "KP_M1",
+    "departureTime": "07:00",
+    "origin": "Kalleppulley",
     "stops": [
-      "Kalleppully",
+      "Kalleppulley",
       "Mattumantha",
       "Koppam",
-      "Chandranagar",
+      "Chandranagar Circle",
       "Pudussery",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route from Kalleppully. Arrives Sahyadri 7:50 AM",
-    "returnTime": "7:50",
-    "dayType": "Monday"
+    "routeDescription": "Route from Kalleppulley (7:00 AM). Arrives Sahyadri 7:50 AM",
+    "dayType": "Monday",
+    "returnTime": "07:50"
   },
   {
-    "routeId": "PT1",
-    "departureTime": "7:40",
-    "origin": "Nila Gate",
+    "routeId": "PT_M1",
+    "departureTime": "08:00",
+    "origin": "Palakkad",
     "stops": [
-      "Nila Gate",
-      "Palakkad Town",
+      "Palakkad",
       "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
       "Kalmandapam",
       "Chandranagar",
@@ -33,100 +32,72 @@
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Palakkad Town (arr. 8:25 AM) via Maidan & Stadium. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Monday"
+    "routeDescription": "From Palakkad 8:00 AM. Arrives Sahyadri 8:30 AM",
+    "dayType": "Monday",
+    "returnTime": "08:30"
   },
   {
-    "routeId": "KP1",
-    "departureTime": "7:55",
+    "routeId": "PT_M2",
+    "departureTime": "07:40",
     "origin": "Nila Gate",
     "stops": [
       "Nila Gate",
-      "Kalleppully",
+      "Palakkad",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Kalmandapam",
+      "Chandranagar",
+      "Pudussery",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila Gate 7:40 AM to Palakkad (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Monday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "KP_M2",
+    "departureTime": "07:55",
+    "origin": "Nila Gate",
+    "stops": [
+      "Nila Gate",
+      "Kalleppulley",
       "Koppam",
       "Sekharipuram",
       "Mattumantha",
-      "Malampuzha",
+      "Malampuza",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Kalleppully (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Monday"
+    "routeDescription": "Nila Gate 7:55 AM to Kalleppulley (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Monday",
+    "returnTime": "08:55"
   },
   {
-    "routeId": "PT2",
-    "departureTime": "8:00",
-    "origin": "Palakkad Town",
-    "stops": [
-      "Palakkad Town",
-      "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
-      "Stadium Bus Stand",
-      "Kalmandapam",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM",
-    "returnTime": "8:30",
-    "dayType": "Monday"
-  },
-  {
-    "routeId": "WP1",
-    "departureTime": "8:15",
-    "origin": "Nila Gate",
-    "stops": [
-      "Nila Gate",
-      "Wise Park Junction",
-      "Nila Manogata",
-      "Sahyadri"
-    ],
-    "routeDescription": "Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)",
-    "returnTime": "9:00",
-    "dayType": "Monday"
-  },
-  {
-    "routeId": "PT3",
-    "departureTime": "17:10",
+    "routeId": "PT_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
       "Nila Gate",
       "Pudussery",
-      "Chandranagar",
-      "Kalmandapam",
-      "Stadium Bus Stand",
-      "Maidan",
-      "Manapullikavu",
       "Kadamkode",
-      "Palakkad Town"
-    ],
-    "routeDescription": "Evening route to Palakkad Town (arr. 17:40 PM). Stadium Bus Stand 17:45 PM returns to Nila Gate",
-    "returnTime": "17:45",
-    "dayType": "Monday"
-  },
-  {
-    "routeId": "PT3-RETURN",
-    "departureTime": "17:45",
-    "origin": "Stadium Bus Stand",
-    "stops": [
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
-      "Kalmandapam",
+      "Palakkad",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Stadium Bus Stand to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Town (Monday-Thursday up to town / Friday up to Kinnar stop)",
     "dayType": "Monday"
   },
   {
-    "routeId": "KP2",
-    "departureTime": "17:20",
+    "routeId": "KP_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
@@ -135,170 +106,155 @@
       "Mattumantha",
       "Sekharipuram",
       "Koppam",
-      "Kalleppully"
+      "Kalleppulley",
+      "Chandranagar",
+      "Pudussery",
+      "Nila"
     ],
-    "routeDescription": "Evening route to Kalleppully (arr. 17:55 PM). Sekharipuram at 17:50 PM",
-    "returnTime": "17:55",
+    "routeDescription": "Sahyadri 5:35 PM to Kalleppulley (5:55 PM). Returns to Nila",
     "dayType": "Monday"
   },
   {
-    "routeId": "KP2-RETURN",
-    "departureTime": "17:50",
-    "origin": "Sekharipuram",
+    "routeId": "WP_M1",
+    "departureTime": "08:15",
+    "origin": "Nila",
     "stops": [
-      "Sekharipuram",
-      "Koppam",
-      "Mattumantha",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate"
+      "Nila",
+      "Wise Park Junction",
+      "Nila Manogata",
+      "Sahyadri"
     ],
-    "routeDescription": "Return from Sekharipuram to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Nila 8:15 AM - Wise Park 8:30 AM - Sahyadri 9:00 AM (service roads)",
+    "dayType": "Monday",
+    "returnTime": "09:00"
+  },
+  {
+    "routeId": "WP_E1",
+    "departureTime": "18:15",
+    "origin": "Sahyadri",
+    "stops": [
+      "Sahyadri",
+      "Nila Gate",
+      "Wise Park Junction",
+      "Nila Manogata"
+    ],
+    "routeDescription": "Sahyadri 6:15 PM - Wise Park 6:45 PM - Nila Manogata 7:00 PM (service roads)",
     "dayType": "Monday"
   },
   {
-    "routeId": "WP2",
-    "departureTime": "18:15",
-    "origin": "Sahyadri",
-    "stops": [
-      "Sahyadri",
-      "Nila Gate",
-      "Wise Park Junction",
-      "Nila Manogata"
-    ],
-    "routeDescription": "Evening Wise Park route: Junction arr. 18:45 PM, Nila Manogata 19:00 PM (service roads only)",
-    "returnTime": "19:00",
-    "dayType": "Monday"
-  },
-  {
-    "routeId": "KP0",
-    "departureTime": "7:00",
-    "origin": "Kalleppully",
-    "stops": [
-      "Kalleppully",
-      "Mattumantha",
-      "Koppam",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "Route from Kalleppully. Arrives Sahyadri 7:50 AM",
-    "returnTime": "7:50",
-    "dayType": "Tuesday"
-  },
-  {
-    "routeId": "PT1",
-    "departureTime": "7:40",
-    "origin": "Nila Gate",
-    "stops": [
-      "Nila Gate",
-      "Palakkad Town",
-      "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
-      "Stadium Bus Stand",
-      "Kalmandapam",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "Route to Palakkad Town (arr. 8:25 AM) via Maidan & Stadium. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Tuesday"
-  },
-  {
-    "routeId": "KP1",
-    "departureTime": "7:55",
-    "origin": "Nila Gate",
-    "stops": [
-      "Nila Gate",
-      "Kalleppully",
-      "Koppam",
-      "Sekharipuram",
-      "Mattumantha",
-      "Malampuzha",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "Route to Kalleppully (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Tuesday"
-  },
-  {
-    "routeId": "PT2",
-    "departureTime": "8:00",
-    "origin": "Palakkad Town",
-    "stops": [
-      "Palakkad Town",
-      "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
-      "Stadium Bus Stand",
-      "Kalmandapam",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM",
-    "returnTime": "8:30",
-    "dayType": "Tuesday"
-  },
-  {
-    "routeId": "WP1",
-    "departureTime": "8:15",
-    "origin": "Nila Gate",
-    "stops": [
-      "Nila Gate",
-      "Wise Park Junction",
-      "Nila Manogata",
-      "Sahyadri"
-    ],
-    "routeDescription": "Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)",
-    "returnTime": "9:00",
-    "dayType": "Tuesday"
-  },
-  {
-    "routeId": "PT3",
-    "departureTime": "17:10",
-    "origin": "Sahyadri",
-    "stops": [
-      "Sahyadri",
-      "Nila Gate",
-      "Pudussery",
-      "Chandranagar",
-      "Kalmandapam",
-      "Stadium Bus Stand",
-      "Maidan",
-      "Manapullikavu",
-      "Kadamkode",
-      "Palakkad Town"
-    ],
-    "routeDescription": "Evening route to Palakkad Town (arr. 17:40 PM). Stadium Bus Stand 17:45 PM returns to Nila Gate",
-    "returnTime": "17:45",
-    "dayType": "Tuesday"
-  },
-  {
-    "routeId": "PT3-RETURN",
-    "departureTime": "17:45",
+    "routeId": "ROUTE_8",
+    "departureTime": "21:30",
     "origin": "Stadium Bus Stand",
     "stops": [
       "Stadium Bus Stand",
+      "Chandranagar",
+      "Pudussery",
+      "IIT Main Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Stadium Bus Stand 9:30 PM to IIT Main Gate / Sahyadri",
+    "dayType": "Monday",
+    "returnTime": "22:15"
+  },
+  {
+    "routeId": "KP_M1",
+    "departureTime": "07:00",
+    "origin": "Kalleppulley",
+    "stops": [
+      "Kalleppulley",
+      "Mattumantha",
+      "Koppam",
+      "Chandranagar Circle",
+      "Pudussery",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Route from Kalleppulley (7:00 AM). Arrives Sahyadri 7:50 AM",
+    "dayType": "Tuesday",
+    "returnTime": "07:50"
+  },
+  {
+    "routeId": "PT_M1",
+    "departureTime": "08:00",
+    "origin": "Palakkad",
+    "stops": [
+      "Palakkad",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
       "Kalmandapam",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila Gate",
+      "Sahyadri"
     ],
-    "routeDescription": "Return from Stadium Bus Stand to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "From Palakkad 8:00 AM. Arrives Sahyadri 8:30 AM",
+    "dayType": "Tuesday",
+    "returnTime": "08:30"
+  },
+  {
+    "routeId": "PT_M2",
+    "departureTime": "07:40",
+    "origin": "Nila Gate",
+    "stops": [
+      "Nila Gate",
+      "Palakkad",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Kalmandapam",
+      "Chandranagar",
+      "Pudussery",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila Gate 7:40 AM to Palakkad (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Tuesday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "KP_M2",
+    "departureTime": "07:55",
+    "origin": "Nila Gate",
+    "stops": [
+      "Nila Gate",
+      "Kalleppulley",
+      "Koppam",
+      "Sekharipuram",
+      "Mattumantha",
+      "Malampuza",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila Gate 7:55 AM to Kalleppulley (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Tuesday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "PT_E1",
+    "departureTime": "17:35",
+    "origin": "Sahyadri",
+    "stops": [
+      "Sahyadri",
+      "Nila Gate",
+      "Pudussery",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Palakkad",
+      "Chandranagar",
+      "Pudussery",
+      "Nila"
+    ],
+    "routeDescription": "Sahyadri 5:35 PM to Town (Monday-Thursday up to town / Friday up to Kinnar stop)",
     "dayType": "Tuesday"
   },
   {
-    "routeId": "KP2",
-    "departureTime": "17:20",
+    "routeId": "KP_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
@@ -307,30 +263,30 @@
       "Mattumantha",
       "Sekharipuram",
       "Koppam",
-      "Kalleppully"
-    ],
-    "routeDescription": "Evening route to Kalleppully (arr. 17:55 PM). Sekharipuram at 17:50 PM",
-    "returnTime": "17:55",
-    "dayType": "Tuesday"
-  },
-  {
-    "routeId": "KP2-RETURN",
-    "departureTime": "17:50",
-    "origin": "Sekharipuram",
-    "stops": [
-      "Sekharipuram",
-      "Koppam",
-      "Mattumantha",
+      "Kalleppulley",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Sekharipuram to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Kalleppulley (5:55 PM). Returns to Nila",
     "dayType": "Tuesday"
   },
   {
-    "routeId": "WP2",
+    "routeId": "WP_M1",
+    "departureTime": "08:15",
+    "origin": "Nila",
+    "stops": [
+      "Nila",
+      "Wise Park Junction",
+      "Nila Manogata",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila 8:15 AM - Wise Park 8:30 AM - Sahyadri 9:00 AM (service roads)",
+    "dayType": "Tuesday",
+    "returnTime": "09:00"
+  },
+  {
+    "routeId": "WP_E1",
     "departureTime": "18:15",
     "origin": "Sahyadri",
     "stops": [
@@ -339,37 +295,50 @@
       "Wise Park Junction",
       "Nila Manogata"
     ],
-    "routeDescription": "Evening Wise Park route: Junction arr. 18:45 PM, Nila Manogata 19:00 PM (service roads only)",
-    "returnTime": "19:00",
+    "routeDescription": "Sahyadri 6:15 PM - Wise Park 6:45 PM - Nila Manogata 7:00 PM (service roads)",
     "dayType": "Tuesday"
   },
   {
-    "routeId": "KP0",
-    "departureTime": "7:00",
-    "origin": "Kalleppully",
+    "routeId": "ROUTE_8",
+    "departureTime": "21:30",
+    "origin": "Stadium Bus Stand",
     "stops": [
-      "Kalleppully",
+      "Stadium Bus Stand",
+      "Chandranagar",
+      "Pudussery",
+      "IIT Main Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Stadium Bus Stand 9:30 PM to IIT Main Gate / Sahyadri",
+    "dayType": "Tuesday",
+    "returnTime": "22:15"
+  },
+  {
+    "routeId": "KP_M1",
+    "departureTime": "07:00",
+    "origin": "Kalleppulley",
+    "stops": [
+      "Kalleppulley",
       "Mattumantha",
       "Koppam",
-      "Chandranagar",
+      "Chandranagar Circle",
       "Pudussery",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route from Kalleppully. Arrives Sahyadri 7:50 AM",
-    "returnTime": "7:50",
-    "dayType": "Wednesday"
+    "routeDescription": "Route from Kalleppulley (7:00 AM). Arrives Sahyadri 7:50 AM",
+    "dayType": "Wednesday",
+    "returnTime": "07:50"
   },
   {
-    "routeId": "PT1",
-    "departureTime": "7:40",
-    "origin": "Nila Gate",
+    "routeId": "PT_M1",
+    "departureTime": "08:00",
+    "origin": "Palakkad",
     "stops": [
-      "Nila Gate",
-      "Palakkad Town",
+      "Palakkad",
       "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
       "Kalmandapam",
       "Chandranagar",
@@ -377,100 +346,72 @@
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Palakkad Town (arr. 8:25 AM) via Maidan & Stadium. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Wednesday"
+    "routeDescription": "From Palakkad 8:00 AM. Arrives Sahyadri 8:30 AM",
+    "dayType": "Wednesday",
+    "returnTime": "08:30"
   },
   {
-    "routeId": "KP1",
-    "departureTime": "7:55",
+    "routeId": "PT_M2",
+    "departureTime": "07:40",
     "origin": "Nila Gate",
     "stops": [
       "Nila Gate",
-      "Kalleppully",
+      "Palakkad",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Kalmandapam",
+      "Chandranagar",
+      "Pudussery",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila Gate 7:40 AM to Palakkad (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Wednesday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "KP_M2",
+    "departureTime": "07:55",
+    "origin": "Nila Gate",
+    "stops": [
+      "Nila Gate",
+      "Kalleppulley",
       "Koppam",
       "Sekharipuram",
       "Mattumantha",
-      "Malampuzha",
+      "Malampuza",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Kalleppully (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Wednesday"
+    "routeDescription": "Nila Gate 7:55 AM to Kalleppulley (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Wednesday",
+    "returnTime": "08:55"
   },
   {
-    "routeId": "PT2",
-    "departureTime": "8:00",
-    "origin": "Palakkad Town",
-    "stops": [
-      "Palakkad Town",
-      "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
-      "Stadium Bus Stand",
-      "Kalmandapam",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM",
-    "returnTime": "8:30",
-    "dayType": "Wednesday"
-  },
-  {
-    "routeId": "WP1",
-    "departureTime": "8:15",
-    "origin": "Nila Gate",
-    "stops": [
-      "Nila Gate",
-      "Wise Park Junction",
-      "Nila Manogata",
-      "Sahyadri"
-    ],
-    "routeDescription": "Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)",
-    "returnTime": "9:00",
-    "dayType": "Wednesday"
-  },
-  {
-    "routeId": "PT3",
-    "departureTime": "17:10",
+    "routeId": "PT_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
       "Nila Gate",
       "Pudussery",
-      "Chandranagar",
-      "Kalmandapam",
-      "Stadium Bus Stand",
-      "Maidan",
-      "Manapullikavu",
       "Kadamkode",
-      "Palakkad Town"
-    ],
-    "routeDescription": "Evening route to Palakkad Town (arr. 17:40 PM). Stadium Bus Stand 17:45 PM returns to Nila Gate",
-    "returnTime": "17:45",
-    "dayType": "Wednesday"
-  },
-  {
-    "routeId": "PT3-RETURN",
-    "departureTime": "17:45",
-    "origin": "Stadium Bus Stand",
-    "stops": [
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
-      "Kalmandapam",
+      "Palakkad",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Stadium Bus Stand to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Town (Monday-Thursday up to town / Friday up to Kinnar stop)",
     "dayType": "Wednesday"
   },
   {
-    "routeId": "KP2",
-    "departureTime": "17:20",
+    "routeId": "KP_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
@@ -479,30 +420,30 @@
       "Mattumantha",
       "Sekharipuram",
       "Koppam",
-      "Kalleppully"
-    ],
-    "routeDescription": "Evening route to Kalleppully (arr. 17:55 PM). Sekharipuram at 17:50 PM",
-    "returnTime": "17:55",
-    "dayType": "Wednesday"
-  },
-  {
-    "routeId": "KP2-RETURN",
-    "departureTime": "17:50",
-    "origin": "Sekharipuram",
-    "stops": [
-      "Sekharipuram",
-      "Koppam",
-      "Mattumantha",
+      "Kalleppulley",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Sekharipuram to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Kalleppulley (5:55 PM). Returns to Nila",
     "dayType": "Wednesday"
   },
   {
-    "routeId": "WP2",
+    "routeId": "WP_M1",
+    "departureTime": "08:15",
+    "origin": "Nila",
+    "stops": [
+      "Nila",
+      "Wise Park Junction",
+      "Nila Manogata",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila 8:15 AM - Wise Park 8:30 AM - Sahyadri 9:00 AM (service roads)",
+    "dayType": "Wednesday",
+    "returnTime": "09:00"
+  },
+  {
+    "routeId": "WP_E1",
     "departureTime": "18:15",
     "origin": "Sahyadri",
     "stops": [
@@ -511,37 +452,50 @@
       "Wise Park Junction",
       "Nila Manogata"
     ],
-    "routeDescription": "Evening Wise Park route: Junction arr. 18:45 PM, Nila Manogata 19:00 PM (service roads only)",
-    "returnTime": "19:00",
+    "routeDescription": "Sahyadri 6:15 PM - Wise Park 6:45 PM - Nila Manogata 7:00 PM (service roads)",
     "dayType": "Wednesday"
   },
   {
-    "routeId": "KP0",
-    "departureTime": "7:00",
-    "origin": "Kalleppully",
+    "routeId": "ROUTE_8",
+    "departureTime": "21:30",
+    "origin": "Stadium Bus Stand",
     "stops": [
-      "Kalleppully",
+      "Stadium Bus Stand",
+      "Chandranagar",
+      "Pudussery",
+      "IIT Main Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Stadium Bus Stand 9:30 PM to IIT Main Gate / Sahyadri",
+    "dayType": "Wednesday",
+    "returnTime": "22:15"
+  },
+  {
+    "routeId": "KP_M1",
+    "departureTime": "07:00",
+    "origin": "Kalleppulley",
+    "stops": [
+      "Kalleppulley",
       "Mattumantha",
       "Koppam",
-      "Chandranagar",
+      "Chandranagar Circle",
       "Pudussery",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route from Kalleppully. Arrives Sahyadri 7:50 AM",
-    "returnTime": "7:50",
-    "dayType": "Thursday"
+    "routeDescription": "Route from Kalleppulley (7:00 AM). Arrives Sahyadri 7:50 AM",
+    "dayType": "Thursday",
+    "returnTime": "07:50"
   },
   {
-    "routeId": "PT1",
-    "departureTime": "7:40",
-    "origin": "Nila Gate",
+    "routeId": "PT_M1",
+    "departureTime": "08:00",
+    "origin": "Palakkad",
     "stops": [
-      "Nila Gate",
-      "Palakkad Town",
+      "Palakkad",
       "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
       "Kalmandapam",
       "Chandranagar",
@@ -549,100 +503,72 @@
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Palakkad Town (arr. 8:25 AM) via Maidan & Stadium. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Thursday"
+    "routeDescription": "From Palakkad 8:00 AM. Arrives Sahyadri 8:30 AM",
+    "dayType": "Thursday",
+    "returnTime": "08:30"
   },
   {
-    "routeId": "KP1",
-    "departureTime": "7:55",
+    "routeId": "PT_M2",
+    "departureTime": "07:40",
     "origin": "Nila Gate",
     "stops": [
       "Nila Gate",
-      "Kalleppully",
+      "Palakkad",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Kalmandapam",
+      "Chandranagar",
+      "Pudussery",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila Gate 7:40 AM to Palakkad (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Thursday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "KP_M2",
+    "departureTime": "07:55",
+    "origin": "Nila Gate",
+    "stops": [
+      "Nila Gate",
+      "Kalleppulley",
       "Koppam",
       "Sekharipuram",
       "Mattumantha",
-      "Malampuzha",
+      "Malampuza",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Kalleppully (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Thursday"
+    "routeDescription": "Nila Gate 7:55 AM to Kalleppulley (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Thursday",
+    "returnTime": "08:55"
   },
   {
-    "routeId": "PT2",
-    "departureTime": "8:00",
-    "origin": "Palakkad Town",
-    "stops": [
-      "Palakkad Town",
-      "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
-      "Stadium Bus Stand",
-      "Kalmandapam",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM",
-    "returnTime": "8:30",
-    "dayType": "Thursday"
-  },
-  {
-    "routeId": "WP1",
-    "departureTime": "8:15",
-    "origin": "Nila Gate",
-    "stops": [
-      "Nila Gate",
-      "Wise Park Junction",
-      "Nila Manogata",
-      "Sahyadri"
-    ],
-    "routeDescription": "Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)",
-    "returnTime": "9:00",
-    "dayType": "Thursday"
-  },
-  {
-    "routeId": "PT3",
-    "departureTime": "17:10",
+    "routeId": "PT_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
       "Nila Gate",
       "Pudussery",
-      "Chandranagar",
-      "Kalmandapam",
-      "Stadium Bus Stand",
-      "Maidan",
-      "Manapullikavu",
       "Kadamkode",
-      "Palakkad Town"
-    ],
-    "routeDescription": "Evening route to Palakkad Town (arr. 17:40 PM). Stadium Bus Stand 17:45 PM returns to Nila Gate",
-    "returnTime": "17:45",
-    "dayType": "Thursday"
-  },
-  {
-    "routeId": "PT3-RETURN",
-    "departureTime": "17:45",
-    "origin": "Stadium Bus Stand",
-    "stops": [
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
-      "Kalmandapam",
+      "Palakkad",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Stadium Bus Stand to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Town (Monday-Thursday up to town / Friday up to Kinnar stop)",
     "dayType": "Thursday"
   },
   {
-    "routeId": "KP2",
-    "departureTime": "17:20",
+    "routeId": "KP_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
@@ -651,30 +577,30 @@
       "Mattumantha",
       "Sekharipuram",
       "Koppam",
-      "Kalleppully"
-    ],
-    "routeDescription": "Evening route to Kalleppully (arr. 17:55 PM). Sekharipuram at 17:50 PM",
-    "returnTime": "17:55",
-    "dayType": "Thursday"
-  },
-  {
-    "routeId": "KP2-RETURN",
-    "departureTime": "17:50",
-    "origin": "Sekharipuram",
-    "stops": [
-      "Sekharipuram",
-      "Koppam",
-      "Mattumantha",
+      "Kalleppulley",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Sekharipuram to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Kalleppulley (5:55 PM). Returns to Nila",
     "dayType": "Thursday"
   },
   {
-    "routeId": "WP2",
+    "routeId": "WP_M1",
+    "departureTime": "08:15",
+    "origin": "Nila",
+    "stops": [
+      "Nila",
+      "Wise Park Junction",
+      "Nila Manogata",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila 8:15 AM - Wise Park 8:30 AM - Sahyadri 9:00 AM (service roads)",
+    "dayType": "Thursday",
+    "returnTime": "09:00"
+  },
+  {
+    "routeId": "WP_E1",
     "departureTime": "18:15",
     "origin": "Sahyadri",
     "stops": [
@@ -683,37 +609,50 @@
       "Wise Park Junction",
       "Nila Manogata"
     ],
-    "routeDescription": "Evening Wise Park route: Junction arr. 18:45 PM, Nila Manogata 19:00 PM (service roads only)",
-    "returnTime": "19:00",
+    "routeDescription": "Sahyadri 6:15 PM - Wise Park 6:45 PM - Nila Manogata 7:00 PM (service roads)",
     "dayType": "Thursday"
   },
   {
-    "routeId": "KP0",
-    "departureTime": "7:00",
-    "origin": "Kalleppully",
+    "routeId": "ROUTE_8",
+    "departureTime": "21:30",
+    "origin": "Stadium Bus Stand",
     "stops": [
-      "Kalleppully",
+      "Stadium Bus Stand",
+      "Chandranagar",
+      "Pudussery",
+      "IIT Main Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Stadium Bus Stand 9:30 PM to IIT Main Gate / Sahyadri",
+    "dayType": "Thursday",
+    "returnTime": "22:15"
+  },
+  {
+    "routeId": "KP_M1",
+    "departureTime": "07:00",
+    "origin": "Kalleppulley",
+    "stops": [
+      "Kalleppulley",
       "Mattumantha",
       "Koppam",
-      "Chandranagar",
+      "Chandranagar Circle",
       "Pudussery",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route from Kalleppully. Arrives Sahyadri 7:50 AM",
-    "returnTime": "7:50",
-    "dayType": "Friday"
+    "routeDescription": "Route from Kalleppulley (7:00 AM). Arrives Sahyadri 7:50 AM",
+    "dayType": "Friday",
+    "returnTime": "07:50"
   },
   {
-    "routeId": "PT1",
-    "departureTime": "7:40",
-    "origin": "Nila Gate",
+    "routeId": "PT_M1",
+    "departureTime": "08:00",
+    "origin": "Palakkad",
     "stops": [
-      "Nila Gate",
-      "Palakkad Town",
+      "Palakkad",
       "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
       "Kalmandapam",
       "Chandranagar",
@@ -721,100 +660,72 @@
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Palakkad Town (arr. 8:25 AM) via Maidan & Stadium. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Friday"
+    "routeDescription": "From Palakkad 8:00 AM. Arrives Sahyadri 8:30 AM",
+    "dayType": "Friday",
+    "returnTime": "08:30"
   },
   {
-    "routeId": "KP1",
-    "departureTime": "7:55",
+    "routeId": "PT_M2",
+    "departureTime": "07:40",
     "origin": "Nila Gate",
     "stops": [
       "Nila Gate",
-      "Kalleppully",
+      "Palakkad",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Kalmandapam",
+      "Chandranagar",
+      "Pudussery",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila Gate 7:40 AM to Palakkad (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Friday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "KP_M2",
+    "departureTime": "07:55",
+    "origin": "Nila Gate",
+    "stops": [
+      "Nila Gate",
+      "Kalleppulley",
       "Koppam",
       "Sekharipuram",
       "Mattumantha",
-      "Malampuzha",
+      "Malampuza",
       "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Kalleppully (arr. 8:25 AM) via Sekharipuram. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
-    "dayType": "Friday"
+    "routeDescription": "Nila Gate 7:55 AM to Kalleppulley (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Friday",
+    "returnTime": "08:55"
   },
   {
-    "routeId": "PT2",
-    "departureTime": "8:00",
-    "origin": "Palakkad Town",
-    "stops": [
-      "Palakkad Town",
-      "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
-      "Stadium Bus Stand",
-      "Kalmandapam",
-      "Chandranagar",
-      "Pudussery",
-      "Nila Gate",
-      "Sahyadri"
-    ],
-    "routeDescription": "From Palakkad Town via Stadium Bus Stand. Arrives Sahyadri 8:30 AM",
-    "returnTime": "8:30",
-    "dayType": "Friday"
-  },
-  {
-    "routeId": "WP1",
-    "departureTime": "8:15",
-    "origin": "Nila Gate",
-    "stops": [
-      "Nila Gate",
-      "Wise Park Junction",
-      "Nila Manogata",
-      "Sahyadri"
-    ],
-    "routeDescription": "Wise Park Junction (arr. 8:30 AM) - Nila Manogata (8:45 AM) - Sahyadri 9:00 AM (service roads only)",
-    "returnTime": "9:00",
-    "dayType": "Friday"
-  },
-  {
-    "routeId": "PT3",
-    "departureTime": "17:10",
+    "routeId": "PT_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
       "Nila Gate",
       "Pudussery",
-      "Chandranagar",
-      "Kalmandapam",
-      "Stadium Bus Stand",
-      "Maidan",
-      "Manapullikavu",
       "Kadamkode",
-      "Palakkad Town"
-    ],
-    "routeDescription": "Evening route to Palakkad Town (arr. 17:40 PM). Stadium Bus Stand 17:45 PM returns to Nila Gate",
-    "returnTime": "17:45",
-    "dayType": "Friday"
-  },
-  {
-    "routeId": "PT3-RETURN",
-    "departureTime": "17:45",
-    "origin": "Stadium Bus Stand",
-    "stops": [
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
-      "Kalmandapam",
+      "Palakkad",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Stadium Bus Stand to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Town (Monday-Thursday up to town / Friday up to Kinnar stop)",
     "dayType": "Friday"
   },
   {
-    "routeId": "KP2",
-    "departureTime": "17:20",
+    "routeId": "KP_E1",
+    "departureTime": "17:35",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
@@ -823,30 +734,30 @@
       "Mattumantha",
       "Sekharipuram",
       "Koppam",
-      "Kalleppully"
-    ],
-    "routeDescription": "Evening route to Kalleppully (arr. 17:55 PM). Sekharipuram at 17:50 PM",
-    "returnTime": "17:55",
-    "dayType": "Friday"
-  },
-  {
-    "routeId": "KP2-RETURN",
-    "departureTime": "17:50",
-    "origin": "Sekharipuram",
-    "stops": [
-      "Sekharipuram",
-      "Koppam",
-      "Mattumantha",
+      "Kalleppulley",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate"
+      "Nila"
     ],
-    "routeDescription": "Return from Sekharipuram to Nila Gate",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 5:35 PM to Kalleppulley (5:55 PM). Returns to Nila",
     "dayType": "Friday"
   },
   {
-    "routeId": "WP2",
+    "routeId": "WP_M1",
+    "departureTime": "08:15",
+    "origin": "Nila",
+    "stops": [
+      "Nila",
+      "Wise Park Junction",
+      "Nila Manogata",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila 8:15 AM - Wise Park 8:30 AM - Sahyadri 9:00 AM (service roads)",
+    "dayType": "Friday",
+    "returnTime": "09:00"
+  },
+  {
+    "routeId": "WP_E1",
     "departureTime": "18:15",
     "origin": "Sahyadri",
     "stops": [
@@ -855,95 +766,153 @@
       "Wise Park Junction",
       "Nila Manogata"
     ],
-    "routeDescription": "Evening Wise Park route: Junction arr. 18:45 PM, Nila Manogata 19:00 PM (service roads only)",
-    "returnTime": "19:00",
+    "routeDescription": "Sahyadri 6:15 PM - Wise Park 6:45 PM - Nila Manogata 7:00 PM (service roads)",
     "dayType": "Friday"
   },
   {
-    "routeId": "PT3-KINAR",
-    "departureTime": "17:10",
+    "routeId": "PT_E2",
+    "departureTime": "18:15",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
-      "Kinar Stop"
+      "Nila Gate",
+      "Pudussery",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand"
     ],
-    "routeDescription": "Friday special direct service to Kinar Stop",
-    "returnTime": "",
+    "routeDescription": "Sahyadri 6:15 PM to Stadium Bus Stand",
     "dayType": "Friday"
   },
   {
-    "routeId": "PT1",
-    "departureTime": "7:40",
-    "origin": "Nila Gate",
+    "routeId": "ROUTE_8",
+    "departureTime": "21:30",
+    "origin": "Stadium Bus Stand",
     "stops": [
-      "Nila Gate",
-      "Palakkad Town",
-      "Kadamkode",
-      "Manapullikavu",
-      "Maidan",
       "Stadium Bus Stand",
-      "Kalmandapam",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate",
+      "IIT Main Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Route to Palakkad Town (arr. 8:25 AM) via Maidan & Stadium. Returns to Sahyadri 8:55 AM",
-    "returnTime": "8:55",
+    "routeDescription": "Stadium Bus Stand 9:30 PM to IIT Main Gate / Sahyadri",
+    "dayType": "Friday",
+    "returnTime": "22:15"
+  },
+  {
+    "routeId": "PT_E2",
+    "departureTime": "18:15",
+    "origin": "Sahyadri",
+    "stops": [
+      "Sahyadri",
+      "Nila Gate",
+      "Pudussery",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand"
+    ],
+    "routeDescription": "Sahyadri 6:15 PM to Stadium Bus Stand",
     "dayType": "Saturday"
   },
   {
-    "routeId": "WP1",
-    "departureTime": "8:45",
+    "routeId": "PT_M2",
+    "departureTime": "07:40",
     "origin": "Nila Gate",
     "stops": [
       "Nila Gate",
-      "Wise Park Junction",
-      "Nila Manogata",
+      "Palakkad",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Kalmandapam",
+      "Chandranagar",
+      "Pudussery",
+      "Nila Gate",
       "Sahyadri"
     ],
-    "routeDescription": "Wise Park Junction (arr. 9:00 AM) - Nila Manogata (9:15 AM) - Sahyadri 9:30 AM",
-    "returnTime": "9:30",
+    "routeDescription": "Nila Gate 7:40 AM to Palakkad (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Saturday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "KP_M2",
+    "departureTime": "07:55",
+    "origin": "Nila Gate",
+    "stops": [
+      "Nila Gate",
+      "Kalleppulley",
+      "Koppam",
+      "Sekharipuram",
+      "Mattumantha",
+      "Malampuza",
+      "Nila Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila Gate 7:55 AM to Kalleppulley (8:25 AM). Returns Sahyadri 8:55 AM",
+    "dayType": "Saturday",
+    "returnTime": "08:55"
+  },
+  {
+    "routeId": "PT_E1",
+    "departureTime": "17:35",
+    "origin": "Sahyadri",
+    "stops": [
+      "Sahyadri",
+      "Nila Gate",
+      "Pudussery",
+      "Kadamkode",
+      "Manapullykavu",
+      "Maidaan",
+      "Stadium Bus Stand",
+      "Palakkad",
+      "Chandranagar",
+      "Pudussery",
+      "Nila"
+    ],
+    "routeDescription": "Sahyadri 5:35 PM to Town (up to Kinnar stop)",
     "dayType": "Saturday"
   },
   {
-    "routeId": "PT4",
+    "routeId": "PT_A1",
     "departureTime": "13:00",
     "origin": "Sahyadri",
     "stops": [
       "Sahyadri",
       "Nila Gate",
       "Pudussery",
-      "Chandranagar",
-      "Kalmandapam",
-      "Stadium Bus Stand",
-      "Maidan",
-      "Manapullikavu",
       "Kadamkode",
-      "Palakkad Town"
-    ],
-    "routeDescription": "Afternoon route to Palakkad Town (arr. 13:30 PM)",
-    "returnTime": "13:30",
-    "dayType": "Saturday"
-  },
-  {
-    "routeId": "PT4-RETURN",
-    "departureTime": "13:30",
-    "origin": "Stadium Bus Stand",
-    "stops": [
+      "Manapullykavu",
+      "Maidaan",
       "Stadium Bus Stand",
-      "Kalmandapam",
+      "Palakkad",
       "Chandranagar",
       "Pudussery",
-      "Nila Gate",
+      "Nila",
       "Saraswati"
     ],
-    "routeDescription": "Return from Stadium Bus Stand to Saraswati (arr. 14:00 PM)",
-    "returnTime": "",
-    "dayType": "Saturday"
+    "routeDescription": "Sahyadri 1:00 PM to Palakkad (1:30 PM). Returns to Saraswati 2:00 PM",
+    "dayType": "Saturday",
+    "returnTime": "14:00"
   },
   {
-    "routeId": "WP2",
+    "routeId": "WP_M1",
+    "departureTime": "08:45",
+    "origin": "Nila",
+    "stops": [
+      "Nila",
+      "Wise Park Junction",
+      "Nila Manogata",
+      "Sahyadri"
+    ],
+    "routeDescription": "Nila 8:45 AM - Wise Park 9:00 AM - Sahyadri 9:30 AM (service roads)",
+    "dayType": "Saturday",
+    "returnTime": "09:30"
+  },
+  {
+    "routeId": "WP_E1",
     "departureTime": "18:15",
     "origin": "Sahyadri",
     "stops": [
@@ -952,8 +921,37 @@
       "Wise Park Junction",
       "Nila Manogata"
     ],
-    "routeDescription": "Evening Wise Park route: Junction arr. 18:45 PM, Nila Manogata 19:00 PM",
-    "returnTime": "19:00",
+    "routeDescription": "Sahyadri 6:15 PM - Wise Park 6:45 PM - Nila Manogata 7:00 PM (service roads)",
     "dayType": "Saturday"
+  },
+  {
+    "routeId": "ROUTE_8",
+    "departureTime": "21:30",
+    "origin": "Stadium Bus Stand",
+    "stops": [
+      "Stadium Bus Stand",
+      "Chandranagar",
+      "Pudussery",
+      "IIT Main Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Stadium Bus Stand 9:30 PM to IIT Main Gate / Sahyadri",
+    "dayType": "Saturday",
+    "returnTime": "22:15"
+  },
+  {
+    "routeId": "ROUTE_8",
+    "departureTime": "21:30",
+    "origin": "Stadium Bus Stand",
+    "stops": [
+      "Stadium Bus Stand",
+      "Chandranagar",
+      "Pudussery",
+      "IIT Main Gate",
+      "Sahyadri"
+    ],
+    "routeDescription": "Stadium Bus Stand 9:30 PM to IIT Main Gate / Sahyadri",
+    "dayType": "Sunday",
+    "returnTime": "22:15"
   }
 ]
